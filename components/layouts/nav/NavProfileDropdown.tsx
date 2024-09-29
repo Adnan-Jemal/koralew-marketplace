@@ -4,7 +4,7 @@ import {
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuSeparator,
-} from "../ui/dropdown-menu";
+} from "../../ui/dropdown-menu";
 import { signOut } from "next-auth/react";
 
 export default function NavProfileDropdown() {
@@ -14,11 +14,11 @@ export default function NavProfileDropdown() {
       className="border-secondary border-2 rounded-xl w-40 "
       align="start"
     >
-      <Link href={"/account/dashboard"}>
+      <Link href={"/"}>
         <DropdownMenuItem className="cursor-pointer">Account</DropdownMenuItem>
       </Link>
 
-      <Link href={"/account/messages"}>
+      <Link href={"/"}>
         <DropdownMenuItem className="cursor-pointer">Messages</DropdownMenuItem>
       </Link>
 

@@ -1,15 +1,15 @@
 import Link from "next/link";
 import { Search } from "lucide-react";
-import { ModeToggle } from "../ModeToggle";
+import { ModeToggle } from "../../ui/ModeToggle";
 import { NavProfile } from "./NavProfile";
 
 export const Navbar = () => {
   return (
     <div
-      className={` border-b-2 border-secondary sticky top-0 z-10 bg-background`}
+      className={` border-b-2 border-secondary sticky  top-0 z-10 bg-background`}
     >
       <div className=" max-w-7xl select-none px-4 m-auto py-3  flex items-center justify-between gap-2">
-        <Link href={"/"} >
+        <Link href={"/"}>
           <h1 className="font-bold text-2xl  sm:text-3xl">Koralew</h1>
         </Link>
 
@@ -42,5 +42,3 @@ export const Navbar = () => {
     </div>
   );
 };
-
-

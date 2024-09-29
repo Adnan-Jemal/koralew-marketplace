@@ -3,24 +3,23 @@ import {
   DropdownMenu,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
+import { Avatar, AvatarFallback, AvatarImage } from "../../ui/avatar";
 
 import { auth } from "@/auth";
 import NavProfileDropdown from "./NavProfileDropdown";
-import { Button } from "../ui/button";
+import { Button } from "../../ui/button";
 import { redirect } from "next/dist/server/api-utils";
 import Link from "next/link";
 
 export const NavProfile = async () => {
   const session = await auth();
   const user = session?.user;
-  if(!user){
-    return(
-      <Link href={'/signin'}><Button>Sign In</Button></Link>
-     
-      
-    )
-    
+  if (!user) {
+    return (
+      <Link href={"/signin"}>
+        <Button>Sign In</Button>
+      </Link>
+    );
   }
 
   return (
