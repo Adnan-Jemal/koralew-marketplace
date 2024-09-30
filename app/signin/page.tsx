@@ -14,7 +14,7 @@ export default async function Page() {
         <h1 className="text-4xl sm:text-5xl font-bold text-primary">
           Welcome to Koralew
         </h1>
-        <h3 className="text-xl text-primary">Login/Sign up</h3>
+        <h3 className="text-xl text-primary">Login or Sign up</h3>
         <SignInForm />
       </div>
     

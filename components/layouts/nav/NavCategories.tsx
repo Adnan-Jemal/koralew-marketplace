@@ -19,72 +19,72 @@ export default function NavCategories() {
   const categories = [
     {
       name: "All",
-      link: "/",
+      link: "",
       icon: <LucideSquareStack />,
     },
     {
       name: "Electronics",
-      link: "/electronics",
+      link: "electronics",
       icon: <MonitorSmartphone />,
     },
     {
       name: "Fashion",
-      link: "/fashion",
+      link: "fashion",
       icon: <Shirt />,
     },
     {
       name: "Vehicles",
-      link: "/vehicles",
+      link: "vehicles",
       icon: <CarFront />,
     },
     {
       name: "Sports",
-      link: "/sports",
+      link: "sports",
       icon: <Dumbbell />,
     },
     {
       name: "Baby",
-      link: "/baby",
+      link: "baby",
       icon: <Baby />,
     },
     {
       name: "Home",
-      link: "/home",
+      link: "home",
       icon: <HomeIcon />,
     },
     {
       name: "Books",
-      link: "/books",
+      link: "books",
       icon: <LucideBookOpenText />,
     },
     {
       name: "Health",
-      link: "/health",
+      link: "health",
       icon: <HeartPulse />,
     },
     {
       name: "Tools",
-      link: "/tools",
+      link: "tools",
       icon: <Drill />,
     },
     {
       name: "Office",
-      link: "/office",
+      link: "office",
       icon: <Briefcase />,
     },
     {
       name: "Music",
-      link: "/music",
+      link: "music",
       icon: <Music4 />,
     },
     {
       name: "Others",
-      link: "/others",
+      link: "others",
       icon: <MoreHorizontal />,
     },
   ];
   return (
-    <div className="max-w-7xl mx-auto flex items-center mt-4 gap-7 px-4 justify-evenly overflow-x-scroll scrollbar-hide">
+    <div className="max-w-7xl mx-auto flex items-center mt-4 gap-7 px-4 justify-evenly overflow-x-scroll md:scrollbar-none scrollbar-thin scrollbar-track-transparent scrollbar-thumb-secondary ">
       {categories.map((cat) => (
         <NavCategory
           categoryLink={cat.link}
