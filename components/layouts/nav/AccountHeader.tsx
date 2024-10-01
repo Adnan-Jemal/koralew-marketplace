@@ -19,7 +19,7 @@ const AccountHeader = () => {
           </SessionProvider>
 
         <Link href={'/'}>  <Button
-            variant={"ghost"}
+            variant={"outline"}
             className=" items-center py-6 text-lg border-none "
           >
             < ArrowLeft className="mr-2 size-6" /> Home

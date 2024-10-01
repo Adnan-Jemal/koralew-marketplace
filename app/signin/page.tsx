@@ -1,5 +1,5 @@
 import { auth } from "@/auth";
-import SignInForm from "@/components/forms/SignInForm";
+import SignInForm from "@/components/auth/SignInForm";
 import Image from "next/image";
 import { redirect } from "next/navigation";
 import React from "react";
