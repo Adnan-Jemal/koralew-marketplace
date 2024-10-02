@@ -45,7 +45,7 @@ export default function ProfileForm() {
     console.log(values);
   }
   return (
-    <div className="w-full p-4 shadow-lg rounded-xl dark:border dark:border-secondary">
+    <div className="w-full p-4 shadow-lg rounded-2xl dark:border dark:border-secondary">
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8 ">
             <div className=" flex gap-4 flex-col sm:flex-row"><FormField
@@ -100,8 +100,34 @@ export default function ProfileForm() {
               </FormItem>
             )}
           /></div>
+            <div className=" flex gap-4 flex-col sm:flex-row"><FormField
+            control={form.control}
+            name="city"
+            render={({ field }) => (
+              <FormItem className="flex-grow">
+                <Label>City</Label>
+                <FormControl>
+                  <Input placeholder="Your City" {...field} />
+                </FormControl>
+                <FormMessage className="text-sm text-white bg-red-400 w-fit px-2 rounded-md " />
+              </FormItem>
+            )}
+          />
+          <FormField
+            control={form.control}
+            name="address"
+            render={({ field }) => (
+              <FormItem className="flex-grow" >
+                <Label>Address</Label>
+                <FormControl>
+                  <Input placeholder="Enter Address" {...field} />
+                </FormControl>
+                <FormMessage className="text-sm text-white bg-red-400 w-fit px-2 rounded-md " />
+              </FormItem>
+            )}
+          /></div>
           
-          <Button className="" type="submit">Submit</Button>
+          <Button className="w-full" type="submit">Update </Button>
         </form>
       </Form>
     </div>

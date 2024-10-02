@@ -13,7 +13,7 @@ const ProfileView = async () => {
 //     user ? doc(db, "users", user.uid) : null
 //   );
   return (
-    <div className="flex items-center gap-6 flex-wrap justify-center md:justify-start p-8 shadow-lg rounded-xl dark:border dark:border-secondary  ">
+    <div className="flex items-center gap-6 flex-wrap justify-center md:justify-start p-8 shadow-lg rounded-2xl dark:border dark:border-secondary  ">
       {/* {user ? (
         <Avatar className="size-32">
           <AvatarImage src={user.photoURL!} />
