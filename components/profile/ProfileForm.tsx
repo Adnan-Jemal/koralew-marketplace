@@ -15,9 +15,12 @@ import {
 import { Input } from "../ui/input";
 import { Button } from "../ui/button";
 import { Label } from "../ui/label";
+import { SelectUser } from "@/db/schema";
+import { updateUser } from "@/actions/update";
+import { revalidatePath } from "next/cache";
 
 const formSchema = z.object({
-  name: z.string().min(2,{message:"Invalid full name"}).max(50),
+  name: z.string().min(2, { message: "Invalid full name" }).max(50),
   email: z.string().email({ message: "Invalid email address" }),
   phoneNumber: z
     .string()
@@ -27,107 +30,118 @@ const formSchema = z.object({
   address: z.string().min(4, { message: "Please enter a real address" }),
 });
 
-export default function ProfileForm() {
+type propType = {
+  userData: SelectUser;
+};
+
+export default function ProfileForm({ userData }: propType) {
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      name: "abebe",
-      email: "mola@koralew.et",
-      phoneNumber: "0987656789",
-      country: "Ethiopia",
-      city: "Addis Ababa",
-      address: "Kolfe",
+      name: userData.name || "",
+      email: userData.email,
+      phoneNumber: userData.phoneNumber || "",
+      country: userData.country || "",
+      city: userData.city || "",
+      address: userData.address || "",
     },
   });
   function onSubmit(values: z.infer<typeof formSchema>) {
-    // Do something with the form values.
-    // ✅ This will be type-safe and validated.
-    console.log(values);
+    updateUser(userData.id,values);
+
   }
   return (
     <div className="w-full p-4 shadow-lg rounded-2xl dark:border dark:border-secondary">
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8 ">
-            <div className=" flex gap-4 flex-col sm:flex-row"><FormField
-            control={form.control}
-            name="name"
-            render={({ field }) => (
-              <FormItem className="flex-grow">
-                <Label>Full Name</Label>
-                <FormControl>
-                  <Input placeholder="Your Name" {...field} />
-                </FormControl>
-                <FormMessage className="text-sm text-white bg-red-400 w-fit px-2 rounded-md " />
-              </FormItem>
-            )}
-          />
-          <FormField
-            control={form.control}
-            name="email"
-            render={({ field }) => (
-              <FormItem className="flex-grow" >
-                <Label>Email</Label>
-                <FormControl>
-                  <Input placeholder="Your Email" {...field} />
-                </FormControl>
-                <FormMessage className="text-sm text-white bg-red-400 w-fit px-2 rounded-md " />
-              </FormItem>
-            )}
-          /></div>
-            <div className=" flex gap-4 flex-col sm:flex-row"><FormField
-            control={form.control}
-            name="country"
-            render={({ field }) => (
-              <FormItem className="flex-grow">
-                <Label>Country</Label>
-                <FormControl>
-                  <Input placeholder="Your Country" {...field} />
-                </FormControl>
-                <FormMessage className="text-sm text-white bg-red-400 w-fit px-2 rounded-md " />
-              </FormItem>
-            )}
-          />
-          <FormField
-            control={form.control}
-            name="phoneNumber"
-            render={({ field }) => (
-              <FormItem className="flex-grow" >
-                <Label>Phone Number</Label>
-                <FormControl>
-                  <Input placeholder="Enter Phone Number" {...field} />
-                </FormControl>
-                <FormMessage className="text-sm text-white bg-red-400 w-fit px-2 rounded-md " />
-              </FormItem>
-            )}
-          /></div>
-            <div className=" flex gap-4 flex-col sm:flex-row"><FormField
-            control={form.control}
-            name="city"
-            render={({ field }) => (
-              <FormItem className="flex-grow">
-                <Label>City</Label>
-                <FormControl>
-                  <Input placeholder="Your City" {...field} />
-                </FormControl>
-                <FormMessage className="text-sm text-white bg-red-400 w-fit px-2 rounded-md " />
-              </FormItem>
-            )}
-          />
-          <FormField
-            control={form.control}
-            name="address"
-            render={({ field }) => (
-              <FormItem className="flex-grow" >
-                <Label>Address</Label>
-                <FormControl>
-                  <Input placeholder="Enter Address" {...field} />
-                </FormControl>
-                <FormMessage className="text-sm text-white bg-red-400 w-fit px-2 rounded-md " />
-              </FormItem>
-            )}
-          /></div>
-          
-          <Button className="w-full" type="submit">Update </Button>
+          <div className=" flex gap-4 flex-col sm:flex-row">
+            <FormField
+              control={form.control}
+              name="name"
+              render={({ field }) => (
+                <FormItem className="flex-grow">
+                  <Label>Full Name</Label>
+                  <FormControl>
+                    <Input placeholder="Your Name" {...field} />
+                  </FormControl>
+                  <FormMessage className="text-sm text-white bg-red-400 w-fit px-2 rounded-md " />
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={form.control}
+              name="email"
+              render={({ field }) => (
+                <FormItem className="flex-grow">
+                  <Label>Email</Label>
+                  <FormControl>
+                    <Input placeholder="Enter Your Email" {...field} />
+                  </FormControl>
+                  <FormMessage className="text-sm text-white bg-red-400 w-fit px-2 rounded-md " />
+                </FormItem>
+              )}
+            />
+          </div>
+          <div className=" flex gap-4 flex-col sm:flex-row">
+            <FormField
+              control={form.control}
+              name="country"
+              render={({ field }) => (
+                <FormItem className="flex-grow">
+                  <Label>Country</Label>
+                  <FormControl>
+                    <Input placeholder="Enter Your Country" {...field} />
+                  </FormControl>
+                  <FormMessage className="text-sm text-white bg-red-400 w-fit px-2 rounded-md " />
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={form.control}
+              name="phoneNumber"
+              render={({ field }) => (
+                <FormItem className="flex-grow">
+                  <Label>Phone Number</Label>
+                  <FormControl>
+                    <Input placeholder="Enter Phone Number" {...field} />
+                  </FormControl>
+                  <FormMessage className="text-sm text-white bg-red-400 w-fit px-2 rounded-md " />
+                </FormItem>
+              )}
+            />
+          </div>
+          <div className=" flex gap-4 flex-col sm:flex-row">
+            <FormField
+              control={form.control}
+              name="city"
+              render={({ field }) => (
+                <FormItem className="flex-grow">
+                  <Label>City</Label>
+                  <FormControl>
+                    <Input placeholder="Enter Your City" {...field} />
+                  </FormControl>
+                  <FormMessage className="text-sm text-white bg-red-400 w-fit px-2 rounded-md " />
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={form.control}
+              name="address"
+              render={({ field }) => (
+                <FormItem className="flex-grow">
+                  <Label>Address</Label>
+                  <FormControl>
+                    <Input placeholder="Enter Your Address" {...field} />
+                  </FormControl>
+                  <FormMessage className="text-sm text-white bg-red-400 w-fit px-2 rounded-md " />
+                </FormItem>
+              )}
+            />
+          </div>
+
+          <Button className="w-full" type="submit">
+            Update{" "}
+          </Button>
         </form>
       </Form>
     </div>
