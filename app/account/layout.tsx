@@ -17,6 +17,7 @@ export default function RootLayout({
         <div className="w-full h-full">
           <AccountHeader />
           {children}
+          
         </div>
       </div>
     </div>

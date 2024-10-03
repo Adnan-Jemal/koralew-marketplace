@@ -17,7 +17,8 @@ import { Button } from "../ui/button";
 import { Label } from "../ui/label";
 import { SelectUser } from "@/db/schema";
 import { updateUser } from "@/actions/update";
-import { revalidatePath } from "next/cache";
+
+import { toast } from "sonner";
 
 const formSchema = z.object({
   name: z.string().min(2, { message: "Invalid full name" }).max(50),
@@ -47,8 +48,7 @@ export default function ProfileForm({ userData }: propType) {
     },
   });
   function onSubmit(values: z.infer<typeof formSchema>) {
-    updateUser(userData.id,values);
-
+    updateUser(userData.id, values).then(()=>toast("Profile Updated"));
   }
   return (
     <div className="w-full p-4 shadow-lg rounded-2xl dark:border dark:border-secondary">
