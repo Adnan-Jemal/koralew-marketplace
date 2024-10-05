@@ -1,12 +1,12 @@
 "use client";
 import { LogOut } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { Avatar, AvatarFallback, AvatarImage } from "@radix-ui/react-avatar";
 import { logOut } from "@/actions";
 import { useSession } from "next-auth/react";
 import { Skeleton } from "@/components/ui/skeleton";
 import Link from "next/link";
 import { redirect } from "next/navigation";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 
 const SidebarProfile = () => {
   const session = useSession().data;
@@ -16,7 +16,7 @@ const SidebarProfile = () => {
       <div className="flex  gap-2 px-3 py-4 shadow-sm  rounded-xl  border-secondary border-2">
         {/* profile image */}
         {session ? (
-          <Avatar className="size-12">
+          <Avatar className="size-12 ">
             <AvatarImage src={session.user?.image!!} />
             <AvatarFallback className="text-xl">
               {session?.user?.name?.charAt(0).toUpperCase()}

@@ -20,7 +20,7 @@ export default async function page() {
 
       <ProfileForm userData={user} />
 
-      <DeleteAccount />
+      <DeleteAccount userId= {session.user.id} />
     </div>
   );
 }

@@ -10,15 +10,27 @@ import {
 } from "@/components/ui/dialog";
 
 import { toast } from "sonner";
-
-import { useRouter } from "next/navigation";
 import { useState } from "react";
-import { AwardIcon } from "lucide-react";
+import { Ellipsis} from "lucide-react";
+import { deleteUser } from "@/actions/delete";
 
-const DeleteAccount = () => {
+type propTypes = {
+  userId: string;
+};
+
+const DeleteAccount = ({ userId }: propTypes) => {
+  const [loading, setLoading] = useState(false);
   //delete user and data from db and navigate /
   const DeleteUser = async () => {
-    //delete user
+    setLoading(true);
+    try {
+      await deleteUser(userId);
+      toast("User Deleted Successfully");
+      setLoading(false);
+    } catch (error) {
+      console.error(error);
+      toast("Something Went Wrong");
+    }
   };
   return (
     <div className=" flex flex-col md:flex-row gap-4 justify-between items-center p-6 mt-20 border-2 border-secondary rounded-xl">
@@ -37,25 +49,24 @@ const DeleteAccount = () => {
           <DialogHeader className="flex flex-col gap-3">
             <DialogTitle>Are you absolutely sure?</DialogTitle>
             <DialogDescription>
-              Remember
+              Remember{" "}
               <span className="text-red-400 font-semibold">
                 this action cannot be undone.
-              </span>
+              </span>{" "}
               This will permanently delete your account and remove all your data
               from our servers.
             </DialogDescription>
           </DialogHeader>
           <Button
-            // disabled={deleting || usrloading || loading}
+            disabled={loading}
             onClick={DeleteUser}
             variant={"destructive"}
           >
-            {/* {deleting ? (
-              <span className="text-4xl animate-bounce">...</span>
+            {loading ? (
+              <Ellipsis className="text-4xl animate-bounce" />
             ) : (
               <span>Delete Permanently</span>
-            )} */}
-            <span>Delete Permanently</span>
+            )}
           </Button>
         </DialogContent>
       </Dialog>
