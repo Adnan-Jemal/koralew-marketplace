@@ -75,7 +75,7 @@ export default function ProfileForm({ userData }: propType) {
                 <FormItem className="flex-grow">
                   <Label>Email</Label>
                   <FormControl>
-                    <Input placeholder="Enter Your Email" {...field} />
+                    <Input disabled={true} placeholder="Enter Your Email" {...field} />
                   </FormControl>
                   <FormMessage className="text-sm text-white bg-red-400 w-fit px-2 rounded-md " />
                 </FormItem>
@@ -139,8 +139,8 @@ export default function ProfileForm({ userData }: propType) {
             />
           </div>
 
-          <Button className="w-full" type="submit">
-            Update{" "}
+          <Button disabled={!form.formState.isDirty} className="w-full" type="submit">
+            Update
           </Button>
         </form>
       </Form>
