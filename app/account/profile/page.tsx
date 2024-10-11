@@ -3,7 +3,7 @@ import { auth } from "@/auth";
 import DeleteAccount from "@/components/profile/DeleteAccount";
 import ProfileForm from "@/components/profile/ProfileForm";
 import ProfileView from "@/components/profile/ProfileView";
-import Loading from "@/components/profile/Loading";
+
 export default async function page() {
   const session = await auth();
   if (!session || !session.user?.id) {

@@ -8,6 +8,7 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
+import { Input } from "../ui/input";
 
 const UpdatePhotoBtn = () => {
   return (
@@ -18,14 +19,15 @@ const UpdatePhotoBtn = () => {
             Update Photo
           </Button>
         </DialogTrigger>
-        <DialogContent className="w-[80%] rounded-xl dark:border-secondary">
+        <DialogContent className="w-[80%] text-center rounded-xl dark:border-secondary">
           <DialogHeader>
             <DialogTitle>Upload Photo</DialogTitle>
-            <DialogDescription>
-              This action cannot be undone. This will permanently delete your
-              account and remove your data from our servers.
-            </DialogDescription>
           </DialogHeader>
+          <form action="">
+            
+            <Input className="mt-4 mb-2" name="profilePicture" type="file" />
+            <Button type="submit" variant={"secondary"}>Upload Image</Button>
+          </form>
         </DialogContent>
       </Dialog>
     </>

@@ -19,6 +19,7 @@ import { SelectUser } from "@/db/schema";
 import { updateUser } from "@/actions/update";
 
 import { toast } from "sonner";
+import { CldUploadWidget } from "next-cloudinary";
 
 const formSchema = z.object({
   name: z.string().min(2, { message: "Invalid full name" }).max(50),
@@ -48,7 +49,7 @@ export default function ProfileForm({ userData }: propType) {
     },
   });
   function onSubmit(values: z.infer<typeof formSchema>) {
-    updateUser(userData.id, values).then(()=>toast("Profile Updated"));
+    updateUser(userData.id, values).then(() => toast("Profile Updated"));
   }
   return (
     <div className="w-full p-4 shadow-lg rounded-2xl dark:border dark:border-secondary">
@@ -75,7 +76,11 @@ export default function ProfileForm({ userData }: propType) {
                 <FormItem className="flex-grow">
                   <Label>Email</Label>
                   <FormControl>
-                    <Input disabled={true} placeholder="Enter Your Email" {...field} />
+                    <Input
+                      disabled={true}
+                      placeholder="Enter Your Email"
+                      {...field}
+                    />
                   </FormControl>
                   <FormMessage className="text-sm text-white bg-red-400 w-fit px-2 rounded-md " />
                 </FormItem>
@@ -139,9 +144,34 @@ export default function ProfileForm({ userData }: propType) {
             />
           </div>
 
-          <Button disabled={!form.formState.isDirty} className="w-full" type="submit">
+          <Button
+            disabled={!form.formState.isDirty}
+            className="w-full"
+            type="submit"
+          >
             Update
           </Button>
+          <CldUploadWidget
+            options={{
+              sources: ["local", "url"],
+              multiple: false,
+              maxFiles: 1,
+              
+            }}
+            uploadPreset="nns0f9bh"
+          >
+            {({ open }) => {
+              return (
+                <Button
+                  onClick={() => open()}
+                  type="submit"
+                  variant={"secondary"}
+                >
+                  Upload Image
+                </Button>
+              );
+            }}
+          </CldUploadWidget>
         </form>
       </Form>
     </div>
