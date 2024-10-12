@@ -33,7 +33,7 @@ const DeleteAccount = ({ userId }: propTypes) => {
     }
   };
   return (
-    <div className=" flex flex-col md:flex-row gap-4 justify-between items-center p-6 mt-20 border-2 border-secondary rounded-xl">
+    <div className=" flex flex-col md:flex-row gap-4 justify-between items-center p-6 mt-4 border-2 border-secondary rounded-xl">
       <div className=" flex-col flex gap-5">
         <h2 className="font-semibold text-lg">Delete Account Permanently</h2>
         <p className="text-secondary-foreground">

@@ -2,8 +2,7 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Skeleton } from "@/components/ui/skeleton";
 import { auth } from "@/auth";
 import UpdatePhotoBtn from "./UpdatePhotoBtn";
-import { CldUploadWidget } from "next-cloudinary";
-import { Button } from "../ui/button";
+
 
 const ProfileView = async () => {
   const session = await auth();
@@ -27,7 +26,7 @@ const ProfileView = async () => {
           </div>
         </div>
       
-        <UpdatePhotoBtn />
+        <UpdatePhotoBtn session={session}  />
       </div>
     </div>
   );

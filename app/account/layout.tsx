@@ -12,13 +12,12 @@ export default function RootLayout({
       <div className="flex">
         <SessionProvider>
           <Sidebar />
-        </SessionProvider>
 
-        <div className="w-full h-full">
-          <AccountHeader />
-          {children}
-          
-        </div>
+          <div className="w-full h-full">
+            <AccountHeader />
+            {children}
+          </div>
+        </SessionProvider>
       </div>
     </div>
   );

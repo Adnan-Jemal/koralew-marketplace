@@ -19,7 +19,6 @@ import { SelectUser } from "@/db/schema";
 import { updateUser } from "@/actions/update";
 
 import { toast } from "sonner";
-import { CldUploadWidget } from "next-cloudinary";
 
 const formSchema = z.object({
   name: z.string().min(2, { message: "Invalid full name" }).max(50),
@@ -151,27 +150,6 @@ export default function ProfileForm({ userData }: propType) {
           >
             Update
           </Button>
-          <CldUploadWidget
-            options={{
-              sources: ["local", "url"],
-              multiple: false,
-              maxFiles: 1,
-              
-            }}
-            uploadPreset="nns0f9bh"
-          >
-            {({ open }) => {
-              return (
-                <Button
-                  onClick={() => open()}
-                  type="submit"
-                  variant={"secondary"}
-                >
-                  Upload Image
-                </Button>
-              );
-            }}
-          </CldUploadWidget>
         </form>
       </Form>
     </div>
