@@ -17,6 +17,7 @@ import { getDownloadURL, ref, uploadBytesResumable } from "firebase/storage";
 import { storage } from "@/firebase";
 import { toast } from "sonner";
 import { useSession } from "next-auth/react";
+import { Ellipsis } from "lucide-react";
 
 type propType = {
   session: Session | null;
@@ -85,7 +86,7 @@ const UpdatePhotoBtn = ({ session }: propType) => {
             />
             <Button disabled={uploading || img == null} type="submit">
               {uploading ? (
-                <span className="animate-bounce text-3xl">...</span>
+                <Ellipsis className="text-4xl animate-bounce" />
               ) : (
                 "Upload Image"
               )}

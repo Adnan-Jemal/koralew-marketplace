@@ -1,7 +1,7 @@
 import { auth } from "@/auth";
 import SignInForm from "@/components/auth/SignInForm";
-import Image from "next/image";
 import { redirect } from "next/navigation";
+
 import React from "react";
 export default async function Page() {
   const session = await auth();
@@ -9,14 +9,12 @@ export default async function Page() {
     redirect("/");
   }
   return (
-   
-      <div className=" h-screen w-full flex items-center justify-center  flex-col gap-6 z-10">
-        <h1 className="text-4xl sm:text-5xl font-bold text-primary">
-          Welcome to Koralew
-        </h1>
-        <h3 className="text-xl text-primary">Login or Sign up</h3>
-        <SignInForm />
-      </div>
-    
+    <div className="h-screen w-full flex items-center justify-center bg-[url('../public/signin-bg.jpg')] bg-cover bg-center flex-col gap-6 ">
+      <h1 className="text-4xl sm:text-5xl font-bold text-white">
+        Welcome to Koralew
+      </h1>
+      <h3 className="text-xl text-white">Login or Sign up</h3>
+      <SignInForm />
+    </div>
   );
 }

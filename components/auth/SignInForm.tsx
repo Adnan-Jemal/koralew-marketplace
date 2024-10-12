@@ -2,11 +2,11 @@
 import { useState } from "react";
 import { Button } from "../ui/button";
 import { signInGithub, signInGoogle } from "@/actions";
+import { Ellipsis } from "lucide-react";
 
 export default function SignInForm() {
   const [googleLoading, setGoogleLoading] = useState<boolean>(false);
   const [githubLoading, setGithubLoading] = useState<boolean>(false);
-
 
   const googleSigning = async () => {
     try {
@@ -28,30 +28,30 @@ export default function SignInForm() {
   };
 
   return (
-    <div className="px-12 py-16 border-2  rounded-lg shadow-lg bg- flex flex-col gap-5 lg:w-[40%] sm:w-[60%]  items-center">
+    <div className="px-12 py-12 border-2  rounded-xl shadow-lg bg-primary-foreground flex flex-col justify-between gap-8 lg:w-[40%] sm:w-[60%]  items-center">
       <Button
         onClick={googleSigning}
         disabled={googleLoading || githubLoading}
-        variant={"secondary"}
-        className="w-full text-md py-6  "
+        variant={"outline"}
+        className="w-full text-md py-6 shadow-lg "
       >
         {googleLoading ? (
-          <span className="animate-bounce text-3xl">...</span>
+          <Ellipsis className="text-4xl animate-bounce" />
         ) : (
-          "Continue With Google"
+          <span className="flex gap-2">Continue With Google</span>
         )}
       </Button>
 
       <Button
         onClick={githubSigning}
         disabled={googleLoading || githubLoading}
-        variant={"secondary"}
-        className="w-full text-md py-6"
+        variant={"outline"}
+        className="w-full text-md py-6 shadow-lg"
       >
         {githubLoading ? (
-          <span className="animate-bounce text-3xl">...</span>
+          <Ellipsis className="text-4xl animate-bounce" />
         ) : (
-          "Continue With Github"
+          <span className="flex gap-2">Continue With Github</span>
         )}
       </Button>
     </div>
