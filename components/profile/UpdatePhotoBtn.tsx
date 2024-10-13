@@ -56,9 +56,10 @@ const UpdatePhotoBtn = ({ session }: propType) => {
       const imgUrl = await getDownloadURL(newImageRef);
       await updateUserPhoto(userId, imgUrl).then(() => update());
       setOpen(false);
+      setImg(null);
       setUploading(false);
       toast("Profile Image Updated Successfully");
-      setImg(null);
+      
     } catch (err) {
       console.error(err);
     }

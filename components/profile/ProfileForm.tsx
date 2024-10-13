@@ -19,6 +19,9 @@ import { SelectUser } from "@/db/schema";
 import { updateUser } from "@/actions/update";
 
 import { toast } from "sonner";
+import { CountrySelect } from "./CountrySelect";
+import { Ellipsis } from "lucide-react";
+
 
 const formSchema = z.object({
   name: z.string().min(2, { message: "Invalid full name" }).max(50),
@@ -26,7 +29,7 @@ const formSchema = z.object({
   phoneNumber: z
     .string()
     .regex(/^\d{10}$/, { message: "Invalid phone number" }),
-  country: z.string().min(4, { message: "Please enter a real country" }),
+  country: z.string().min(4, { message: "Please select a country" }),
   city: z.string().min(4, { message: "Please enter a real city" }),
   address: z.string().min(4, { message: "Please enter a real address" }),
 });
@@ -47,8 +50,11 @@ export default function ProfileForm({ userData }: propType) {
       address: userData.address || "",
     },
   });
-  function onSubmit(values: z.infer<typeof formSchema>) {
-    updateUser(userData.id, values).then(() => toast("Profile Updated"));
+
+  async function onSubmit (values: z.infer<typeof formSchema>) {
+    await updateUser(userData.id, values).then(() => toast("Profile Updated"));
+    form.reset(form.getValues())
+    
   }
   return (
     <div className="w-full p-4 shadow-lg rounded-2xl dark:border dark:border-secondary">
@@ -94,7 +100,8 @@ export default function ProfileForm({ userData }: propType) {
                 <FormItem className="flex-grow">
                   <Label>Country</Label>
                   <FormControl>
-                    <Input placeholder="Enter Your Country" {...field} />
+                    {/* <Input placeholder="Enter Your Country" {...field} /> */}
+                    <CountrySelect form={form} field={field}/>
                   </FormControl>
                   <FormMessage className="text-sm text-white bg-red-400 w-fit px-2 rounded-md " />
                 </FormItem>
@@ -144,11 +151,15 @@ export default function ProfileForm({ userData }: propType) {
           </div>
 
           <Button
-            disabled={!form.formState.isDirty}
+            disabled={!form.formState.isDirty || form.formState.isSubmitting}
             className="w-full"
             type="submit"
           >
-            Update
+             {form.formState.isSubmitting ? (
+              <Ellipsis className="text-4xl animate-bounce" />
+            ) : (
+              <span>Update profile</span>
+            )}
           </Button>
         </form>
       </Form>
