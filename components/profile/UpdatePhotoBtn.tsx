@@ -59,7 +59,6 @@ const UpdatePhotoBtn = ({ session }: propType) => {
       setImg(null);
       setUploading(false);
       toast("Profile Image Updated Successfully");
-      
     } catch (err) {
       console.error(err);
     }
@@ -75,13 +74,13 @@ const UpdatePhotoBtn = ({ session }: propType) => {
         </DialogTrigger>
         <DialogContent className="w-[80%] text-center rounded-xl dark:border-secondary">
           <DialogHeader>
-            <DialogTitle>Upload Image</DialogTitle>
+            <DialogTitle className="text-2xl text-center">Upload Image</DialogTitle>
           </DialogHeader>
-          <form onSubmit={(e) => handleSubmit(e)}>
-            <Input
+          <form className="flex flex-col items-center" onSubmit={(e) => handleSubmit(e)}>
+            <input
               disabled={uploading}
               onChange={handleChange}
-              className="mt-4 mb-2 hover:border-secondary-foreground cursor-pointer"
+              className="mt-2 mb-6  w-[70%] file:text-sm text-sm rounded-lg disabled:cursor-progress  bg-secondary cursor-pointer file:bg-primary file:text-primary-foreground file:py-2 file:rounded-lg file:border-none file:mr-3 file:cursor-pointer file:disabled:opacity-60 file:disabled:cursor-progress"
               name="profileImg"
               type="file"
             />

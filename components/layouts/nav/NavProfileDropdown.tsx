@@ -23,7 +23,7 @@ export default function NavProfileDropdown() {
       </Link>
 
       <DropdownMenuSeparator className=" h-[2px]  " />
-      <Link href={"/"}>
+      <Link href={"/create-listing"}>
         <DropdownMenuItem className="cursor-pointer">
           Sell an Item
         </DropdownMenuItem>

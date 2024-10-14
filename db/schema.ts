@@ -99,8 +99,21 @@ export const products = pgTable('product', {
   createdAt: timestamp('created_at').notNull().defaultNow(),
 });
 
+
+// product_images table
+export const productImages = pgTable('product_images', {
+  id: serial('id').primaryKey(),
+  productId: integer('product_id').notNull().references(() => products.id), 
+  imageUrl: text('image_url').notNull(),  
+  order: integer('order'),
+});
+
 export type InsertUser = typeof users.$inferInsert;
 export type SelectUser = typeof users.$inferSelect;
+
+export type InsertProductImages = typeof productImages.$inferInsert;
+export type SelectProductImages = typeof productImages.$inferSelect;
+
 
 export type InsertProduct = typeof products.$inferInsert;
 export type SelectProduct = typeof products.$inferSelect;
