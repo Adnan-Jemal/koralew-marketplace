@@ -17,7 +17,7 @@ const SidebarProfile = () => {
         {/* profile image */}
         {session ? (
           <Avatar className="size-12 ">
-            <AvatarImage src={session.user?.image!!} />
+            <AvatarImage className="object-cover" src={session.user?.image!!} />
             <AvatarFallback className="text-xl">
               {session?.user?.name?.charAt(0).toUpperCase()}
             </AvatarFallback>

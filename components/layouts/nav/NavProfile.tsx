@@ -29,7 +29,7 @@ export const NavProfile = async () => {
           <MenuIcon />
           {user ? (
             <Avatar>
-              <AvatarImage src={user.image!!} />
+              <AvatarImage className="object-cover" src={user.image!!} />
               <AvatarFallback className="text-xl">
                 {user.email?.charAt(0).toUpperCase()}
               </AvatarFallback>

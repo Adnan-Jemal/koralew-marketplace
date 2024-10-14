@@ -14,7 +14,7 @@ const ProfileView = async () => {
   return (
     <div className="flex items-center w-fit mx-auto gap-6 flex-wrap justify-center md:justify-start p-8 shadow-lg rounded-2xl dark:border dark:border-secondary  ">
       <Avatar className="size-32">
-        <AvatarImage src={user?.image!!} />
+        <AvatarImage className="object-cover" src={user?.image!!} />
         <AvatarFallback className="text-5xl ">
           {user?.name!.charAt(0).toUpperCase()}
         </AvatarFallback>
