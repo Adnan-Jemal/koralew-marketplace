@@ -112,9 +112,9 @@ const UpdatePhotoBtn = ({ session }: propType) => {
                     setImgFile(null);
                   }}
                   disabled={uploading || imgFile == null}
-                  className="absolute disabled:opacity-50 disabled:cursor-wait text-red-400 rounded-full top-0 right-0"
+                  className="absolute cursor-pointer disabled:opacity-50 disabled:cursor-wait text-red-400 rounded-full top-0 right-0"
                 >
-                  <XCircle className="cursor-pointer absolute text-red-400 rounded-full top-0 right-0" />
+                  <XCircle className=" absolute text-red-400 rounded-full top-0 right-0" />
                 </button>
               </div>
             )}

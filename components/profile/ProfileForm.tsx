@@ -21,10 +21,10 @@ import { updateUser } from "@/actions/update";
 import { toast } from "sonner";
 import { CountrySelect } from "./CountrySelect";
 import { Ellipsis } from "lucide-react";
-
+import { useSession } from "next-auth/react";
 
 const formSchema = z.object({
-  name: z.string().min(2, { message: "Invalid full name" }).max(50),
+  name: z.string().min(2, { message: "Invalid full name" }).max(25),
   email: z.string().email({ message: "Invalid email address" }),
   phoneNumber: z
     .string()
@@ -39,6 +39,7 @@ type propType = {
 };
 
 export default function ProfileForm({ userData }: propType) {
+  const { update } = useSession();
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -51,10 +52,10 @@ export default function ProfileForm({ userData }: propType) {
     },
   });
 
-  async function onSubmit (values: z.infer<typeof formSchema>) {
-    await updateUser(userData.id, values).then(() => toast("Profile Updated"));
-    form.reset(form.getValues())
-    
+  async function onSubmit(values: z.infer<typeof formSchema>) {
+    await updateUser(userData.id, values).then(() => update());
+    toast("Profile Updated");
+    form.reset(form.getValues());
   }
   return (
     <div className="w-full p-4 shadow-lg rounded-2xl dark:border dark:border-secondary">
@@ -101,7 +102,7 @@ export default function ProfileForm({ userData }: propType) {
                   <Label>Country</Label>
                   <FormControl>
                     {/* <Input placeholder="Enter Your Country" {...field} /> */}
-                    <CountrySelect form={form} field={field}/>
+                    <CountrySelect form={form} field={field} />
                   </FormControl>
                   <FormMessage className="text-sm text-white bg-red-400 w-fit px-2 rounded-md " />
                 </FormItem>
@@ -155,7 +156,7 @@ export default function ProfileForm({ userData }: propType) {
             className="w-full"
             type="submit"
           >
-             {form.formState.isSubmitting ? (
+            {form.formState.isSubmitting ? (
               <Ellipsis className="text-4xl animate-bounce" />
             ) : (
               <span>Update profile</span>
