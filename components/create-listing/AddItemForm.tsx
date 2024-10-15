@@ -21,10 +21,19 @@ import { updateUser } from "@/actions/update";
 import { toast } from "sonner";
 
 import { Ellipsis } from "lucide-react";
+import { Textarea } from "../ui/textarea";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "../ui/select";
+import { categories } from "../layouts/nav/NavCategories";
 
 const formSchema = z.object({
-  name: z.string().min(2, { message: "Invalid full name" }).max(50),
-  email: z.string().email({ message: "Invalid email address" }),
+  title: z.string().min(5).max(50),
+  category: z.string(),
   phoneNumber: z
     .string()
     .regex(/^\d{10}$/, { message: "Invalid phone number" }),
@@ -41,8 +50,8 @@ export default function AddItemForm() {
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      name: "",
-      email: "",
+      title: "",
+      category: "",
       phoneNumber: "",
       country: "",
       city: "",
@@ -55,69 +64,76 @@ export default function AddItemForm() {
     form.reset(form.getValues());
   }
   return (
-    <div className="w-full p-4 shadow-lg rounded-2xl dark:border dark:border-secondary">
+    <div className="w-full p-4 shadow-lg rounded-2xl dark:border flex flex-col gap-6 dark:border-secondary">
+      <div className=" w-[95%] border-b dark:border-b-secondary border-b-gray-200 self-center text-start">
+        <h2 className="text-xl my-4 ml-1 uppercase ">Item Information</h2>
+      </div>
+
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8 ">
-          <div className=" flex gap-4 flex-col sm:flex-row">
+          <div className=" grid grid-cols-1 grid-rows-2 gap-4 sm:grid-cols-2 sm:grid-rows-1 ">
             <FormField
               control={form.control}
-              name="name"
+              name="title"
               render={({ field }) => (
                 <FormItem className="flex-grow">
-                  <Label>Full Name</Label>
-                  <FormControl>
-                    <Input placeholder="Your Name" {...field} />
-                  </FormControl>
-                  <FormMessage className="text-sm text-white bg-red-400 w-fit px-2 rounded-md " />
-                </FormItem>
-              )}
-            />
-            <FormField
-              control={form.control}
-              name="email"
-              render={({ field }) => (
-                <FormItem className="flex-grow">
-                  <Label>Email</Label>
+                  <Label className="text-md">Title / Name</Label>
                   <FormControl>
                     <Input
-                      disabled={true}
-                      placeholder="Enter Your Email"
+                      placeholder="What are you selling"
                       {...field}
+                      className="h-14 text-md"
                     />
                   </FormControl>
                   <FormMessage className="text-sm text-white bg-red-400 w-fit px-2 rounded-md " />
                 </FormItem>
               )}
             />
-          </div>
-          <div className=" flex gap-4 flex-col sm:flex-row">
             <FormField
               control={form.control}
-              name="country"
+              name="category"
               render={({ field }) => (
                 <FormItem className="flex-grow">
-                  <Label>Country</Label>
-                  <FormControl>
-                    <Input placeholder="Enter Your Country" {...field} />
-                  </FormControl>
+                  <Label className="text-md">Category</Label>
+                  <Select
+                    onValueChange={field.onChange}
+                    defaultValue={field.value}
+                  >
+                    <FormControl>
+                      <SelectTrigger className="h-14 text-md">
+                        <SelectValue placeholder="Select a category" />
+                      </SelectTrigger>
+                    </FormControl>
+                    <SelectContent>
+                      {categories.map((category) => (
+                        <SelectItem className="text-md" key={category.link} value={category.name}>
+                          {category.name}
+                        </SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
                   <FormMessage className="text-sm text-white bg-red-400 w-fit px-2 rounded-md " />
                 </FormItem>
               )}
             />
-            <FormField
-              control={form.control}
-              name="phoneNumber"
-              render={({ field }) => (
-                <FormItem className="flex-grow">
-                  <Label>Phone Number</Label>
-                  <FormControl>
-                    <Input placeholder="Enter Phone Number" {...field} />
-                  </FormControl>
-                  <FormMessage className="text-sm text-white bg-red-400 w-fit px-2 rounded-md " />
-                </FormItem>
-              )}
-            />
-          </div>
+          </div>{" "}
+          <FormField
+            control={form.control}
+            name="title"
+            render={({ field }) => (
+              <FormItem className="flex-grow">
+                <Label className="text-md">Description</Label>
+                <FormControl>
+                  <Textarea
+                    placeholder="Describe your item"
+                    {...field}
+                    className="h-28 text-md"
+                  />
+                </FormControl>
+                <FormMessage className="text-sm text-white bg-red-400 w-fit px-2 rounded-md " />
+              </FormItem>
+            )}
+          />
           <div className=" flex gap-4 flex-col sm:flex-row">
             <FormField
               control={form.control}
@@ -146,7 +162,6 @@ export default function AddItemForm() {
               )}
             />
           </div>
-
           <Button
             disabled={!form.formState.isDirty || form.formState.isSubmitting}
             className="w-full"

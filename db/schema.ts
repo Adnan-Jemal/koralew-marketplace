@@ -87,7 +87,7 @@ export const authenticators = pgTable(
 
 export const products = pgTable('product', {
   id: serial('id').primaryKey(),
-  name: text('name').notNull(),
+  title: text('title').notNull(),
   description: text('description').notNull(),
   userId: integer('user_id')
     .notNull()

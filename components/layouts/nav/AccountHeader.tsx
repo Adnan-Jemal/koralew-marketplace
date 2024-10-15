@@ -21,8 +21,8 @@ const AccountHeader = () => {
           <Link href={"/"}>
             {" "}
             <Button
-              variant={"outline"}
-              className=" items-center py-6 text-lg border-none "
+              variant={"link"}
+              className=" items-center py-6 text-lg "
             >
               <ArrowLeft className="mr-2 size-6" /> Home
             </Button>
