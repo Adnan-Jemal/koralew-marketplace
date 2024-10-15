@@ -71,7 +71,7 @@ const UpdatePhotoBtn = ({ session }: propType) => {
 
   return (
     <>
-      <Dialog open={open} onOpenChange={setOpen}>
+      <Dialog   open={open||uploading} onOpenChange={setOpen}>
         <DialogTrigger asChild>
           <Button disabled={uploading} variant={"secondary"} size={"sm"}>
             Update Profile Image
