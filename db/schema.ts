@@ -1,6 +1,8 @@
-import { integer, pgTable, serial, text, timestamp,decimal, boolean,primaryKey } from 'drizzle-orm/pg-core';
+import { sql } from 'drizzle-orm';
+import { integer, pgTable, serial, text, timestamp,decimal, boolean,primaryKey, pgEnum } from 'drizzle-orm/pg-core';
 import type { AdapterAccountType } from "next-auth/adapters"
  
+export const conditionEnum = pgEnum('condition', ["new", "slightly used", "used", "refurbished"]);
  
 export const users = pgTable("user", {
   id: text("id")
@@ -93,6 +95,7 @@ export const products = pgTable('product', {
     .notNull()
     .references(() => users.id, { onDelete: 'cascade' }),
   category: text('category').notNull(),
+  condition: conditionEnum('condition').notNull(),
   price: decimal('price',{ precision: 10, scale: 2 }).notNull(),
   priceNegotiable: boolean('price_negotiable').default(true),
   views: integer('views').notNull().default(0),
