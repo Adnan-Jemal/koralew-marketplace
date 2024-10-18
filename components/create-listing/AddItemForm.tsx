@@ -1,7 +1,7 @@
 "use client";
 
 import { useForm } from "react-hook-form";
-import { z } from "zod";
+import { undefined, z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import {
   Form,
@@ -18,7 +18,7 @@ import { Label } from "../ui/label";
 import { SelectUser } from "@/db/schema";
 import { updateUser } from "@/actions/update";
 
-import { toast } from "sonner";
+import { conditionEnum } from "@/db/schema";
 
 import { Ellipsis } from "lucide-react";
 import { Textarea } from "../ui/textarea";
@@ -34,17 +34,17 @@ import { categories } from "../layouts/nav/NavCategories";
 const formSchema = z.object({
   title: z.string().min(5).max(50),
   category: z.string(),
-  phoneNumber: z
+  description: z
     .string()
-    .regex(/^\d{10}$/, { message: "Invalid phone number" }),
-  country: z.string().min(4, { message: "Please select a country" }),
-  city: z.string().min(4, { message: "Please enter a real city" }),
-  address: z.string().min(4, { message: "Please enter a real address" }),
+    .max(300)
+    .min(10, { message: "description is too short" }),
+  price: z
+    .number()
+    .min(10)
+    .max(100000000, { message: "your item is not worth this much." }),
+  condition: z.string(),
+  priceNegotiable: z.boolean(),
 });
-
-type propType = {
-  userData: SelectUser;
-};
 
 export default function AddItemForm() {
   const form = useForm<z.infer<typeof formSchema>>({
@@ -52,10 +52,11 @@ export default function AddItemForm() {
     defaultValues: {
       title: "",
       category: "",
-      phoneNumber: "",
-      country: "",
-      city: "",
-      address: "",
+      description: "",
+      condition:"",
+      priceNegotiable:true
+
+
     },
   });
 
@@ -106,7 +107,11 @@ export default function AddItemForm() {
                     </FormControl>
                     <SelectContent>
                       {categories.map((category) => (
-                        <SelectItem className="text-md" key={category.link} value={category.name}>
+                        <SelectItem
+                          className="text-md"
+                          key={category.link}
+                          value={category.name}
+                        >
                           {category.name}
                         </SelectItem>
                       ))}
@@ -119,7 +124,7 @@ export default function AddItemForm() {
           </div>{" "}
           <FormField
             control={form.control}
-            name="title"
+            name="description"
             render={({ field }) => (
               <FormItem className="flex-grow">
                 <Label className="text-md">Description</Label>
@@ -134,15 +139,20 @@ export default function AddItemForm() {
               </FormItem>
             )}
           />
-          <div className=" flex gap-4 flex-col sm:flex-row">
+          <div className=" grid grid-cols-1 grid-rows-2 gap-4 sm:grid-cols-2 sm:grid-rows-1 ">
             <FormField
               control={form.control}
-              name="city"
+              name="price"
               render={({ field }) => (
                 <FormItem className="flex-grow">
-                  <Label>City</Label>
+                  <Label className="text-md">Price</Label>
                   <FormControl>
-                    <Input placeholder="Enter Your City" {...field} />
+                    <Input
+                      type="number"
+                      placeholder="How much"
+                      {...field}
+                      className="h-14 text-md"
+                    />
                   </FormControl>
                   <FormMessage className="text-sm text-white bg-red-400 w-fit px-2 rounded-md " />
                 </FormItem>
@@ -150,13 +160,29 @@ export default function AddItemForm() {
             />
             <FormField
               control={form.control}
-              name="address"
+              name="condition"
               render={({ field }) => (
                 <FormItem className="flex-grow">
-                  <Label>Address</Label>
-                  <FormControl>
-                    <Input placeholder="Enter Your Address" {...field} />
-                  </FormControl>
+                  <Label className="text-md">Condition</Label>
+                  <Select
+                    onValueChange={field.onChange}
+                    defaultValue={field.value}
+                  >
+                    <FormControl>
+                      <SelectTrigger className="h-14 text-md">
+                        <SelectValue placeholder="Select condition" />
+                      </SelectTrigger>
+                    </FormControl>
+                    <SelectContent>
+                      {conditionEnum.enumValues.map((condition)=><SelectItem
+                          className="text-md"
+                          key={condition}
+                          value={condition}
+                        >
+                          {condition}
+                        </SelectItem>)}
+                    </SelectContent>
+                  </Select>
                   <FormMessage className="text-sm text-white bg-red-400 w-fit px-2 rounded-md " />
                 </FormItem>
               )}
