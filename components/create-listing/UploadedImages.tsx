@@ -14,7 +14,7 @@ export default function UploadedImages({ images, setImages }: propTypes) {
         {images.map((img) => (
           <div className="relative">
             <Image
-              className="rounded-md select-none object-cover size-40"
+              className="rounded-md select-none object-cover size-20 sm:size-32 md:size-40"
               key={img.toString()}
               alt="selected product images"
               width={200}
@@ -23,7 +23,7 @@ export default function UploadedImages({ images, setImages }: propTypes) {
             />
             <X
               onClick={() => setImages(images.filter((i) => i != img))}
-              className="absolute cursor-pointer top-[-5px] right-[-5px] z-10 bg-red-500 rounded-full text-white size-5 p-[2px] shadow-lg"
+              className="absolute cursor-pointer top-[-5px] right-[-5px] bg-red-500 rounded-full text-white size-5 p-[2px] shadow-lg"
             />
           </div>
         ))}
