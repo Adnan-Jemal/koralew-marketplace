@@ -96,8 +96,6 @@ export const products = pgTable('product', {
   category: text('category').notNull(),
   condition: conditionEnum('condition').notNull(),
   price: decimal('price',{ precision: 10, scale: 2 }).notNull(),
-  discountedPrice: decimal('discounted_price', { precision: 10, scale: 2 }),
-  priceNegotiable: boolean('price_negotiable').default(true),
   views: integer('views').notNull().default(0),
   createdAt: timestamp('created_at').notNull().defaultNow(),
 });

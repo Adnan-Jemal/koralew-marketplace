@@ -1,7 +1,7 @@
 "use client";
 
 import { useForm } from "react-hook-form";
-import { undefined, z } from "zod";
+import { z, ZodNull } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import {
   Form,
@@ -15,8 +15,6 @@ import {
 import { Input } from "../ui/input";
 import { Button } from "../ui/button";
 import { Label } from "../ui/label";
-import { SelectUser } from "@/db/schema";
-import { updateUser } from "@/actions/update";
 
 import { conditionEnum } from "@/db/schema";
 
@@ -31,39 +29,44 @@ import {
 } from "../ui/select";
 import { categories } from "../layouts/nav/NavCategories";
 
-const formSchema = z.object({
-  title: z.string().min(5).max(50),
-  category: z.string(),
+const categoryNames = categories.map((c) => c.name);
+
+export const addItemFormSchema = z.object({
+  title: z.string().min(5, { message: "Must be at leas 5 characters" }).max(50),
+  category: z.enum(categoryNames as [string, ...string[]], {
+    message:"Please select a category"
+  }),
   description: z
     .string()
-    .max(300)
+    .max(500)
     .min(10, { message: "description is too short" }),
-  price: z
-    .number()
-    .min(10)
-    .max(100000000, { message: "your item is not worth this much." }),
-  condition: z.string(),
-  priceNegotiable: z.boolean(),
+  price: z.coerce
+    .number({message:"please enter price"})
+    .min(3)
+    .max(100000000, { message: "your item is not worth this much" }),
+
+  condition: z.enum(conditionEnum.enumValues as [string, ...string[]], {
+    message: "please select a condition",
+  }),
 });
 
-export default function AddItemForm() {
-  const form = useForm<z.infer<typeof formSchema>>({
-    resolver: zodResolver(formSchema),
+type propTypes = {
+  onSubmit:(values: z.infer<typeof addItemFormSchema>) => Promise<void>;
+}
+
+
+export default function AddItemForm({onSubmit}:propTypes) {
+  const form = useForm<z.infer<typeof addItemFormSchema>>({
+    resolver: zodResolver(addItemFormSchema),
     defaultValues: {
       title: "",
       category: "",
       description: "",
-      condition:"",
-      priceNegotiable:true
-
-
+      condition: "",
     },
   });
 
-  async function onSubmit(values: z.infer<typeof formSchema>) {
-    // await updateUser(userData.id, values).then(() => toast("Profile Updated"));
-    form.reset(form.getValues());
-  }
+
   return (
     <div className="w-full p-4 shadow-lg rounded-2xl dark:border flex flex-col gap-6 dark:border-secondary">
       <div className=" w-[95%] border-b dark:border-b-secondary border-b-gray-200 self-center text-start">
@@ -106,6 +109,7 @@ export default function AddItemForm() {
                       </SelectTrigger>
                     </FormControl>
                     <SelectContent>
+                      
                       {categories.map((category) => (
                         <SelectItem
                           className="text-md"
@@ -145,11 +149,12 @@ export default function AddItemForm() {
               name="price"
               render={({ field }) => (
                 <FormItem className="flex-grow">
-                  <Label className="text-md">Price</Label>
+                  <Label className="text-md">Price (US$)</Label>
+                  
                   <FormControl>
                     <Input
                       type="number"
-                      placeholder="How much"
+                      placeholder="how much in USD"
                       {...field}
                       className="h-14 text-md"
                     />
@@ -174,13 +179,15 @@ export default function AddItemForm() {
                       </SelectTrigger>
                     </FormControl>
                     <SelectContent>
-                      {conditionEnum.enumValues.map((condition)=><SelectItem
+                      {conditionEnum.enumValues.map((condition) => (
+                        <SelectItem
                           className="text-md"
                           key={condition}
                           value={condition}
                         >
                           {condition}
-                        </SelectItem>)}
+                        </SelectItem>
+                      ))}
                     </SelectContent>
                   </Select>
                   <FormMessage className="text-sm text-white bg-red-400 w-fit px-2 rounded-md " />
@@ -189,14 +196,15 @@ export default function AddItemForm() {
             />
           </div>
           <Button
-            disabled={!form.formState.isDirty || form.formState.isSubmitting}
-            className="w-full"
+            // disabled={!form.formState.isDirty || form.formState.isSubmitting}
+            className="w-full text-lg"
+            size={"lg"}
             type="submit"
           >
             {form.formState.isSubmitting ? (
               <Ellipsis className="text-4xl animate-bounce" />
             ) : (
-              <span>Update profile</span>
+              "List Item"
             )}
           </Button>
         </form>
