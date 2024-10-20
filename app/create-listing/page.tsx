@@ -1,5 +1,4 @@
 "use client";
-import { updateUserPhoto } from "@/actions/update";
 import AddItemForm, {
   addItemFormSchema,
 } from "@/components/create-listing/AddItemForm";
@@ -34,7 +33,7 @@ export default function page() {
       return;
     }
     try {
-      const newImageRef = ref(storage, `images/users/${}`);
+      const newImageRef = ref(storage, `images/services/${'service id'}`);
       imgFiles.forEach(
         async (imgFile) => await uploadBytesResumable(newImageRef, imgFile as Blob)
       );

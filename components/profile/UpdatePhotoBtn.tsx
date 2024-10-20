@@ -63,10 +63,10 @@ const UpdatePhotoBtn = ({ session }: propType) => {
       setOpen(false);
       setImgFile(null);
       setUploading(false);
-      toast("Profile Image Updated Successfully");
+      toast.success("Profile Image Updated Successfully");
     } catch (err) {
       console.error(err);
-      toast('something went wrong')
+      toast.error('something went wrong')
     }
   };
 

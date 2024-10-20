@@ -54,7 +54,7 @@ export default function ProfileForm({ userData }: propType) {
 
   async function onSubmit(values: z.infer<typeof formSchema>) {
     await updateUser(userData.id, values).then(() => update());
-    toast("Profile Updated");
+    toast.success("Profile Updated");
     form.reset(form.getValues());
   }
   return (

@@ -34,7 +34,7 @@ export default function RootLayout({
             defaultTheme="system"
             enableSystem
             disableTransitionOnChange
-          ><SessionProvider>{children}</SessionProvider></ThemeProvider><Toaster /></body>
+          ><SessionProvider>{children}</SessionProvider></ThemeProvider><Toaster richColors /></body>
     </html>
   );
 }

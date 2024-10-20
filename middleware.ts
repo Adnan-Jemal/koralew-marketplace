@@ -1,5 +1,5 @@
 export { auth as middleware } from "@/auth"
 
 export const config = {
-  matcher: ['/category/:path*', '/account/:path*','/add-item/'],
+  matcher: ['/category/:path*', '/account/:path*','/create-listing/'],
 }
