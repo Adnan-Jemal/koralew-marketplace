@@ -1,36 +1,74 @@
 "use client";
+import { updateUserPhoto } from "@/actions/update";
 import AddItemForm, {
   addItemFormSchema,
 } from "@/components/create-listing/AddItemForm";
 import AddItemHeader from "@/components/create-listing/AddItemHeader";
 import AddItemImgForm from "@/components/create-listing/AddItemImgForm";
 import UploadedImages from "@/components/create-listing/UploadedImages";
+import { storage } from "@/firebase";
+import { getDownloadURL, ref, uploadBytesResumable } from "firebase/storage";
+import { useSession } from "next-auth/react";
 
 import React, { useState } from "react";
+import { toast } from "sonner";
 import { z } from "zod";
 
 export default function page() {
   const [fileUrls, setFileUrls] = useState<String[]>([]);
-  const [error,setError]=useState<string>('')
+  const [imgFiles, setImgFiles] = useState<File[]>([]);
+  const [error, setError] = useState<String>("");
+  const session = useSession().data;
+
   async function onSubmit(values: z.infer<typeof addItemFormSchema>) {
-    // await updateUser(userData.id, values).then(() => toast("Profile Updated"));
-    if(fileUrls.length<1){
-      setError("please upload images")
-      window.scrollTo({top:0,behavior:"smooth"})
-      return
-    }else{setError('')}
-    console.log("from parent");
+    if (fileUrls.length < 1) {
+      setError("please upload images");
+      window.scrollTo({ top: 0, behavior: "smooth" });
+      return;
+    } else {
+      setError("");
+    }
+
+    if (!session?.user) {
+      console.error("no user found");
+      return;
+    }
+    try {
+      const newImageRef = ref(storage, `images/users/${}`);
+      imgFiles.forEach(
+        async (imgFile) => await uploadBytesResumable(newImageRef, imgFile as Blob)
+      );
+
+      const imgUrl = await getDownloadURL(newImageRef);
+      // await updateUserPhoto(userId, imgUrl).then(() => update());
+      // setOpen(false);
+      // setImgFile(null);
+      // setUploading(false);
+      toast("Profile Image Updated Successfully");
+    } catch (err) {
+      console.error(err);
+      toast("something went wrong");
+    }
+
+    console.log("on submit");
     console.log(values);
+    console.log(imgFiles);
   }
+
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const files = Array.from(e.currentTarget.files || []);
+    setImgFiles(files);
     if (files.length > 8) {
-      setError("You can only upload up to 8 images")
+      setError("You can only upload up to 8 images");
       return;
-    }else{setError('')}
+    } else {
+      setError("");
+      setImgFiles([]);
+    }
     const urls = files.map((file) => URL.createObjectURL(file));
     setFileUrls((prevUrls) => [...prevUrls, ...urls]);
   };
+
   return (
     <div>
       <AddItemHeader />
@@ -43,7 +81,9 @@ export default function page() {
           ) : (
             <AddItemImgForm handleChange={handleChange} />
           )}
-          <p className="text-sm text-white bg-red-400 w-fit px-2 rounded-md text-center  ">{error}</p>
+          <p className="text-sm text-white bg-red-400 w-fit px-2 rounded-md text-center  ">
+            {error}
+          </p>
         </div>
         <AddItemForm onSubmit={onSubmit} />
       </div>

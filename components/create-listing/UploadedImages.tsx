@@ -1,7 +1,7 @@
 "use client";
 import Image from "next/image";
 import React, { Dispatch, SetStateAction } from "react";
-import { XCircle, X } from "lucide-react";
+import { X } from "lucide-react";
 
 type propTypes = {
   images: String[];
@@ -12,10 +12,9 @@ export default function UploadedImages({ images, setImages }: propTypes) {
     <div className=" min-h-40 p-5 border border-secondary flex flex-col items-center justify-center gap-2 rounded-lg bg-secondary  ">
       <div className="flex flex-wrap w-full gap-3 justify-evenly">
         {images.map((img) => (
-          <div className="relative">
+          <div key={img.toString()} className="relative">
             <Image
               className="rounded-md select-none object-cover size-20 sm:size-32 md:size-40"
-              key={img.toString()}
               alt="selected product images"
               width={200}
               height={200}

@@ -10,14 +10,12 @@ export default function RootLayout({
   return (
     <div className="">
       <div className="flex">
-        <SessionProvider>
-          <Sidebar />
+        <Sidebar />
 
-          <div className="w-full h-full">
-            <AccountHeader />
-            {children}
-          </div>
-        </SessionProvider>
+        <div className="w-full h-full">
+          <AccountHeader />
+          {children}
+        </div>
       </div>
     </div>
   );
