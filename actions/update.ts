@@ -3,9 +3,7 @@ import { auth } from '@/auth';
 import { db } from '@/db/db';
 import { SelectUser, users } from '@/db/schema';
 import { eq } from 'drizzle-orm';
-import {storage} from '@/firebase'
-import { getDownloadURL, ref, uploadBytesResumable } from 'firebase/storage';
-import { File } from 'buffer';
+
 
 import { revalidatePath } from 'next/cache';
 

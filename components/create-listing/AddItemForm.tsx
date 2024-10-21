@@ -34,38 +34,35 @@ const categoryNames = categories.map((c) => c.name);
 export const addItemFormSchema = z.object({
   title: z.string().min(5, { message: "Must be at leas 5 characters" }).max(50),
   category: z.enum(categoryNames as [string, ...string[]], {
-    message:"Please select a category"
+    message: "Please select a category",
   }),
   description: z
     .string()
     .max(500)
     .min(10, { message: "description is too short" }),
-  price: z.coerce
-    .number({message:"please enter price"})
-    .min(3)
-    .max(100000000, { message: "your item is not worth this much" }),
+  price: z
+    .string({ message: "please enter price" })
+    .min(1)
+    .max(9, { message: "your item is not worth this much" }),
 
-  condition: z.enum(conditionEnum.enumValues as [string, ...string[]], {
+  condition: z.enum(conditionEnum.enumValues, {
     message: "please select a condition",
   }),
 });
 
 type propTypes = {
-  onSubmit:(values: z.infer<typeof addItemFormSchema>) => Promise<void>;
-}
+  onSubmit: (values: z.infer<typeof addItemFormSchema>) => Promise<void>;
+};
 
-
-export default function AddItemForm({onSubmit}:propTypes) {
+export default function AddItemForm({ onSubmit }: propTypes) {
   const form = useForm<z.infer<typeof addItemFormSchema>>({
     resolver: zodResolver(addItemFormSchema),
     defaultValues: {
       title: "",
       category: "",
       description: "",
-      condition: "",
     },
   });
-
 
   return (
     <div className="w-full p-4 shadow-lg rounded-2xl dark:border flex flex-col gap-6 dark:border-secondary">
@@ -109,7 +106,6 @@ export default function AddItemForm({onSubmit}:propTypes) {
                       </SelectTrigger>
                     </FormControl>
                     <SelectContent>
-                      
                       {categories.map((category) => (
                         <SelectItem
                           className="text-md"
@@ -150,7 +146,7 @@ export default function AddItemForm({onSubmit}:propTypes) {
               render={({ field }) => (
                 <FormItem className="flex-grow">
                   <Label className="text-md">Price (US$)</Label>
-                  
+
                   <FormControl>
                     <Input
                       type="number"
