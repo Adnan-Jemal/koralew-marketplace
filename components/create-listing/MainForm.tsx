@@ -1,5 +1,5 @@
 "use client";
-import { addItem } from "@/actions/create";
+import { addImage, addItem } from "@/actions/create";
 import AddItemForm, {
   addItemFormSchema,
 } from "@/components/create-listing/AddItemForm";
@@ -10,15 +10,17 @@ import { storage } from "@/firebase";
 import { getDownloadURL, ref, uploadBytesResumable } from "firebase/storage";
 import { Session } from "next-auth";
 import { useSession } from "next-auth/react";
+import { useRouter } from "next/navigation";
 
 import React, { useState } from "react";
 import { toast } from "sonner";
 import { z } from "zod";
 
-export default function MainForm({session}:{session:Session|null}) {
+export default function MainForm({ session }: { session: Session | null }) {
   const [fileUrls, setFileUrls] = useState<String[]>([]);
   const [imgFiles, setImgFiles] = useState<File[]>([]);
   const [error, setError] = useState<String>("");
+  const router = useRouter();
 
   async function onSubmit(formValues: z.infer<typeof addItemFormSchema>) {
     if (fileUrls.length < 1) {
@@ -34,18 +36,16 @@ export default function MainForm({session}:{session:Session|null}) {
       return;
     }
     try {
-      await addItem(formValues,session.user.id)
-      const newImageRef = ref(storage, `images/services/${'service id'}`);
-      imgFiles.forEach(
-        async (imgFile) => await uploadBytesResumable(newImageRef, imgFile as Blob)
-      );
-
-      const imgUrl = await getDownloadURL(newImageRef);
-      // await updateUserPhoto(userId, imgUrl).then(() => update());
-      // setOpen(false);
-      // setImgFile(null);
-      // setUploading(false);
-      toast("Profile Image Updated Successfully");
+      const newProductId = await addItem(formValues, session.user.id);
+      console.log(newProductId)
+      const newImageRef = ref(storage, `images/services/${newProductId}`);
+      imgFiles.forEach(async (imgFile) => {
+        await uploadBytesResumable(newImageRef, imgFile as Blob);
+        const imgUrl = await getDownloadURL(newImageRef);
+        await addImage(newProductId, imgUrl);
+      });
+      router.push("/account/my-items");
+      toast.success("Item Added Successfully");
     } catch (err) {
       console.error(err);
       toast("something went wrong");
@@ -53,12 +53,12 @@ export default function MainForm({session}:{session:Session|null}) {
 
     console.log("on submit");
     console.log(formValues);
-    
+    console.log(session.user.id);
     console.log(imgFiles);
   }
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-  console.log(session?.user)
+    console.log(session?.user);
     const files = Array.from(e.currentTarget.files || []);
     setImgFiles(files);
     if (files.length > 8) {
