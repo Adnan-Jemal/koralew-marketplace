@@ -17,7 +17,9 @@ body {
     text-wrap: balance;
   }
 }
-
+:root:has(.no-scroll) {
+  overflow:hidden;
+}
 @layer base {
   :root {
     --background: 0 0% 100%;
