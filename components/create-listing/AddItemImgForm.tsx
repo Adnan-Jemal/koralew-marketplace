@@ -3,22 +3,23 @@ import { UploadCloud } from "lucide-react";
 import React, { useRef } from "react";
 
 export default function AddItemImgForm({
-  handleChange,
+  handleChange,imgInputRef 
 }: {
   handleChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  imgInputRef:React.RefObject<HTMLInputElement>
 }) {
-  const imageInputRef = useRef<HTMLInputElement>(null);
+  
 
   return (
     <div
-      onClick={() => imageInputRef.current?.click()}
+      onClick={() => imgInputRef.current?.click()}
       className=" h-40 p-6 border border-secondary flex flex-col items-center justify-center gap-2 rounded-lg cursor-pointer bg-secondary  "
     >
       {" "}
       <UploadCloud className="size-10 cursor-pointer" />
       <span>Click here to upload images</span>
       <input
-        ref={imageInputRef}
+        ref={imgInputRef}
         // disabled={uploading}
         onChange={handleChange}
         hidden
@@ -26,7 +27,7 @@ export default function AddItemImgForm({
         name="productImages"
         type="file"
         multiple
-        max={10}
+        max={8}
       />
     </div>
   );

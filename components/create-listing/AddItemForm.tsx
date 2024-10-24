@@ -61,6 +61,7 @@ export default function AddItemForm({ onSubmit }: propTypes) {
       title: "",
       category: "",
       description: "",
+      price:''
     },
   });
 

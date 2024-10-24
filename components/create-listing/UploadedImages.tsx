@@ -1,13 +1,16 @@
 "use client";
 import Image from "next/image";
-import React, { Dispatch, SetStateAction } from "react";
+import React, { Dispatch, SetStateAction, useState } from "react";
 import { X } from "lucide-react";
 
 type propTypes = {
-  images: String[];
-  setImages: Dispatch<SetStateAction<String[]>>;
+  images:File[]
+  setImages: Dispatch<SetStateAction<File[]>>;
 };
-export default function UploadedImages({ images, setImages }: propTypes) {
+export default function UploadedImages({  setImages,images }: propTypes) {
+  const [fileUrls, setFileUrls] = useState<String[]>([]);
+  const urls = images.map((file) => URL.createObjectURL(file));
+    setFileUrls((prevUrls) => [...prevUrls, ...urls]);
   return (
     <div className=" min-h-40 p-5 border border-secondary flex flex-col items-center justify-center gap-2 rounded-lg bg-secondary  ">
       <div className="flex flex-wrap w-full gap-3 justify-evenly">
