@@ -27,7 +27,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "../ui/select";
-import { categories } from "../layouts/nav/NavCategories";
+import { categories } from "@/lib/categories";
 
 const categoryNames = categories.map((c) => c.name);
 
@@ -42,6 +42,7 @@ export const addItemFormSchema = z.object({
     .min(10, { message: "description is too short" }),
   price: z
     .string({ message: "please enter price" })
+    .regex(/^[0-9]*$/,{message:"Please enter a correct price"})
     .min(1)
     .max(9, { message: "your item is not worth this much" }),
 
@@ -61,7 +62,7 @@ export default function AddItemForm({ onSubmit }: propTypes) {
       title: "",
       category: "",
       description: "",
-      price:''
+      price: "",
     },
   });
 

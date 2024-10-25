@@ -54,6 +54,10 @@ const UpdatePhotoBtn = ({ session }: propType) => {
       toast("No image found");
       return;
     }
+    if (imgFile.size > 2 * 1024 * 1024) {
+      toast.error("Image size greater than 2Mb");
+      return
+    }
     setUploading(true);
     try {
       const newImageRef = ref(storage, `images/users/${userId}`);
@@ -66,13 +70,13 @@ const UpdatePhotoBtn = ({ session }: propType) => {
       toast.success("Profile Image Updated Successfully");
     } catch (err) {
       console.error(err);
-      toast.error('something went wrong')
+      toast.error("something went wrong");
     }
   };
 
   return (
     <>
-      <Dialog   open={open||uploading} onOpenChange={setOpen}>
+      <Dialog open={open || uploading} onOpenChange={setOpen}>
         <DialogTrigger asChild>
           <Button disabled={uploading} variant={"secondary"} size={"sm"}>
             Update Profile Image
