@@ -38,13 +38,13 @@ export const addItemFormSchema = z.object({
   }),
   description: z
     .string()
-    .max(500)
+    .max(800)
     .min(10, { message: "description is too short" }),
   price: z
     .string({ message: "please enter price" })
-    .regex(/^[0-9]*$/,{message:"Please enter a correct price"})
+    .regex(/^[0-9]*$/, { message: "Please enter a correct price" })
     .min(1)
-    .max(9, { message: "your item is not worth this much" }),
+    .max(6, { message: "your item is not worth this much" }),
 
   condition: z.enum(conditionEnum.enumValues, {
     message: "please select a condition",
