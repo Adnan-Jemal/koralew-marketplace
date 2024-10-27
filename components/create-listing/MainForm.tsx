@@ -51,7 +51,7 @@ export default function MainForm({ session }: { session: Session | null }) {
           const newImageRef = ref(storage,`images/products/${newProductId}/image_${index}`);
           const uploadTask = await uploadBytesResumable(newImageRef,imgFile as Blob);
           const imgUrl = await getDownloadURL(uploadTask.ref);
-          await addImage(newProductId, imgUrl);
+          await addImage(newProductId, imgUrl,index+1);
           setUploadMessage("Almost Done");
         });
 
