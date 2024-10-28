@@ -16,9 +16,9 @@ export default function ItemCard({
 }: propType) {
   console.log(imageUrl)
   return (
-    <div className="flex flex-col bg-primary-foreground justify-between w-60 h-80 rounded-2xl overflow-hidden shadow-md cursor-pointer ">
+    <div className="flex flex-col bg-primary-foreground justify-between w-64 h-80 rounded-2xl overflow-hidden shadow-md cursor-pointer ">
       <div className="  h-[60%] select-none ">
-        <Image height={500} width={500} src={imageUrl} alt="Item Image" className=" h-full w-full object-cover" />
+        <Image src={imageUrl} loading="eager" height={500} width={500}  alt="Item Image" className=" h-full w-full object-cover" />
       </div>
 
       <div className="px-3 py-[10px] h-[40%] flex flex-col justify-around">

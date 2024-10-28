@@ -22,11 +22,15 @@ export default function NavCategory({
   const params = new URLSearchParams(searchParams);
 
   const handelClick = () => {
-    params.set("category", categoryName.toLocaleLowerCase());
+    if(categoryName =='All'){
+      route.push(`/`);
+      return
+    }
+    params.set("category", categoryLink);
     route.replace(`${currentPath}?${params}`);
   };
 
-  if (params.get("category") == categoryName.toLocaleLowerCase()) {
+  if (params.get("category") == categoryLink ) {
     return (
       
         <button

@@ -6,7 +6,7 @@ export default function NavCategories() {
   const navCategories = [
     {
       name: "All",
-      link: "",
+      link: "/",
       icon: <LucideSquareStack />,
     },
     ...categories,

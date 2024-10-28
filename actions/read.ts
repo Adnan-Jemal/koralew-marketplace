@@ -5,6 +5,8 @@ import { db } from "@/db/db"
 import { productImages, products, SelectUser, users } from "@/db/schema"
 
 import { eq,sql } from "drizzle-orm";
+import { revalidatePath } from "next/cache";
+import { toast } from "sonner";
 
 
 
@@ -20,7 +22,8 @@ export async function getUserItems() {
     console.error("no user id")
     return
   }
-  const items = await db
+  try {
+    const items = await db
     .select({
       id: products.id,
       title: products.title,
@@ -33,6 +36,32 @@ export async function getUserItems() {
     .where(eq(products.userId, session.user.id))
     .groupBy(products.id)
     .orderBy(sql`${products.createdAt} DESC`);
+    return items;
+  } catch (error) {
+    console.log(error)
+    toast.error('something went wrong')
+    throw error
+  }
+  
 
-  return items;
+  
+}
+export async function getCategoryItems(category:string) {
+
+    const items = await db
+    .select({
+      id: products.id,
+      title: products.title,
+      condition: products.condition,
+      price: products.price,
+      images: sql`ARRAY_AGG(${productImages.imageUrl})`.as('images')
+    })
+    .from(products)
+    .innerJoin(productImages, eq(products.id, productImages.productId))
+    .where(eq(products.category,category))
+    .groupBy(products.id)
+    revalidatePath(`/?category=${category.toLowerCase}`)
+  
+    return items;
+  
 }
