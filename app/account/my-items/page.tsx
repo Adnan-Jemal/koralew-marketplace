@@ -1,30 +1,25 @@
-import {  getUserItems} from "@/actions/read";
+import { getUserItems } from "@/actions/read";
 
 import ItemCard from "@/components/ItemCard/ItemCard";
 
-
 import React from "react";
-
-
 
 export default async function page() {
   const userItems = await getUserItems();
 
-
-  if(!userItems) {
-    return (<div>No Items Found</div>)
+  if (!userItems) {
+    return <div>No Items Found</div>;
   }
-
 
   return (
     <div className="p-10 gap-10 flex flex-col">
       <h1 className="text-4xl capitalize font-semibold">Your Listed Items</h1>
       <div className="flex flex-wrap gap-8 items-center justify-around ">
-       
         {userItems?.map((item) => {
           let image = item.images as string[];
           return (
             <ItemCard
+              key={item.id}
               title={item.title}
               imageUrl={image[0]}
               price={parseFloat(item.price)}

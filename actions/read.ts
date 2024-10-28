@@ -14,35 +14,6 @@ export async function getUserById(id: SelectUser['id']) {
   
 }
 
-// export async function getUserItems() {
-//   const session = await auth()
-//   if(!session?.user?.id){
-//     console.error("no user id")
-//     return
-//   }
-//   let items = await db.execute(sql`SELECT 
-//     p.title,
-//     p.id,
-//     p.condition,
-//     p.price,
-//     ARRAY_AGG(pi.image_url) AS images
-// FROM 
-//     product p
-// INNER JOIN 
-//     product_images pi 
-// ON 
-//     p.id = pi.product_id
-// WHERE
-//     p.userId = ${session.user.id}
-// GROUP BY 
-//     p.id
-// ORDER BY 
-//     p.created_at desc;
-// `)
-  
-//   return items
-// }
-
 export async function getUserItems() {
   const session = await auth()
   if(!session?.user?.id){
