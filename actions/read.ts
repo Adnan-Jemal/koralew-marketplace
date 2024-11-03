@@ -65,3 +65,16 @@ export async function getCategoryItems(category:string) {
     return items;
   
 }
+
+export async function getItem(id:number) {
+    const item = await db
+    .select()
+    .from(products)
+    .innerJoin(productImages, eq(products.id, productImages.productId))
+    .where(eq(products.id,id))
+    return item
+}
+export async function getItemSeller(userId:string) { 
+ const seller = (await db.select().from(users).where(eq(users.id,userId)))
+    return seller
+  }

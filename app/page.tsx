@@ -30,6 +30,7 @@ export default async function Home({ searchParams }: propType) {
             >
               {" "}
               <ItemCard
+                id={item.id}
                 key={item.id}
                 title={item.title}
                 imageUrl={image[0]}
