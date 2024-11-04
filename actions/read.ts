@@ -2,7 +2,8 @@
 
 import { auth } from "@/auth";
 import { db } from "@/db/db"
-import { productImages, products, SelectUser, users } from "@/db/schema"
+import { productImages, products, SelectProduct, SelectProductImages, SelectUser, users } from "@/db/schema"
+import { ItemWithImages } from "@/lib/types";
 
 import { eq,sql } from "drizzle-orm";
 import { revalidatePath } from "next/cache";
@@ -54,7 +55,15 @@ export async function getCategoryItems(category:string) {
       title: products.title,
       condition: products.condition,
       price: products.price,
-      images: sql`ARRAY_AGG(${productImages.imageUrl})`.as('images')
+      images: sql`
+      JSON_AGG(
+        JSON_BUILD_OBJECT(
+          'imageUrl', ${productImages.imageUrl},
+          'order', ${productImages.order},
+          'productId',${productImages.productId}
+        )
+      )
+    `.as('images')
     })
     .from(products)
     .innerJoin(productImages, eq(products.id, productImages.productId))
@@ -62,19 +71,34 @@ export async function getCategoryItems(category:string) {
     .groupBy(products.id)
     revalidatePath(`/?category=${category.toLowerCase}`)
   
-    return items;
+    return items as ItemWithImages[];
   
 }
 
 export async function getItem(id:number) {
     const item = await db
-    .select()
+    .select({
+      id: products.id,
+      userId:products.userId,
+      title: products.title,
+      condition: products.condition,
+      price: products.price,
+      images: sql`
+      JSON_AGG(
+        JSON_BUILD_OBJECT(
+          'imageUrl', ${productImages.imageUrl},
+          'order', ${productImages.order},
+          'productId',${productImages.productId}
+        )
+      )
+    `.as('images')
+    })
     .from(products)
     .innerJoin(productImages, eq(products.id, productImages.productId))
-    .where(eq(products.id,id))
-    return item
+    .where(eq(products.id,id)).groupBy(products.id)
+    return item[0] as ItemWithImages
 }
 export async function getItemSeller(userId:string) { 
  const seller = (await db.select().from(users).where(eq(users.id,userId)))
-    return seller
+    return seller[0]
   }

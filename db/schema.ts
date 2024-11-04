@@ -106,7 +106,7 @@ export const productImages = pgTable('product_images', {
   id: serial('id').primaryKey(),
   productId: integer('product_id').notNull().references(() => products.id), 
   imageUrl: text('image_url').notNull(),  
-  order: integer('order'),
+  order: integer('order').notNull(),
 });
 
 export type InsertUser = typeof users.$inferInsert;

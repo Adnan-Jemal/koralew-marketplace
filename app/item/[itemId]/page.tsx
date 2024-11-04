@@ -1,19 +1,20 @@
 import { getItem, getItemSeller } from "@/actions/read";
+import ItemImages from "@/components/itemDetails/ItemImages";
+
 import { Navbar } from "@/components/layouts/nav/Navbar";
 import React from "react";
 
 export default async function page({ params }: { params: { itemId: string } }) {
   const item = await getItem(Number(params.itemId));
-  const seller = await getItemSeller(item[0].product.userId);
-
+  const seller = await getItemSeller(item.userId);
+  
+  
   return (
     <>
       <Navbar />
-      
-      <div className="flex flex-col">
-        <h2>{JSON.stringify(item)}</h2>
-        <div>----------------------------------------------</div>
-        <h2>{JSON.stringify(seller)}</h2>;
+      <div className="max-w-7xl mx-auto    w-full flex mt-12 ">
+
+      <ItemImages images={item?.images}/>
       </div>
     </>
   );
