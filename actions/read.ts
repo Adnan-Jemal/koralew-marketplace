@@ -5,7 +5,7 @@ import { db } from "@/db/db"
 import { productImages, products, SelectProduct, SelectProductImages, SelectUser, users } from "@/db/schema"
 import { ItemWithImages } from "@/lib/types";
 
-import { eq,sql } from "drizzle-orm";
+import { asc, eq,sql } from "drizzle-orm";
 import { revalidatePath } from "next/cache";
 import { toast } from "sonner";
 
