@@ -1,4 +1,5 @@
 import { getItem, getItemSeller } from "@/actions/read";
+import ItemBreadCrumbs from "@/components/itemDetails/ItemBreadCrumbs";
 import ItemImages from "@/components/itemDetails/ItemImages";
 import ItemInfo from "@/components/itemDetails/ItemInfo";
 import { SellerProfile } from "@/components/itemDetails/SellerProfile";
@@ -13,7 +14,8 @@ export default async function page({ params }: { params: { itemId: string } }) {
   return (
     <>
       <Navbar />
-      <div className="max-w-7xl mx-auto w-full flex gap-2 flex-col md:flex-row mt-12 ">
+      <ItemBreadCrumbs category={item.category}/>
+      <div className="max-w-7xl mx-auto w-full flex gap-2 flex-col md:flex-row ">
         <ItemImages images={item?.images.sort((a, b) => a.order - b.order)} />
         <div className="w-[90%] mx-auto md:w-[45%] flex flex-col pt-4 gap-4 ">
           <h2 className="text-5xl  ">{item.title}</h2>
