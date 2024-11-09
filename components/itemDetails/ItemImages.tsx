@@ -14,17 +14,27 @@ export default function ItemImages({
   );
   return (
     <>
-      <div className="w-[90%] md:w-1/2  lg:h-[65vh] h-[50vh] mx-auto rounded-2xl  grid grid-cols-5 gap-2">
-        <div id="image-list" className={`flex flex-col col-span-1 p-2  w-full  space-y-4 overflow-y-scroll ${images.length<6&&'scrollbar-none'} ${images.length ===1 && 'hidden'} scrollbar-thin scrollbar-track-transparent scrollbar-thumb-secondary `}>
+      <div className="w-[90%] md:w-1/2   mx-auto rounded-2xl  grid grid-cols-5 gap-2">
+        <div
+          id="image-list"
+          className={`flex flex-col col-span-1 p-2  w-full  space-y-4 overflow-y-scroll h-4/5 ${
+            images.length < 6 && "scrollbar-none"
+          } ${
+            images.length === 1 && "hidden"
+          } scrollbar-thin scrollbar-track-transparent scrollbar-thumb-secondary `}
+        >
           {images.map((img) => (
-            <AspectRatio ratio={1 / 1} className="">
+            <AspectRatio ratio={1 / 1} key={img.id}>
               <Image
                 onClick={() => setCurrentImg(img.imageUrl)}
-                className="object-cover size-full rounded-2xl cursor-pointer shadow-md "
+                className={`object-cover size-full rounded-2xl cursor-pointer shadow-md ${
+                  currentImg == img.imageUrl &&
+                  "shadow-lg border-2 border-blue-600"
+                } `}
                 alt="Item Image"
                 height={500}
                 width={500}
-                src={img.imageUrl || ""}
+                src={img.imageUrl}
               />
             </AspectRatio>
           ))}

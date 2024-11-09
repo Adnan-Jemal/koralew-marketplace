@@ -81,6 +81,7 @@ export async function getItem(id:number) {
       id: products.id,
       userId:products.userId,
       title: products.title,
+      category:products.category,
       condition: products.condition,
       price: products.price,
       images: sql`
@@ -100,5 +101,5 @@ export async function getItem(id:number) {
 }
 export async function getItemSeller(userId:string) { 
  const seller = (await db.select().from(users).where(eq(users.id,userId)))
-    return seller[0]
+    return seller[0] as SelectUser
   }
