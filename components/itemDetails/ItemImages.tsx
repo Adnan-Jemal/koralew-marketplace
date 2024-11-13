@@ -14,14 +14,12 @@ export default function ItemImages({
   );
   return (
     <>
-      <div className="w-[90%] md:w-1/2   mx-auto rounded-2xl  grid grid-cols-5 gap-2">
+      <div className="w-[90%] md:w-1/2 md:sticky md:h-fit md:top-28 mx-auto rounded-2xl  grid grid-cols-5 gap-2">
         <div
           id="image-list"
-          className={`flex flex-col col-span-1 p-2  w-full  space-y-4 overflow-y-scroll h-4/5 ${
+          className={`flex flex-col col-span-1 p-2  w-full  space-y-4 overflow-y-scroll ${
             images.length < 6 && "scrollbar-none"
-          } ${
-            images.length === 1 && "hidden"
-          } scrollbar-thin scrollbar-track-transparent scrollbar-thumb-secondary `}
+          }  scrollbar-thin scrollbar-track-transparent scrollbar-thumb-secondary h-[50vh] sm:h-[60vh] lg:h-[68vh] `}
         >
           {images.map((img) => (
             <AspectRatio ratio={1 / 1} key={img.id}>
@@ -39,7 +37,7 @@ export default function ItemImages({
             </AspectRatio>
           ))}
         </div>
-        <div className="col-span-4">
+        <div className="col-span-4 ">
           <AspectRatio ratio={1 / 1}>
             <Image
               className="object-cover rounded-2xl size-full"

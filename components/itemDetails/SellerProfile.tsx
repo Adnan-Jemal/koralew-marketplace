@@ -17,7 +17,7 @@ import { Separator } from "../ui/separator";
 
 export const SellerProfile = ({ seller }: { seller: SelectUser }) => {
   return (
-    <div className="flex p-6 border border-secondary rounded-2xl shadow-md gap-4 flex-col sm:flex-row">
+    <div className="flex p-6 border border-secondary rounded-2xl shadow-md gap-4 flex-col md:flex-row">
       <Avatar className="size-20 mx-auto">
         <AvatarImage src={seller.image!!} />
         <AvatarFallback className="text-5xl m-auto ">
@@ -25,14 +25,14 @@ export const SellerProfile = ({ seller }: { seller: SelectUser }) => {
         </AvatarFallback>
       </Avatar>
       <div className="flex flex-col items-center justify-center  w-full gap-2">
-        <div className="flex w-full justify-between items-center flex-col sm:flex-row gap-2">
+        <div className="flex w-full justify-between items-center flex-col md:flex-row px-1 ">
           <p className="text-2xl">{seller.name}</p>
-          <span className="border rounded-md bg-secondary py-1 px-2 hidden sm:inline">
+          <span className="border rounded-md bg-secondary py-1 px-2 hidden md:inline">
             Seller
           </span>
         </div>
 
-        <div className="flex  flex-col sm:flex-row w-full mx-auto">
+        <div className="flex  flex-col md:flex-row w-full mx-auto">
           <div className="flex items-center justify-center space-x-1  ">
             {" "}
             <MapPin className="size-4" />
@@ -46,7 +46,7 @@ export const SellerProfile = ({ seller }: { seller: SelectUser }) => {
             </p>
           </div>
 
-          <DotIcon className="hidden sm:inline" />
+          <DotIcon className="hidden md:inline" />
           <div className="flex items-center justify-center space-x-1  ">
             {" "}
             <Clock className="size-4" />

@@ -1,11 +1,12 @@
 import { auth } from "@/auth";
-import MainForm from "@/components/create-listing/MainForm";
+import CreateListingMainForm from "@/components/create-listing/CreateListingMainForm";
+
 
 export default async function page() {
   const session = await auth()
   return (
     <>
-      <MainForm session={session} />
+      <CreateListingMainForm session={session} />
     </>
   );
 }

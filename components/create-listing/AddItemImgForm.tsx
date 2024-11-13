@@ -3,13 +3,11 @@ import { UploadCloud } from "lucide-react";
 import React, { useRef } from "react";
 
 export default function AddItemImgForm({
-  handleChange,imgInputRef 
+  handleChange,
 }: {
   handleChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
-  imgInputRef:React.RefObject<HTMLInputElement>
 }) {
-  
-
+  const imgInputRef = useRef<HTMLInputElement>(null);
   return (
     <div
       onClick={() => imgInputRef.current?.click()}

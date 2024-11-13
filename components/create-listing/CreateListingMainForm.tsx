@@ -11,26 +11,29 @@ import { getDownloadURL, ref, uploadBytesResumable } from "firebase/storage";
 import { Session } from "next-auth";
 import { useRouter } from "next/navigation";
 
-import React, { useRef, useState } from "react";
+import { useState } from "react";
 import { toast } from "sonner";
 import { z } from "zod";
 import UploadLoading from "./UploadLoading";
 
-export default function MainForm({ session }: { session: Session | null }) {
-  const imgInputRef = useRef<HTMLInputElement>(null);
+export default function CreateListingMainForm({
+  session,
+}: {
+  session: Session | null;
+}) {
   const [imgFiles, setImgFiles] = useState<File[]>([]);
-  const [error, setError] = useState<String>("");
+  const [imgError, setImgError] = useState<String>("");
   const [isUploading, setIsUploading] = useState<boolean>(false);
   const [uploadMessage, setUploadMessage] = useState<String>("");
   const router = useRouter();
 
   async function onSubmit(formValues: z.infer<typeof addItemFormSchema>) {
     if (imgFiles.length < 1) {
-      setError("please upload images");
+      setImgError("please upload images");
       window.scrollTo({ top: 0, behavior: "smooth" });
       return;
     }
-    if (error != "") {
+    if (imgError != "") {
       window.scrollTo({ top: 0, behavior: "smooth" });
       return;
     }
@@ -48,10 +51,16 @@ export default function MainForm({ session }: { session: Session | null }) {
         setUploadMessage("Uploading Images");
         // Loop through all imgFiles and upload each one
         const uploadPromises = imgFiles.map(async (imgFile, index) => {
-          const newImageRef = ref(storage,`images/products/${newProductId}/image_${index}`);
-          const uploadTask = await uploadBytesResumable(newImageRef,imgFile as Blob);
+          const newImageRef = ref(
+            storage,
+            `images/products/${newProductId}/image_${index}`
+          );
+          const uploadTask = await uploadBytesResumable(
+            newImageRef,
+            imgFile as Blob
+          );
           const imgUrl = await getDownloadURL(uploadTask.ref);
-          await addImage(newProductId, imgUrl,index+1);
+          await addImage(newProductId, imgUrl, index + 1);
           setUploadMessage("Almost Done");
         });
 
@@ -68,13 +77,17 @@ export default function MainForm({ session }: { session: Session | null }) {
     }
   }
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleImgChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const files = Array.from(e.currentTarget.files || []);
     if (files.length > 8) {
-      setError("You can only upload up to 8 images");
+      setImgError("You can only upload up to 8 images");
+      return;
+    }
+    if (files.length == 1) {
+      setImgError("Please add more than one image");
       return;
     } else {
-      setError("");
+      setImgError("");
     }
     setImgFiles(files);
   };
@@ -89,18 +102,15 @@ export default function MainForm({ session }: { session: Session | null }) {
             <h2 className="text-xl ml-1 ">PHOTOS</h2>
             {imgFiles.length > 0 ? (
               <UploadedImages
-                setError={setError}
+                setError={setImgError}
                 setImages={setImgFiles}
                 images={imgFiles}
               />
             ) : (
-              <AddItemImgForm
-                imgInputRef={imgInputRef}
-                handleChange={handleChange}
-              />
+              <AddItemImgForm handleChange={handleImgChange} />
             )}
             <p className="text-sm text-white bg-red-400 w-fit px-2 rounded-md text-center  ">
-              {error}
+              {imgError}
             </p>
           </div>
           <AddItemForm onSubmit={onSubmit} />

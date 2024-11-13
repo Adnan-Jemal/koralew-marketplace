@@ -3,7 +3,7 @@ import { toast } from "sonner";
 import { Button } from "../ui/button";
 import { Heart, Share } from "lucide-react";
 
-export const ShareAndWishlistBtns = () => {
+export const ShareAndFavoriteBtns = () => {
   function copyURL() {
     const url = window.location.href;
     console.log(url);
@@ -24,7 +24,7 @@ export const ShareAndWishlistBtns = () => {
         variant="ghost"
       >
         <Heart className="size-4" />
-        Add to Wishlist
+        Add to Favorites
       </Button>
       <Button
         onClick={copyURL}

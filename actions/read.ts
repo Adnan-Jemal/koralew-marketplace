@@ -5,7 +5,7 @@ import { db } from "@/db/db"
 import { productImages, products, SelectProduct, SelectProductImages, SelectUser, users } from "@/db/schema"
 import { ItemWithImages } from "@/lib/types";
 
-import { asc, eq,sql } from "drizzle-orm";
+import { and, asc, eq,ne,sql } from "drizzle-orm";
 import { revalidatePath } from "next/cache";
 import { toast } from "sonner";
 
@@ -83,7 +83,9 @@ export async function getItem(id:number) {
       title: products.title,
       category:products.category,
       condition: products.condition,
+      createdAt: products.createdAt,
       price: products.price,
+      description:products.description,
       images: sql`
       JSON_AGG(
         JSON_BUILD_OBJECT(
@@ -103,3 +105,32 @@ export async function getItemSeller(userId:string) {
  const seller = (await db.select().from(users).where(eq(users.id,userId)))
     return seller[0] as SelectUser
   }
+
+  export async function getSimilarCategoryItems(category:string,productId:number) {
+
+    const items = await db
+    .select({
+      id: products.id,
+      title: products.title,
+      condition: products.condition,
+      price: products.price,
+      images: sql`
+      JSON_AGG(
+        JSON_BUILD_OBJECT(
+          'imageUrl', ${productImages.imageUrl},
+          'order', ${productImages.order},
+          'productId',${productImages.productId}
+        )
+      )
+    `.as('images')
+    })
+    .from(products)
+    .innerJoin(productImages, eq(products.id, productImages.productId))
+    .where(and(eq(products.category,category),ne(products.id,productId)))
+    .groupBy(products.id)
+    revalidatePath(`/?category=${category.toLowerCase}`)
+  
+    return items as ItemWithImages[];
+  
+}
+
