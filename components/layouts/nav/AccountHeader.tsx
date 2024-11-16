@@ -8,6 +8,7 @@ import { Button } from "@/components/ui/button";
 import { ModeToggle } from "@/components/ui/ModeToggle";
 import SidebarProfile from "./SidebarProfile";
 import { SessionProvider } from "next-auth/react";
+import { Breadcrumb, BreadcrumbItem, BreadcrumbLink, BreadcrumbList, BreadcrumbSeparator } from "@/components/ui/breadcrumb";
 
 const AccountHeader = () => {
   return (
@@ -17,6 +18,17 @@ const AccountHeader = () => {
           <SessionProvider>
             <MobileSidebar />
           </SessionProvider>
+          {/* <Breadcrumb>
+        <BreadcrumbList className="text-md text-gray-500 dark:text-gray-400">
+          <BreadcrumbItem>
+            <BreadcrumbLink href="/">Home</BreadcrumbLink>
+          </BreadcrumbItem>
+          <BreadcrumbSeparator />
+          <BreadcrumbItem>
+            Account
+          </BreadcrumbItem>
+        </BreadcrumbList>
+      </Breadcrumb> */}
 
           <Link href={"/"}>
             {" "}

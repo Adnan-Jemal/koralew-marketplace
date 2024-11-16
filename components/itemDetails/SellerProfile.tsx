@@ -17,7 +17,7 @@ import { Separator } from "../ui/separator";
 
 export const SellerProfile = ({ seller }: { seller: SelectUser }) => {
   return (
-    <div className="flex p-6 border border-secondary rounded-2xl shadow-md gap-4 flex-col md:flex-row">
+    <div className="flex p-6 border border-secondary rounded-2xl shadow-sm gap-4 flex-col md:flex-row">
       <Avatar className="size-20 mx-auto">
         <AvatarImage src={seller.image!!} />
         <AvatarFallback className="text-5xl m-auto ">
