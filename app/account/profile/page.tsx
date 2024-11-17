@@ -4,7 +4,7 @@ import DeleteAccount from "@/components/profile/DeleteAccount";
 import ProfileForm from "@/components/profile/ProfileForm";
 import ProfileView from "@/components/profile/ProfileView";
 
-export default async function page() {
+export default async function ProfilePage() {
   const session = await auth();
   if (!session || !session.user?.id) {
     return <p>please log in</p>;
@@ -14,15 +14,13 @@ export default async function page() {
     return <p>No user found</p>;
   }
 
-    
-
   return (
     <div className="w-[90%] mx-auto flex flex-col  gap-14  my-10">
       <ProfileView />
 
       <ProfileForm userData={user} />
 
-      <DeleteAccount userId= {session.user.id} />
+      <DeleteAccount userId={session.user.id} />
     </div>
   );
 }

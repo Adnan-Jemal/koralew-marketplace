@@ -7,15 +7,18 @@ import {
   Clock,
   DotIcon,
   MapPin,
-  MessageCircleMore,
   MessageSquareText,
   PhoneCall,
 } from "lucide-react";
 import { fromDashedToCapitalizedWord } from "@/lib/utils";
 import { Button } from "../ui/button";
 import { Separator } from "../ui/separator";
+import { CallSellerBtn } from "./CallSellerBtn";
+import { auth } from "@/auth";
+import Link from "next/link";
 
-export const SellerProfile = ({ seller }: { seller: SelectUser }) => {
+export const SellerProfile = async ({ seller }: { seller: SelectUser }) => {
+  const session = await auth();
   return (
     <div className="flex p-6 border border-secondary rounded-2xl shadow-sm gap-4 flex-col md:flex-row">
       <Avatar className="size-20 mx-auto">
@@ -61,13 +64,15 @@ export const SellerProfile = ({ seller }: { seller: SelectUser }) => {
         </div>
         <Separator className="my-2" />
         <div className="flex w-full gap-4">
-          <Button className="w-full flex gap-2 text-lg rounded-xl">
-            <PhoneCall className="size-6" />
-            Call
-          </Button>
-          <Button className="w-full flex gap-2 text-lg rounded-xl">
-            <MessageSquareText /> Message
-          </Button>
+          <CallSellerBtn
+            session={session}
+            sellerPhoneNumber={seller.phoneNumber}
+          />
+          <Link href="/account/messages" className="w-full">
+            <Button className="w-full flex gap-2 text-lg rounded-xl">
+              <MessageSquareText /> Message
+            </Button>
+          </Link>
         </div>
       </div>
     </div>

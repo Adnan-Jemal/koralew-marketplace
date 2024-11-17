@@ -14,7 +14,7 @@ export default function ItemImages({
   );
   return (
     <>
-      <div className="w-[90%] md:w-1/2 md:sticky md:h-fit md:top-28 mx-auto rounded-2xl  grid grid-cols-5 gap-2">
+      <div className="w-[90%] lg:w-1/2 lg:sticky lg:h-fit lg:top-28 mx-auto rounded-2xl  grid grid-cols-5 gap-2">
         <div
           id="image-list"
           className={`flex flex-col col-span-1 p-2  w-full  space-y-4 overflow-y-scroll ${

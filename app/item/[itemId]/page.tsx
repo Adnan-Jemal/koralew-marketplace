@@ -21,9 +21,9 @@ export default async function page({ params }: { params: { itemId: string } }) {
         <ShareAndFavoriteBtns />
       </div>
 
-      <div className="max-w-7xl mx-auto w-full flex gap-2 flex-col md:flex-row ">
+      <div className="max-w-7xl mx-auto w-full flex gap-2 flex-col lg:flex-row ">
         <ItemImages images={item?.images.sort((a, b) => a.order - b.order)} />
-        <div className="w-[90%] mx-auto md:w-[45%] flex flex-col pt-4 gap-4 ">
+        <div className="w-[90%] mx-auto lg:w-[45%] flex flex-col pt-4 gap-4 ">
           <h2 className="text-5xl  ">{item.title}</h2>
           <p className="text-4xl font-thin py-2">
             ${parseInt(item.price).toLocaleString()}

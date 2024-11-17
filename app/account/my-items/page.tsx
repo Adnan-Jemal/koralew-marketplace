@@ -4,7 +4,7 @@ import ItemCard from "@/components/ItemCard/ItemCard";
 
 import React from "react";
 
-export default async function page() {
+export default async function MyItemsPage() {
   const userItems = await getUserItems();
 
   if (!userItems) {

@@ -3,15 +3,18 @@ import { useState } from "react";
 import { Button } from "../ui/button";
 import { signInGithub, signInGoogle } from "@/actions";
 import { Ellipsis } from "lucide-react";
+import { useSearchParams } from "next/navigation";
 
 export default function SignInForm() {
   const [googleLoading, setGoogleLoading] = useState<boolean>(false);
   const [githubLoading, setGithubLoading] = useState<boolean>(false);
+  const searchParams = useSearchParams();
+  const callbackUrl = searchParams.get("callbackUrl");
 
   const googleSigning = async () => {
     try {
       setGoogleLoading(true);
-      await signInGoogle();
+      await signInGoogle(callbackUrl ?? undefined);
     } catch (error) {
       setGoogleLoading(false);
       console.log(error);
@@ -20,7 +23,7 @@ export default function SignInForm() {
   const githubSigning = async () => {
     try {
       setGithubLoading(true);
-      await signInGithub();
+      await signInGithub(callbackUrl ?? undefined);
     } catch (error) {
       setGithubLoading(false);
       console.log(error);

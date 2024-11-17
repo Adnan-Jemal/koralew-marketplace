@@ -1,22 +1,10 @@
 "use client";
-import { toast } from "sonner";
 import { Button } from "../ui/button";
 import { Heart, Share } from "lucide-react";
+import { copyURL } from "@/lib/utils";
 
 export const ShareAndFavoriteBtns = () => {
-  function copyURL() {
-    const url = window.location.href;
-    console.log(url);
-    navigator.clipboard
-      .writeText(url)
-      .then(() => {
-        toast.success("Link Copied");
-      })
-      .catch((err) => {
-        console.error("Failed to copy: ", err);
-        toast.error("something went wrong");
-      });
-  }
+
   return (
     <div className="flex">
       <Button
@@ -27,7 +15,7 @@ export const ShareAndFavoriteBtns = () => {
         Add to Favorites
       </Button>
       <Button
-        onClick={copyURL}
+        onClick={()=>copyURL()}
         className="flex items-center justify-center gap-1"
         variant="ghost"
       >
