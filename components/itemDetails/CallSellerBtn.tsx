@@ -23,6 +23,7 @@ export const CallSellerBtn = ({ sellerPhoneNumber, session }: propTypes) => {
   const router = useRouter();
   const checkSession = () => {
     if (!session) {
+      setOpen(false)
       const redirectURL = encodeURIComponent(window.location.href);
       router.push(`/signin?callbackUrl=${redirectURL}`);
     }
