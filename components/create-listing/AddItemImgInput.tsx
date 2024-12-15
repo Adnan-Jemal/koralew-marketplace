@@ -2,7 +2,7 @@
 import { UploadCloud } from "lucide-react";
 import React, { useRef } from "react";
 
-export default function AddItemImgForm({
+export default function AddItemImgInput({
   handleChange,
 }: {
   handleChange: (e: React.ChangeEvent<HTMLInputElement>) => void;

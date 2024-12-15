@@ -1,10 +1,8 @@
 "use client";
 import { addImage, addItem } from "@/actions/create";
-import AddItemForm, {
-  addItemFormSchema,
-} from "@/components/create-listing/AddItemForm";
+
 import AddItemHeader from "@/components/create-listing/AddItemHeader";
-import AddItemImgForm from "@/components/create-listing/AddItemImgForm";
+import AddItemForm, { addItemFormSchema } from "./AddItemForm";
 import UploadedImages from "@/components/create-listing/UploadedImages";
 import { storage } from "@/firebase";
 import { getDownloadURL, ref, uploadBytesResumable } from "firebase/storage";
@@ -15,12 +13,15 @@ import { useState } from "react";
 import { toast } from "sonner";
 import { z } from "zod";
 import UploadLoading from "./UploadLoading";
+import AddItemImgInput from "@/components/create-listing/AddItemImgInput";
+
 
 export default function CreateListingMainForm({
   session,
 }: {
   session: Session | null;
 }) {
+
   const [imgFiles, setImgFiles] = useState<File[]>([]);
   const [imgError, setImgError] = useState<String>("");
   const [isUploading, setIsUploading] = useState<boolean>(false);
@@ -107,7 +108,7 @@ export default function CreateListingMainForm({
                 images={imgFiles}
               />
             ) : (
-              <AddItemImgForm handleChange={handleImgChange} />
+              <AddItemImgInput handleChange={handleImgChange} />
             )}
             <p className="text-sm text-white bg-red-400 w-fit px-2 rounded-md text-center  ">
               {imgError}

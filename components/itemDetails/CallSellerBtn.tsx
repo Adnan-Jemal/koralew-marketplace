@@ -36,6 +36,7 @@ export const CallSellerBtn = ({ sellerPhoneNumber, session }: propTypes) => {
       return;
     }
     window.location.href = `tel:${sellerPhoneNumber}`;
+    setOpen(false);
   };
 
   const copyPhoneNumber = () => {
