@@ -1,6 +1,6 @@
 import AccountHeader from "@/components/layouts/nav/AccountHeader";
 import Sidebar from "@/components/layouts/nav/Sidebar";
-import { SessionProvider } from "next-auth/react";
+
 
 export default function RootLayout({
   children,

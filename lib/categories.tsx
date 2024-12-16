@@ -11,7 +11,6 @@ import {
     Baby,
     Shirt,
     MonitorSmartphone,
-    LucideSquareStack,
     LucideIcon,
   } from "lucide-react";
 

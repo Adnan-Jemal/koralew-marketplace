@@ -6,7 +6,7 @@ import { X } from "lucide-react";
 type propTypes = {
   images: File[];
   setImages: Dispatch<SetStateAction<File[]>>;
-  setError: Dispatch<SetStateAction<String>>;
+  setError: Dispatch<SetStateAction<string>>;
 };
 const maxImgSizeInBytes = 2 * 1024 * 1024;
 export default function UploadedImages({
@@ -18,7 +18,7 @@ export default function UploadedImages({
     <div className=" min-h-40 p-5 border border-secondary flex flex-col items-center justify-center gap-2 rounded-lg bg-secondary  ">
       <div className="flex flex-wrap w-full gap-3 justify-evenly">
         {images.map((img) => {
-          let url = URL.createObjectURL(img);
+          const url = URL.createObjectURL(img);
           if (img.size > maxImgSizeInBytes)
             setError(`Your image "${img.name}" is too large`);
           return (

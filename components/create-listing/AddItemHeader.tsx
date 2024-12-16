@@ -1,4 +1,3 @@
-import { PackagePlus, ArrowLeft, HomeIcon } from "lucide-react";
 
 import Link from "next/link";
 

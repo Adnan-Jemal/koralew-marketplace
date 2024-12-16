@@ -41,7 +41,7 @@ export default async function MyItemsPage() {
             />
           );
         })} */}
-
+{/* 
         <ItemCard
           id={1234}
           title="rolex luxury men's watch"
@@ -69,7 +69,7 @@ export default async function MyItemsPage() {
           imageUrl="https://firebasestorage.googleapis.com/v0/b/koralew-fb48a.appspot.com/o/images%2Fproducts%2F1004%2Fimage_0?alt=media&token=237e1622-b3ad-4cab-8b31-2a99c97d31b9"
           price={600000}
           condition="Slightly Used"
-        />
+        /> */}
       </div>
     </div>
   );

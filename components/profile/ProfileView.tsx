@@ -1,5 +1,4 @@
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { Skeleton } from "@/components/ui/skeleton";
 import { auth } from "@/auth";
 import UpdatePhotoBtn from "./UpdatePhotoBtn";
 
@@ -13,9 +12,9 @@ const ProfileView = async () => {
   return (
     <div className="flex max-w-full items-center mx-auto gap-6 flex-wrap justify-center md:justify-start p-8 shadow-lg rounded-2xl dark:border dark:border-secondary  ">
       <Avatar className="size-32">
-        <AvatarImage className="object-cover" src={user?.image!!} />
+        <AvatarImage className="object-cover" src={user?.image||undefined} />
         <AvatarFallback className="text-5xl ">
-          {user?.name!.charAt(0).toUpperCase()}
+          {user?.name?.charAt(0).toUpperCase()}
         </AvatarFallback>
       </Avatar>
       <div className="flex flex-col items-center gap-4 overflow-hidden">

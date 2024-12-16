@@ -59,10 +59,7 @@ const SidebarMenus = ({ setOpen }: PropType) => {
   return (
     <>
       {menuItems.map((item) => (
-        <Link
-        key={item.link}
-          href={item.link}
-        >
+        <Link key={item.link} href={item.link}>
           <Button
             onClick={() => {
               setCurrentPath(item.link);
@@ -71,7 +68,7 @@ const SidebarMenus = ({ setOpen }: PropType) => {
             variant={"outline"}
             size={"lg"}
             className={`flex items-center justify-start w-full text-md border-none transition-colors select-none ${
-              currentPath === item.link && "bg-secondary"
+              (currentPath === item.link) && "bg-secondary"
             }`}
           >
             {item.icon} {item.text}

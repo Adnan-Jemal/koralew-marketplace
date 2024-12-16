@@ -38,7 +38,6 @@ type PropTypes = {
       city: string;
       address: string;
     },
-    any,
     undefined
   >;
   field: {

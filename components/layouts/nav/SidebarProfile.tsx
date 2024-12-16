@@ -4,8 +4,6 @@ import { Button } from "@/components/ui/button";
 import { logOut } from "@/actions";
 import { useSession } from "next-auth/react";
 import { Skeleton } from "@/components/ui/skeleton";
-import Link from "next/link";
-import { redirect } from "next/navigation";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 
 const SidebarProfile = () => {
@@ -17,7 +15,7 @@ const SidebarProfile = () => {
         {/* profile image */}
         {session ? (
           <Avatar className="size-12 ">
-            <AvatarImage className="object-cover" src={session.user?.image!!} />
+            <AvatarImage className="object-cover" src={session.user?.image || undefined} />
             <AvatarFallback className="text-xl">
               {session?.user?.name?.charAt(0).toUpperCase()}
             </AvatarFallback>

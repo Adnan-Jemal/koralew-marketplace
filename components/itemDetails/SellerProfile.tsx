@@ -7,8 +7,7 @@ import {
   Clock,
   DotIcon,
   MapPin,
-  MessageSquareText,
-  PhoneCall,
+  MessageSquareText
 } from "lucide-react";
 import { fromDashedToCapitalizedWord } from "@/lib/utils";
 import { Button } from "../ui/button";
@@ -22,7 +21,7 @@ export const SellerProfile = async ({ seller }: { seller: SelectUser }) => {
   return (
     <div className="flex p-6 border border-secondary rounded-2xl shadow-sm gap-4 flex-col md:flex-row">
       <Avatar className="size-20 mx-auto">
-        <AvatarImage src={seller.image!!} />
+        <AvatarImage src={seller.image||undefined} />
         <AvatarFallback className="text-5xl m-auto ">
           {seller?.name!.charAt(0).toUpperCase()}
         </AvatarFallback>

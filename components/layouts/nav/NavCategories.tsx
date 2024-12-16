@@ -1,4 +1,3 @@
-import { LucideSquareStack } from "lucide-react";
 import NavCategory from "./NavCategory";
 import { categories } from "@/lib/categories";
 import AllNavBtn from "./AllNavBtn";
@@ -18,4 +17,3 @@ export default function NavCategories() {
     </div>
   );
 }
-

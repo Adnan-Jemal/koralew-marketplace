@@ -1,14 +1,13 @@
 import React from "react";
 
-import { PackagePlus, ArrowLeft, HomeIcon } from "lucide-react";
+import { PackagePlus, ArrowLeft} from "lucide-react";
 
 import Link from "next/link";
 import MobileSidebar from "./MobileSidebar";
 import { Button } from "@/components/ui/button";
 import { ModeToggle } from "@/components/ui/ModeToggle";
-import SidebarProfile from "./SidebarProfile";
 import { SessionProvider } from "next-auth/react";
-import { Breadcrumb, BreadcrumbItem, BreadcrumbLink, BreadcrumbList, BreadcrumbSeparator } from "@/components/ui/breadcrumb";
+
 
 const AccountHeader = () => {
   return (

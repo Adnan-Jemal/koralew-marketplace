@@ -2,14 +2,11 @@
 import { Button } from "@/components/ui/button";
 import {
   Dialog,
-  DialogClose,
   DialogContent,
-  DialogDescription,
   DialogHeader,
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
-import { Input } from "../ui/input";
 import { updateUserPhoto } from "@/actions/update";
 import React, { useRef, useState } from "react";
 import { Session } from "next-auth";
@@ -56,7 +53,7 @@ const UpdatePhotoBtn = ({ session }: propType) => {
     }
     if (imgFile.size > 2 * 1024 * 1024) {
       toast.error("Image size greater than 2Mb");
-      return
+      return;
     }
     setUploading(true);
     try {
@@ -92,7 +89,7 @@ const UpdatePhotoBtn = ({ session }: propType) => {
             className="flex flex-col items-center w-full"
             onSubmit={(e) => handleSubmit(e)}
           >
-            {localImgUrl == "" || imgFile == null ? (
+            {(localImgUrl == "" || imgFile == null) ? (
               <div
                 onClick={() => imageInputRef.current?.click()}
                 className=" h-40 p-6 border border-secondary flex flex-col items-center justify-center gap-2 rounded-xl cursor-pointer mb-6 shadow-lg "

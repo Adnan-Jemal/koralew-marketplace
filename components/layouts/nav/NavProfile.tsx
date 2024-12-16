@@ -8,7 +8,6 @@ import { Avatar, AvatarFallback, AvatarImage } from "../../ui/avatar";
 import { auth } from "@/auth";
 import NavProfileDropdown from "./NavProfileDropdown";
 import { Button } from "../../ui/button";
-import { redirect } from "next/dist/server/api-utils";
 import Link from "next/link";
 
 export const NavProfile = async () => {
@@ -29,7 +28,7 @@ export const NavProfile = async () => {
           <MenuIcon />
           {user ? (
             <Avatar>
-              <AvatarImage className="object-cover" src={user.image!!} />
+              <AvatarImage className="object-cover" src={user.image||undefined} />
               <AvatarFallback className="text-xl">
                 {user.email?.charAt(0).toUpperCase()}
               </AvatarFallback>

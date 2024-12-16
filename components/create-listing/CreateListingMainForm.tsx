@@ -23,9 +23,9 @@ export default function CreateListingMainForm({
 }) {
 
   const [imgFiles, setImgFiles] = useState<File[]>([]);
-  const [imgError, setImgError] = useState<String>("");
+  const [imgError, setImgError] = useState<string>("");
   const [isUploading, setIsUploading] = useState<boolean>(false);
-  const [uploadMessage, setUploadMessage] = useState<String>("");
+  const [uploadMessage, setUploadMessage] = useState<string>("");
   const router = useRouter();
 
   async function onSubmit(formValues: z.infer<typeof addItemFormSchema>) {
