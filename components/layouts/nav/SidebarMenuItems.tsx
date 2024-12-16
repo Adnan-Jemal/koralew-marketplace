@@ -11,42 +11,6 @@ import {
 import Link from "next/link";
 import React, { Dispatch, SetStateAction, useEffect, useState } from "react";
 
-
-
-type PropType = {
-  setOpen?: Dispatch<SetStateAction<boolean>>;
-};
-
-const SidebarMenus = ({ setOpen }: PropType) => {
-  const [currentPath, setCurrentPath] = useState("account/dashboard");
-  useEffect(() => {
-    setCurrentPath(
-      typeof window !== "undefined" ? window.location.pathname : ""
-    );
-  }, []);
-
-  return (
-    <>
-      {menuItems.map((item) => (
-        <Link key={item.link} href={item.link}>
-          <Button
-            onClick={() => {
-              setCurrentPath(item.link);
-              setOpen && (()=>setOpen(false))();
-            }}
-            variant={"outline"}
-            size={"lg"}
-            className={`flex items-center justify-start w-full text-md border-none transition-colors select-none ${
-              (currentPath === item.link) && "bg-secondary"
-            }`}
-          >
-            {item.icon} {item.text}
-          </Button>
-        </Link>
-      ))}
-    </>
-  );
-};
 const menuItems = [
   {
     link: "/account/dashboard",
@@ -79,4 +43,40 @@ const menuItems = [
     text: "Settings",
   },
 ];
+
+type PropType = {
+  setOpen?: Dispatch<SetStateAction<boolean>>;
+};
+
+const SidebarMenus = ({ setOpen }: PropType) => {
+  const [currentPath, setCurrentPath] = useState("account/dashboard");
+  useEffect(() => {
+    setCurrentPath(
+      typeof window !== "undefined" ? window.location.pathname : ""
+    );
+  }, []);
+
+  return (
+    <>
+      {menuItems.map((item) => (
+        <Link key={item.link} href={item.link}>
+          <Button
+            onClick={() => {
+              setCurrentPath(item.link);
+              if (setOpen) setOpen(false);
+            }}
+            variant={"outline"}
+            size={"lg"}
+            className={`flex items-center justify-start w-full text-md border-none transition-colors select-none ${
+              currentPath === item.link && "bg-secondary"
+            }`}
+          >
+            {item.icon} {item.text}
+          </Button>
+        </Link>
+      ))}
+    </>
+  );
+};
+
 export default SidebarMenus;
