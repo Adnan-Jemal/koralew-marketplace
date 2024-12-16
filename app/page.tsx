@@ -24,6 +24,7 @@ export default async function Home({ searchParams }: propType) {
           
           return (
             <Suspense
+            key={item.id}
               fallback={
                 <Skeleton className="bg-primary-foreground w-64 h-80 rounded-2xl shadow-md cursor-pointer" />
               }

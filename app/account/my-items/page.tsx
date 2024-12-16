@@ -18,7 +18,7 @@ export default async function MyItemsPage() {
       </h1>
       <div className="flex flex-wrap gap-8 items-center justify-around ">
         {userItems?.map((item) => {
-          let image = item.images as string[];
+          const image = item.images as string[];
           return (
             <ItemCard
               key={item.id}

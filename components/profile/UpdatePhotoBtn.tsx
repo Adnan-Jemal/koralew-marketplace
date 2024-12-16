@@ -31,7 +31,8 @@ const UpdatePhotoBtn = ({ session }: propType) => {
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     let file = e.target.files?.[0];
     setImgFile(file);
-    file && setLocalImgUrl(URL.createObjectURL(file));
+    if(file)
+    setLocalImgUrl(URL.createObjectURL(file));
     file = undefined;
   };
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
