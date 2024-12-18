@@ -23,9 +23,11 @@ export const CallSellerBtn = ({ sellerPhoneNumber, session }: propTypes) => {
   const router = useRouter();
   const checkSession = () => {
     if (!session) {
-      setOpen(false)
+      setOpen(false);
       const redirectURL = encodeURIComponent(window.location.href);
       router.push(`/signin?callbackUrl=${redirectURL}`);
+    } else {
+      setOpen(true);
     }
   };
 
@@ -58,15 +60,14 @@ export const CallSellerBtn = ({ sellerPhoneNumber, session }: propTypes) => {
   };
   return (
     <Dialog open={open} onOpenChange={setOpen}>
-      <DialogTrigger asChild>
-        <Button
-          onClick={checkSession}
-          className="w-full flex gap-2 text-lg rounded-xl"
-        >
-          <PhoneCall className="size-6" />
-          Contact
-        </Button>
-      </DialogTrigger>
+      <Button
+        onClick={checkSession}
+        className="w-full flex gap-2 text-lg rounded-xl"
+      >
+        <PhoneCall className="size-6" />
+        Contact
+      </Button>
+
       <DialogContent className="w-[80%] text-center rounded-xl dark:border-secondary">
         <DialogHeader>
           <DialogTitle className="text-2xl text-center">
