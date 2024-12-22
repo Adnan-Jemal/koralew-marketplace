@@ -1,18 +1,15 @@
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { auth } from "@/auth";
 import UpdatePhotoBtn from "./UpdatePhotoBtn";
+import { Session } from "next-auth";
 
-const ProfileView = async () => {
-  const session = await auth();
+const ProfileView = async ({ session }: { session: Session }) => {
   const user = session?.user;
 
-  //   const [userData, userDataLoading,] = useDocumentData(
-  //     user ? doc(db, "users", user.uid) : null
-  //   );
   return (
     <div className="flex max-w-full items-center mx-auto gap-6 flex-wrap justify-center md:justify-start p-8 shadow-lg rounded-2xl dark:border dark:border-secondary  ">
       <Avatar className="size-32">
-        <AvatarImage className="object-cover" src={user?.image||undefined} />
+        <AvatarImage className="object-cover" src={user?.image || undefined} />
         <AvatarFallback className="text-5xl ">
           {user?.name?.charAt(0).toUpperCase()}
         </AvatarFallback>

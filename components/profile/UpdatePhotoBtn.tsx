@@ -17,10 +17,8 @@ import { useSession } from "next-auth/react";
 import { Ellipsis, UploadCloud, XCircle } from "lucide-react";
 import Image from "next/image";
 
-type propType = {
-  session: Session | null;
-};
-const UpdatePhotoBtn = ({ session }: propType) => {
+
+const UpdatePhotoBtn = ({ session }: {session:Session}) => {
   const [imgFile, setImgFile] = useState<File | null>();
   const [open, setOpen] = useState(false);
   const [uploading, setUploading] = useState(false);

@@ -6,17 +6,17 @@ import ProfileView from "@/components/profile/ProfileView";
 
 export default async function ProfilePage() {
   const session = await auth();
-  if (!session || !session.user?.id) {
-    return <p>please log in</p>;
+  if (!session?.user?.id) {
+    return <div>please log in</div>;
   }
-  const user = await getUserById(session?.user?.id);
+  const user = await getUserById(session.user.id);
   if (!user) {
-    return <p>No user found</p>;
+    return <div>No user found</div>;
   }
 
   return (
     <div className="w-[90%] mx-auto flex flex-col  gap-14  my-10">
-      <ProfileView />
+      <ProfileView session={session} />
 
       <ProfileForm userData={user} />
 

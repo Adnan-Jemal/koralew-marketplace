@@ -25,7 +25,7 @@ export default async function page({ params }: { params: { itemId: string } }) {
         <ItemImages images={item?.images.sort((a, b) => a.order - b.order)} />
         <div className="w-[90%] mx-auto lg:w-[45%] flex flex-col pt-4 gap-4 ">
           <h2 className="text-5xl  ">{item.title}</h2>
-          <p className="text-4xl font-thin py-2">
+          <p className="text-4xl py-2">
             ${parseInt(item.price).toLocaleString()}
           </p>
           <ItemInfo
@@ -37,9 +37,8 @@ export default async function page({ params }: { params: { itemId: string } }) {
           <SellerProfile seller={seller} />
           <ItemDescription description={item.description} />
         </div>
-        
       </div>
-      <SimilarItems category={item.category} itemId={item.id}/>
+      <SimilarItems category={item.category} itemId={item.id} />
     </>
   );
 }

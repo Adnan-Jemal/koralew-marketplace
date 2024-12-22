@@ -2,7 +2,7 @@
 import SignOut from '@/components/SignOut';
 import { db } from '@/db/db';
 import { productImages, products, SelectUser, users } from '@/db/schema';
-import { and, eq, inArray } from 'drizzle-orm';
+import { eq, inArray } from 'drizzle-orm';
 import { redirect } from 'next/navigation';
 export async function deleteUser(userId: SelectUser['id']) {
   // await db.delete(users).where(eq(users.id, id)).);
