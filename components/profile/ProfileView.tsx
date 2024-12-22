@@ -1,5 +1,4 @@
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { auth } from "@/auth";
 import UpdatePhotoBtn from "./UpdatePhotoBtn";
 import { Session } from "next-auth";
 
