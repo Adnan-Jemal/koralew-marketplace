@@ -1,13 +1,7 @@
 "use client";
 import { Button } from "../ui/button";
 import { Copy, PhoneCall } from "lucide-react";
-import {
-  Dialog,
-  DialogContent,
-  DialogHeader,
-  DialogTitle,
-  DialogTrigger,
-} from "../ui/dialog";
+import { Dialog, DialogContent, DialogHeader, DialogTitle } from "../ui/dialog";
 import { toast } from "sonner";
 import { useState } from "react";
 import { Session } from "next-auth";

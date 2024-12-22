@@ -60,6 +60,7 @@ const SidebarMenus = ({ setOpen }: PropType) => {
     <>
       {menuItems.map((item) => (
         <Button
+        key={item.text}
           asChild
           onClick={() => {
             setCurrentPath(item.link);
