@@ -27,9 +27,9 @@ export default function ItemImages({
             <AspectRatio ratio={1 / 1} key={img.imageUrl}>
               <Image
                 onClick={() => setCurrentImg(img.imageUrl)}
-                className={`object-cover size-full rounded-2xl cursor-pointer shadow-md ${
+                className={`object-cover size-full rounded-2xl cursor-pointer border-[3px] ${
                   currentImg == img.imageUrl &&
-                  "shadow-lg border-2 border-blue-600"
+                  "shadow-lg dark:border-primary border-blue-500"
                 } `}
                 alt="Item Image"
                 height={500}
@@ -39,7 +39,7 @@ export default function ItemImages({
             </AspectRatio>
           ))}
         </div>
-        <div className="w-4/5">
+        <div className="w-4/5  ">
           <AspectRatio ratio={1 / 1}>
             <Image
               className="object-cover rounded-2xl size-full"
