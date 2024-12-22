@@ -14,20 +14,20 @@ export default function NavProfileDropdown() {
       className="border-secondary border-2 rounded-xl w-40 "
       align="start"
     >
-      <Link href={"/account/dashboard"}>
-        <DropdownMenuItem className="cursor-pointer">Account</DropdownMenuItem>
-      </Link>
+      <DropdownMenuItem asChild className="cursor-pointer">
+        <Link href={"/account/dashboard"}>Account</Link>
+      </DropdownMenuItem>
 
-      <Link href={"/"}>
-        <DropdownMenuItem className="cursor-pointer">Messages</DropdownMenuItem>
-      </Link>
+      <DropdownMenuItem asChild className="cursor-pointer">
+        <Link href={"/account/messages"}>Messages </Link>
+      </DropdownMenuItem>
 
       <DropdownMenuSeparator className=" h-[2px]  " />
-      <Link href={"/create-listing"}>
-        <DropdownMenuItem className="cursor-pointer">
-          Sell an Item
-        </DropdownMenuItem>
-      </Link>
+
+      <DropdownMenuItem asChild className="cursor-pointer">
+        <Link href={"/create-listing"}>Sell an Item</Link>
+      </DropdownMenuItem>
+
       <DropdownMenuSeparator className=" h-[2px]  " />
       <DropdownMenuItem
         onClick={() => signOut()}

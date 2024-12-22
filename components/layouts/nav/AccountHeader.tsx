@@ -1,13 +1,12 @@
 import React from "react";
 
-import { PackagePlus, ArrowLeft} from "lucide-react";
+import { PackagePlus, ArrowLeft } from "lucide-react";
 
 import Link from "next/link";
 import MobileSidebar from "./MobileSidebar";
 import { Button } from "@/components/ui/button";
 import { ModeToggle } from "@/components/ui/ModeToggle";
 import { SessionProvider } from "next-auth/react";
-
 
 const AccountHeader = () => {
   return (
@@ -27,34 +26,40 @@ const AccountHeader = () => {
             Account
           </BreadcrumbItem>
         </BreadcrumbList>
-      </Breadcrumb> */}
-
-          <Link href={"/"}>
-            {" "}
-            <Button
-              variant={"link"}
-              className=" items-center py-6 text-lg "
-            >
+      </Breadcrumb> */}{" "}
+          <Button
+            asChild
+            variant={"link"}
+            className=" items-center py-6 text-lg "
+          >
+            <Link href={"/"}>
               <ArrowLeft className="mr-2 size-6" /> Home
-            </Button>
-          </Link>
+            </Link>
+          </Button>
         </div>
 
         <div className="flex items-center md:gap-4 gap-2">
           <div className=" py-4 mx-3">
-            <Link href={"/create-listing"}>
-              <Button
-                variant={"default"}
-                className=" items-center py-6 text-lg   text-md border-none hidden sm:inline-flex"
-              >
+            <Button
+              asChild
+              variant={"default"}
+              className=" items-center py-6 text-lg   text-md border-none hidden sm:inline-flex"
+            >
+              <Link href={"/create-listing"}>
                 <PackagePlus className="mr-2 size-6" /> List an Item
-              </Button>
-            </Link>
-            <Link href={"/create-listing"}>
-              <Button variant={"default"} size={"icon"} className=" sm:hidden ">
+              </Link>
+            </Button>
+
+            <Button
+              asChild
+              variant={"default"}
+              size={"icon"}
+              className=" sm:hidden "
+            >
+              <Link href={"/create-listing"}>
                 <PackagePlus className="  size-6" />
-              </Button>
-            </Link>
+              </Link>
+            </Button>
           </div>
           <ModeToggle />
         </div>

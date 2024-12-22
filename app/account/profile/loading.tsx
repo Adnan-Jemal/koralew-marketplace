@@ -1,7 +1,6 @@
 import { Skeleton } from "@/components/ui/skeleton";
-import React from "react";
 
-const loading = () => {
+export default function loading() {
   return (
     <div className="w-[90%] mx-auto flex flex-col  gap-14  my-10">
       <div className="flex items-center w-[60%] mx-auto gap-6 flex-wrap justify-center md:justify-start p-8 shadow-lg rounded-2xl dark:border dark:border-secondary  ">
@@ -47,6 +46,4 @@ const loading = () => {
       </div>
     </div>
   );
-};
-
-export default loading;
+}

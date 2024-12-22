@@ -59,21 +59,22 @@ const SidebarMenus = ({ setOpen }: PropType) => {
   return (
     <>
       {menuItems.map((item) => (
-        <Link key={item.link} href={item.link}>
-          <Button
-            onClick={() => {
-              setCurrentPath(item.link);
-              if (setOpen) setOpen(false);
-            }}
-            variant={"outline"}
-            size={"lg"}
-            className={`flex items-center justify-start w-full text-md border-none transition-colors select-none ${
-              currentPath === item.link && "bg-secondary"
-            }`}
-          >
+        <Button
+          asChild
+          onClick={() => {
+            setCurrentPath(item.link);
+            if (setOpen) setOpen(false);
+          }}
+          variant={"outline"}
+          size={"lg"}
+          className={`flex items-center justify-start w-full text-md border-none transition-colors select-none ${
+            currentPath === item.link && "bg-secondary"
+          }`}
+        >
+          <Link key={item.text} href={item.link}>
             {item.icon} {item.text}
-          </Button>
-        </Link>
+          </Link>
+        </Button>
       ))}
     </>
   );

@@ -13,7 +13,7 @@ export default function ItemBreadCrumbs({ category }: { category: string }) {
   return (
     
       <Breadcrumb>
-        <BreadcrumbList className="text-md text-gray-500 dark:text-gray-400">
+        <BreadcrumbList className=" text-gray-500 dark:text-gray-400">
           <BreadcrumbItem>
             <BreadcrumbLink href="/">Home</BreadcrumbLink>
           </BreadcrumbItem>

@@ -29,8 +29,8 @@ export default function CreateListingMainForm({
   const router = useRouter();
 
   async function onSubmit(formValues: z.infer<typeof addItemFormSchema>) {
-    if (imgFiles.length < 1) {
-      setImgError("please upload images");
+    if (imgFiles.length < 2) {
+      setImgError("Please upload 2 or more images");
       window.scrollTo({ top: 0, behavior: "smooth" });
       return;
     }

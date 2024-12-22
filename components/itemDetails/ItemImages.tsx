@@ -14,15 +14,17 @@ export default function ItemImages({
   );
   return (
     <>
-      <div className="w-[90%] lg:w-1/2 lg:sticky lg:h-fit lg:top-28 mx-auto rounded-2xl  grid grid-cols-5 gap-2">
+      <div className="w-[90%] relative lg:w-1/2 lg:sticky h-fit lg:top-28 mx-auto rounded-2xl  flex gap-2">
+        {/* used to hold space for the absolute positioned div aka image list */}
+        <div className="w-1/5"></div>
         <div
           id="image-list"
-          className={`flex flex-col col-span-1 p-2  w-full  space-y-4 overflow-y-scroll ${
+          className={`flex flex-col col-span-1 p-2 w-1/5 h-full absolute  space-y-4 overflow-y-auto ${
             images.length < 6 && "scrollbar-none"
-          }  scrollbar-thin scrollbar-track-transparent scrollbar-thumb-secondary h-[50vh] sm:h-[60vh] lg:h-[68vh] `}
+          }  scrollbar-thin scrollbar-track-transparent scrollbar-thumb-secondary `}
         >
           {images.map((img) => (
-            <AspectRatio ratio={1 / 1} key={img.id}>
+            <AspectRatio ratio={1 / 1} key={img.imageUrl}>
               <Image
                 onClick={() => setCurrentImg(img.imageUrl)}
                 className={`object-cover size-full rounded-2xl cursor-pointer shadow-md ${
@@ -37,7 +39,7 @@ export default function ItemImages({
             </AspectRatio>
           ))}
         </div>
-        <div className="col-span-4 ">
+        <div className="w-4/5">
           <AspectRatio ratio={1 / 1}>
             <Image
               className="object-cover rounded-2xl size-full"

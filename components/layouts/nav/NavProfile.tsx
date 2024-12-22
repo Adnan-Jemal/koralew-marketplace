@@ -15,9 +15,9 @@ export const NavProfile = async () => {
   const user = session?.user;
   if (!user) {
     return (
-      <Link href={"/signin"}>
-        <Button>Sign In</Button>
-      </Link>
+      <Button asChild>
+        <Link href={"/signin"}>Sign In </Link>
+      </Button>
     );
   }
 
@@ -28,7 +28,10 @@ export const NavProfile = async () => {
           <MenuIcon />
           {user ? (
             <Avatar>
-              <AvatarImage className="object-cover" src={user.image||undefined} />
+              <AvatarImage
+                className="object-cover"
+                src={user.image || undefined}
+              />
               <AvatarFallback className="text-xl">
                 {user.email?.charAt(0).toUpperCase()}
               </AvatarFallback>

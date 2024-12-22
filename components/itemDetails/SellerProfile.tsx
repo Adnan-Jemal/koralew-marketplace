@@ -3,12 +3,7 @@ import React from "react";
 import { SelectUser } from "@/db/schema";
 import { formatDistanceToNow } from "date-fns";
 import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
-import {
-  Clock,
-  DotIcon,
-  MapPin,
-  MessageSquareText
-} from "lucide-react";
+import { Clock, DotIcon, MapPin, MessageSquareText } from "lucide-react";
 import { fromDashedToCapitalizedWord } from "@/lib/utils";
 import { Button } from "../ui/button";
 import { Separator } from "../ui/separator";
@@ -21,7 +16,7 @@ export const SellerProfile = async ({ seller }: { seller: SelectUser }) => {
   return (
     <div className="flex p-6 border border-secondary rounded-2xl shadow-sm gap-4 flex-col md:flex-row">
       <Avatar className="size-20 mx-auto">
-        <AvatarImage src={seller.image||undefined} />
+        <AvatarImage src={seller.image || undefined} />
         <AvatarFallback className="text-5xl m-auto ">
           {seller?.name!.charAt(0).toUpperCase()}
         </AvatarFallback>
@@ -67,11 +62,12 @@ export const SellerProfile = async ({ seller }: { seller: SelectUser }) => {
             session={session}
             sellerPhoneNumber={seller.phoneNumber}
           />
-          <Link href="/account/messages" className="w-full">
-            <Button className="w-full flex gap-2 text-lg rounded-xl">
+
+          <Button asChild className="w-full flex gap-2 text-lg rounded-xl">
+            <Link href="/account/messages">
               <MessageSquareText /> Message
-            </Button>
-          </Link>
+            </Link>
+          </Button>
         </div>
       </div>
     </div>
