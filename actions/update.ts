@@ -1,10 +1,8 @@
 "use server"
-import { auth } from '@/auth';
+
 import { db } from '@/db/db';
-import { SelectUser, users } from '@/db/schema';
+import { SelectUser, users } from '@/db/schema/users';
 import { eq } from 'drizzle-orm';
-
-
 import { revalidatePath } from 'next/cache';
 
 

@@ -1,7 +1,9 @@
 "use server"
 import { addItemFormSchema } from "@/components/create-listing/AddItemForm"
 import { db } from "@/db/db"
-import { InsertProduct, productImages, products } from "@/db/schema"
+import { productImages } from "@/db/schema/productImages"
+import { InsertProduct, products } from "@/db/schema/products"
+
 import { z } from "zod"
 
 

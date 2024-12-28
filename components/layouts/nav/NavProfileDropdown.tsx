@@ -15,7 +15,7 @@ export default function NavProfileDropdown() {
       align="start"
     >
       <DropdownMenuItem asChild className="cursor-pointer">
-        <Link href={"/account/dashboard"}>Account</Link>
+        <Link href={"/account/dashboard"}>Dashboard</Link>
       </DropdownMenuItem>
 
       <DropdownMenuItem asChild className="cursor-pointer">

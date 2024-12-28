@@ -1,23 +1,10 @@
 import { integer, pgTable, serial, text, timestamp,decimal, boolean,primaryKey, pgEnum } from 'drizzle-orm/pg-core';
 import type { AdapterAccountType } from "next-auth/adapters"
+import { users } from './users';
+
+
  
-export const conditionEnum = pgEnum('condition', ["New", "Slightly Used", "Used", "Refurbished"]);
- 
-export const users = pgTable("user", {
-  id: text("id")
-    .primaryKey()
-    .$defaultFn(() => crypto.randomUUID()),
-  name: text("name"),
-  address: text('address'),
-  phoneNumber: text('phone_number'),
-  country: text('country'),
-  city: text('city'),
-  email: text('email').notNull().unique(),
-  joinedAt: timestamp('joined_at').notNull().defaultNow(),
-  emailVerified: timestamp("emailVerified", { mode: "date" }),
-  image: text("image"),
-})
- 
+
 export const accounts = pgTable(
   "account",
   {
@@ -86,35 +73,7 @@ export const authenticators = pgTable(
 )
 
 
-export const products = pgTable('product', {
-  id: serial('id').primaryKey(),
-  title: text('title').notNull(),
-  description: text('description').notNull(),
-  userId: text('user_id')
-    .notNull()
-    .references(() => users.id, { onDelete: 'cascade' }),
-  category: text('category').notNull(),
-  condition: conditionEnum('condition').notNull(),
-  price: decimal('price',{ precision: 10, scale: 2 }).notNull(),
-  views: integer('views').notNull().default(0),
-  createdAt: timestamp('created_at').notNull().defaultNow(),
-});
 
 
-// product_images table
-export const productImages = pgTable('product_images', {
-  id: serial('id').primaryKey(),
-  productId: integer('product_id').notNull().references(() => products.id), 
-  imageUrl: text('image_url').notNull(),  
-  order: integer('order').notNull(),
-});
-
-export type InsertUser = typeof users.$inferInsert;
-export type SelectUser = typeof users.$inferSelect;
-
-export type InsertProductImages = typeof productImages.$inferInsert;
-export type SelectProductImages = typeof productImages.$inferSelect;
 
 
-export type InsertProduct = typeof products.$inferInsert;
-export type SelectProduct = typeof products.$inferSelect;

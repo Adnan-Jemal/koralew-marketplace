@@ -2,10 +2,11 @@
 
 import { auth } from "@/auth";
 import { db } from "@/db/db"
-import { productImages, products, SelectProduct, SelectProductImages, SelectUser, users } from "@/db/schema"
+import { productImages } from "@/db/schema/productImages";
+import { products } from "@/db/schema/products";
+import { SelectUser, users } from "@/db/schema/users";
 import { ItemWithImages } from "@/lib/types";
-
-import { and, asc, eq,ne,sql } from "drizzle-orm";
+import { and, eq,ne,sql } from "drizzle-orm";
 import { revalidatePath } from "next/cache";
 import { toast } from "sonner";
 

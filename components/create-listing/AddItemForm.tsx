@@ -13,7 +13,7 @@ import {
 import { Input } from "../ui/input";
 import { Button } from "../ui/button";
 import { Label } from "../ui/label";
-import { conditionEnum } from "@/db/schema";
+import { conditionEnum } from "@/db/schema/products";
 import { Ellipsis } from "lucide-react";
 import { Textarea } from "../ui/textarea";
 import {

@@ -1,7 +1,10 @@
 "use server"
 import SignOut from '@/components/SignOut';
 import { db } from '@/db/db';
-import { productImages, products, SelectUser, users } from '@/db/schema';
+import { productImages } from '@/db/schema/productImages';
+import { products} from '@/db/schema/products';
+import { SelectUser, users } from '@/db/schema/users';
+
 import { eq, inArray } from 'drizzle-orm';
 import { redirect } from 'next/navigation';
 export async function deleteUser(userId: SelectUser['id']) {
