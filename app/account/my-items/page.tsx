@@ -1,6 +1,7 @@
 import { getUserItems } from "@/actions/read";
 
 import ItemCard from "@/components/ItemCard/ItemCard";
+import {  PackageOpen } from "lucide-react";
 
 import React from "react";
 
@@ -12,10 +13,17 @@ export default async function MyItemsPage() {
   }
 
   return (
-    <div className="p-10 gap-10 flex flex-col">
+    <div className="p-10 gap-10  flex flex-col">
       <h1 className="text-4xl capitalize font-semibold text-center sm:text-start">
         Your Listed Items
       </h1>
+      {userItems.length < 1 && (
+        <div className="flex flex-col w-full h-80 items-center justify-center">
+          <PackageOpen className="size-36" />
+          <h2 className="text-3xl font-bold">No Items Found</h2>
+          <p>List an item and it will be displayed here.</p>
+        </div>
+      )}
       <div className="flex flex-wrap gap-8 items-center justify-around ">
         {userItems?.map((item) => {
           const image = item.images as string[];
@@ -30,46 +38,7 @@ export default async function MyItemsPage() {
             />
           );
         })}
-        {/* {userItems?.rows.map((item) => {
-          let image = item.images as string[];
-          return (
-            <ItemCard
-              title={item.title as string}
-              imageUrl={image[0] as string}
-              price={parseFloat(item.price as string)}
-              condition={item.condition as string}
-            />
-          );
-        })} */}
-{/* 
-        <ItemCard
-          id={1234}
-          title="rolex luxury men's watch"
-          imageUrl="https://firebasestorage.googleapis.com/v0/b/koralew-fb48a.appspot.com/o/images%2Fproducts%2F1004%2Fimage_0?alt=media&token=237e1622-b3ad-4cab-8b31-2a99c97d31b9"
-          price={10}
-          condition="NEW"
-        />
-        <ItemCard
-        id={5678}
-          title="rolex luxury men's watch"
-          imageUrl="https://firebasestorage.googleapis.com/v0/b/koralew-fb48a.appspot.com/o/images%2Fproducts%2F1004%2Fimage_0?alt=media&token=237e1622-b3ad-4cab-8b31-2a99c97d31b9"
-          price={200}
-          condition="Refurbished"
-        />
-        <ItemCard
-        id={9101}
-          title="rolex luxury men's watch and shoes for outdoors"
-          imageUrl="https://firebasestorage.googleapis.com/v0/b/koralew-fb48a.appspot.com/o/images%2Fproducts%2F1004%2Fimage_0?alt=media&token=237e1622-b3ad-4cab-8b31-2a99c97d31b9"
-          price={2000}
-          condition="NEW"
-        />
-        <ItemCard
-        id={12131}
-          title="rolex luxury men's watch"
-          imageUrl="https://firebasestorage.googleapis.com/v0/b/koralew-fb48a.appspot.com/o/images%2Fproducts%2F1004%2Fimage_0?alt=media&token=237e1622-b3ad-4cab-8b31-2a99c97d31b9"
-          price={600000}
-          condition="Slightly Used"
-        /> */}
+  
       </div>
     </div>
   );

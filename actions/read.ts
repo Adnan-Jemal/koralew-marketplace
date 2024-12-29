@@ -14,12 +14,19 @@ import { toast } from "sonner";
 
 
 export async function getUserById(id: SelectUser['id']) {
-  const user = db.select().from(users).where(eq(users.id, id));
-  return (await user).length > 0 ? (await user).at(0) : null;
+  try {
+    const user = await db.select().from(users).where(eq(users.id, id));
+    return user.at(0)
+  } catch (error) {
+    console.error(error)
+    throw new Error('Unable to get user');
+  }
+  
   
 }
 
 export async function getUserItems() {
+  
   const session = await auth()
   if(!session?.user?.id){
     console.error("no user id")

@@ -48,7 +48,7 @@ type PropType = {
   setOpen?: Dispatch<SetStateAction<boolean>>;
 };
 
-const SidebarMenus = ({ setOpen }: PropType) => {
+const SidebarMenuItems = ({ setOpen }: PropType) => {
   const [currentPath, setCurrentPath] = useState("account/dashboard");
   useEffect(() => {
     setCurrentPath(
@@ -81,4 +81,4 @@ const SidebarMenus = ({ setOpen }: PropType) => {
   );
 };
 
-export default SidebarMenus;
+export default SidebarMenuItems;

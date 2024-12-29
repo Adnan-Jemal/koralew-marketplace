@@ -1,6 +1,6 @@
 import Link from "next/link";
 import SidebarProfile from "./SidebarProfile";
-import SidebarMenus from "./SidebarMenuItems";
+import SidebarMenuItems from "./SidebarMenuItems";
 
 const Sidebar = () => {
   return (
@@ -13,7 +13,7 @@ const Sidebar = () => {
         </div>
 
         <div className="grow flex flex-col px-4 mt-6 gap-4">
-          <SidebarMenus />
+          <SidebarMenuItems />
         </div>
         <SidebarProfile />
       </div>
