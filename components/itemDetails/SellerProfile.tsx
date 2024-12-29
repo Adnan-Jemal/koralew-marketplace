@@ -1,6 +1,4 @@
-import React from "react";
-
-import { SelectUser } from "@/db/schema";
+import { SelectUser } from "@/db/schema/users";
 import { formatDistanceToNow } from "date-fns";
 import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
 import { Clock, DotIcon, MapPin, MessageSquareText } from "lucide-react";

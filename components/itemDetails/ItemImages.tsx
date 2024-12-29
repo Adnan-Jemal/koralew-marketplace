@@ -1,7 +1,7 @@
 "use client";
 import { AspectRatio } from "../ui/aspect-ratio";
 import Image from "next/image";
-import { SelectProductImages } from "@/db/schema";
+import { SelectProductImages } from "@/db/schema/productImages";
 import { useState } from "react";
 
 export default function ItemImages({

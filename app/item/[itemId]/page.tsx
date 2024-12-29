@@ -18,7 +18,8 @@ export default async function page({ params }: { params: { itemId: string } }) {
       <Navbar />
       <div className="w-[85%] max-w-6xl mx-auto flex justify-between items-center py-4 ">
         <ItemBreadCrumbs category={item.category} />
-        <ShareAndFavoriteBtns />
+        <div className="flex"></div>
+        <ShareAndFavoriteBtns productID={item.id} />
       </div>
 
       <div className="max-w-7xl mx-auto w-full flex gap-2 flex-col lg:flex-row ">

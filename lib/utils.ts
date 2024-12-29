@@ -1,7 +1,9 @@
+
 import { clsx, type ClassValue } from "clsx"
 import { toast } from "sonner";
 import { twMerge } from "tailwind-merge"
-
+import { favorites } from "@/db/schema/favorites"
+import { db } from "@/db/db";
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs))
 }
@@ -26,3 +28,4 @@ export function copyURL() {
       toast.error("something went wrong");
     });
 }
+

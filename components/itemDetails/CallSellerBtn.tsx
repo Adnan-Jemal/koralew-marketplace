@@ -20,6 +20,7 @@ export const CallSellerBtn = ({ sellerPhoneNumber, session }: propTypes) => {
       setOpen(false);
       const redirectURL = encodeURIComponent(window.location.href);
       router.push(`/signin?callbackUrl=${redirectURL}`);
+      toast.info("Please Sign in First");
     } else {
       setOpen(true);
     }

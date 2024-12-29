@@ -2,6 +2,7 @@
 
 import { auth } from "@/auth";
 import { db } from "@/db/db"
+import { favorites } from "@/db/schema/favorites";
 import { productImages } from "@/db/schema/productImages";
 import { products } from "@/db/schema/products";
 import { SelectUser, users } from "@/db/schema/users";
@@ -135,3 +136,13 @@ export async function getItemSeller(userId:string) {
   
 }
 
+export async function isProductFavorited(productId: string, userId: string) {
+  try {
+    const result = await db.select().from(favorites)
+      .where(and(eq(favorites.productId, productId),eq(favorites.userId, userId)))
+    return result.length > 0; 
+  } catch (error) {
+    console.error('Error checking favorite status:', error);
+    throw new Error('Unable to check favorite status');
+  }
+}

@@ -6,11 +6,11 @@ import { products } from "./products";
 export const favorites = pgTable("favorites", {
     userId: text("user_id")
       .notNull()
-      .references(() => users.id, { onDelete: "cascade" }), // Foreign key to users
+      .references(() => users.id, { onDelete: "cascade" }), 
     productId: text("product_id")
       .notNull()
-      .references(() => products.id, { onDelete: "cascade" }), // Foreign key to products
-    createdAt: timestamp("created_at").defaultNow(), // Automatically sets the timestamp
+      .references(() => products.id, { onDelete: "cascade" }), 
+    createdAt: timestamp("created_at").defaultNow(), 
   }, (table) => ({
-    pk: primaryKey(table.userId, table.productId), // Composite primary key
+    pk: primaryKey(table.userId, table.productId), 
   }));
