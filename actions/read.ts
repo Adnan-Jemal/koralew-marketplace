@@ -9,7 +9,6 @@ import { SelectUser, users } from "@/db/schema/users";
 import { ItemWithImages } from "@/lib/types";
 import { and, eq,ne,sql } from "drizzle-orm";
 import { revalidatePath } from "next/cache";
-import { toast } from "sonner";
 
 
 
@@ -39,17 +38,24 @@ export async function getUserItems() {
       title: products.title,
       condition: products.condition,
       price: products.price,
-      images: sql`ARRAY_AGG(${productImages.imageUrl})`.as('images')
+      images: sql`
+      JSON_AGG(
+        JSON_BUILD_OBJECT(
+          'imageUrl', ${productImages.imageUrl},
+          'order', ${productImages.order},
+          'productId',${productImages.productId}
+        )
+      )
+    `.as('images')
     })
     .from(products)
     .innerJoin(productImages, eq(products.id, productImages.productId))
     .where(eq(products.userId, session.user.id))
     .groupBy(products.id)
     .orderBy(sql`${products.createdAt} DESC`);
-    return items;
+    return items as ItemWithImages[];
   } catch (error) {
     console.log(error)
-    toast.error('something went wrong')
     throw error
   }
   
@@ -143,7 +149,7 @@ export async function getItemSeller(userId:string) {
   
 }
 
-export async function isProductFavorited(productId: string, userId: string) {
+export async function isProductFavorited(productId:number, userId: string) {
   try {
     const result = await db.select().from(favorites)
       .where(and(eq(favorites.productId, productId),eq(favorites.userId, userId)))
@@ -152,4 +158,37 @@ export async function isProductFavorited(productId: string, userId: string) {
     console.error('Error checking favorite status:', error);
     throw new Error('Unable to check favorite status');
   }
+}
+
+export async function getFavoriteItems() {
+  
+  try {
+    const items = await db
+    .select({
+      id: products.id,
+      title: products.title,
+      condition: products.condition,
+      price: products.price,
+      images: sql`
+      JSON_AGG(
+        JSON_BUILD_OBJECT(
+          'imageUrl', ${productImages.imageUrl},
+          'order', ${productImages.order},
+          'productId',${productImages.productId}
+        )
+      )
+    `.as('images')
+    }).from(favorites)
+    .innerJoin(products, eq(favorites.productId,products.id) )
+    .innerJoin(productImages, eq(products.id, productImages.productId))
+    .groupBy(products.id)
+    .orderBy(sql`${products.createdAt} DESC`);
+    return items as ItemWithImages[];
+  } catch (error) {
+    console.log(error)
+    throw error
+  }
+  
+
+  
 }

@@ -1,4 +1,4 @@
-import { integer, pgTable, serial, text, timestamp,decimal, boolean,primaryKey, pgEnum } from 'drizzle-orm/pg-core';
+import { integer, pgTable, text, timestamp,boolean,primaryKey, pgEnum } from 'drizzle-orm/pg-core';
 import type { AdapterAccountType } from "next-auth/adapters"
 import { users } from './users';
 

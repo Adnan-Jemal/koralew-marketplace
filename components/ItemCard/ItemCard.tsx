@@ -17,7 +17,7 @@ export default function ItemCard({
   condition,
   id,
 }: propType) {
-  console.log(id)
+  
   return (
     <Link href={`/item/${id}`}>
       <div className="flex flex-col bg-primary-foreground justify-between w-64 h-80 rounded-2xl overflow-hidden shadow-md cursor-pointer ">

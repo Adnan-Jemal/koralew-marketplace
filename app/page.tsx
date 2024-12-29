@@ -34,7 +34,7 @@ export default async function Home({ searchParams }: propType) {
                 id={item.id}
                 key={item.id}
                 title={item.title}
-                imageUrl={item.images.find(img=>img.order===1)?.imageUrl||item.images[0].imageUrl}
+                imageUrl={item.images.find(img=>img.order==1)?.imageUrl||item.images[0].imageUrl}
                 price={parseFloat(item.price)}
                 condition={item.condition}
               />

@@ -6,7 +6,6 @@ import ItemInfo from "@/components/itemDetails/ItemInfo";
 import { SellerProfile } from "@/components/itemDetails/SellerProfile";
 import { ShareAndFavoriteBtns } from "@/components/itemDetails/ShareAndFavoriteBtns";
 import { SimilarItems } from "@/components/itemDetails/SimilarItems";
-
 import { Navbar } from "@/components/layouts/nav/Navbar";
 
 export default async function page({ params }: { params: { itemId: string } }) {

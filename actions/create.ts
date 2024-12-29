@@ -4,6 +4,7 @@ import { db } from "@/db/db"
 import { favorites } from "@/db/schema/favorites"
 import { productImages } from "@/db/schema/productImages"
 import { InsertProduct, products } from "@/db/schema/products"
+import { revalidatePath } from "next/cache"
 
 import { z } from "zod"
 
@@ -22,13 +23,13 @@ export async function addImage(productId:number,Url:string,index:number){
     }
   
 }
-export async function addToFavorites(productId:string, userId:string){
+export async function addToFavorites(productId:number, userId:string){
     try {
-        let newFavorite = await db.insert(favorites).values({productId:productId,userId:userId,}).returning()
-        return newFavorite
+        await db.insert(favorites).values({productId:productId,userId:userId,})
+        revalidatePath('account/favorites') 
     } catch (error) {
         console.error(error)
-        throw new Error('Unable to add to favorites');
+        throw error;
     }
    
    

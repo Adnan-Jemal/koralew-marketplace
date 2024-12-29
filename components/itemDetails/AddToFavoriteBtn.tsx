@@ -36,7 +36,7 @@ export default function AddToFavoriteBtn({
         try {
           setLoading(true);
           const favorited = await isProductFavorited(
-            productID.toString(),
+            productID,
             userSession?.user?.id
           );
           setFavorited(favorited);
@@ -56,7 +56,7 @@ export default function AddToFavoriteBtn({
       try {
         setLoading(true);
         setFavorited(true);
-        await addToFavorites(productID.toString(), userSession.user.id);
+        await addToFavorites(productID, userSession.user.id);
         toast.success("Item Added To Favorites");
         setLoading(false);
       } catch (error) {
@@ -73,7 +73,7 @@ export default function AddToFavoriteBtn({
     if (favorited && userSession?.user?.id) {
       try {
         setLoading(true);
-        await deleteFavorite(productID.toString(), userSession.user.id);
+        await deleteFavorite(productID, userSession.user.id);
         setFavorited(false);
         toast.success("Item Removed From Favorites");
         setLoading(false);

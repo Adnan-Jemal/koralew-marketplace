@@ -7,6 +7,7 @@ import { products} from '@/db/schema/products';
 import { SelectUser, users } from '@/db/schema/users';
 
 import { and, eq, inArray } from 'drizzle-orm';
+import { revalidatePath } from 'next/cache';
 import { redirect } from 'next/navigation';
 export async function deleteUser(userId: SelectUser['id']) {
   // await db.delete(users).where(eq(users.id, id)).);
@@ -49,13 +50,15 @@ export async function deleteUser(userId: SelectUser['id']) {
   }
 }
 
-export async function  deleteFavorite(productId:string,userId:string) {
+export async function  deleteFavorite(productId:number,userId:string) {
   try {
     await db.delete(favorites).where(and(eq(favorites.productId, productId),eq(favorites.userId, userId)))
+    revalidatePath('account/favorites')
   } catch (error) {
     console.error(error)
-    throw new Error('Unable to delete favorites');
+    throw error
   }
+  
   
   
 }
