@@ -1,4 +1,4 @@
-import { SelectProductImages } from "@/db/schema";
+import { SelectProductImages } from "@/db/schema/productImages";
 
 export type ItemWithImages = {
     id: number;
