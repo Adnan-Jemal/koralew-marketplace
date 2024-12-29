@@ -13,7 +13,7 @@ import {
 import { Input } from "../ui/input";
 import { Button } from "../ui/button";
 import { Label } from "../ui/label";
-import { SelectUser } from "@/db/schema";
+import { SelectUser } from "@/db/schema/users";
 import { updateUser } from "@/actions/update";
 
 import { toast } from "sonner";
