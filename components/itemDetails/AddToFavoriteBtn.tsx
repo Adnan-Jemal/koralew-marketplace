@@ -48,7 +48,7 @@ export default function AddToFavoriteBtn({
       }
     }
     checkFavoriteStatus();
-  }, []);
+  }, [productID, userSession?.user?.id]);
 
   const handelAddToFavorites = async () => {
     checkSession();
