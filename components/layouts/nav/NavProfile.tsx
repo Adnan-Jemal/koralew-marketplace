@@ -1,17 +1,17 @@
+"use client";
 import { MenuIcon, User2 } from "lucide-react";
 import {
   DropdownMenu,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { Avatar, AvatarFallback, AvatarImage } from "../../ui/avatar";
-
-import { auth } from "@/auth";
 import NavProfileDropdown from "./NavProfileDropdown";
 import { Button } from "../../ui/button";
 import Link from "next/link";
+import { useSession } from "next-auth/react";
 
-export const NavProfile = async () => {
-  const session = await auth();
+export const NavProfile = () => {
+  const session = useSession().data;
   const user = session?.user;
   if (!user) {
     return (

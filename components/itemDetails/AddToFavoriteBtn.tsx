@@ -33,7 +33,6 @@ export default function AddToFavoriteBtn({ productID }: propTypes) {
         try {
           setLoading(true);
           const favorited = await isProductFavorited(productID);
-          console.log(favorited)
           setFavorited(favorited);
           setLoading(false);
         } catch (error) {

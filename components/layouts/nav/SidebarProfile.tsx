@@ -15,7 +15,10 @@ const SidebarProfile = () => {
         {/* profile image */}
         {session ? (
           <Avatar className="size-12 ">
-            <AvatarImage className="object-cover" src={session.user?.image || undefined} />
+            <AvatarImage
+              className="object-cover"
+              src={session.user?.image || undefined}
+            />
             <AvatarFallback className="text-xl">
               {session?.user?.name?.charAt(0).toUpperCase()}
             </AvatarFallback>
@@ -43,7 +46,7 @@ const SidebarProfile = () => {
       </div>
       <form
         action={() => {
-          logOut('/');
+          logOut("/");
         }}
       >
         <Button variant={"ghost"} className="hover:text-red-500 gap-2">
