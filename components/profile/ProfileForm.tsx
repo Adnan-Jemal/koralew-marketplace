@@ -33,7 +33,7 @@ const formSchema = z.object({
 });
 
 type propType = {
-  userData: SelectUser;
+  userData: SelectUser | undefined;
 };
 
 export default function ProfileForm({ userData }: propType) {
@@ -41,17 +41,17 @@ export default function ProfileForm({ userData }: propType) {
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      name: userData.name || "",
-      email: userData.email,
-      phoneNumber: userData.phoneNumber || "",
-      country: userData.country || "",
-      city: userData.city || "",
-      address: userData.address || "",
+      name: userData?.name || "",
+      email: userData?.email,
+      phoneNumber: userData?.phoneNumber || "",
+      country: userData?.country || "",
+      city: userData?.city || "",
+      address: userData?.address || "",
     },
   });
 
   async function onSubmit(values: z.infer<typeof formSchema>) {
-    await updateUser(userData.id, values).then(() => update());
+    await updateUser(values).then(() => update());
     toast.success("Profile Updated");
     form.reset(form.getValues());
   }

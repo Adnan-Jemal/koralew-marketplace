@@ -4,19 +4,21 @@ import { Copy, PhoneCall } from "lucide-react";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "../ui/dialog";
 import { toast } from "sonner";
 import { useState } from "react";
-import { Session } from "next-auth";
 import { useRouter } from "next/navigation";
+import { useSession } from "next-auth/react";
+
 
 type propTypes = {
   sellerPhoneNumber: string | null;
-  session: Session | null;
 };
 
-export const CallSellerBtn = ({ sellerPhoneNumber, session }: propTypes) => {
+export const CallSellerBtn = ({ sellerPhoneNumber }: propTypes) => {
   const [open, setOpen] = useState(false);
   const router = useRouter();
+  const session = useSession();
+
   const checkSession = () => {
-    if (!session) {
+    if (session.status == "unauthenticated") {
       setOpen(false);
       const redirectURL = encodeURIComponent(window.location.href);
       router.push(`/signin?callbackUrl=${redirectURL}`);

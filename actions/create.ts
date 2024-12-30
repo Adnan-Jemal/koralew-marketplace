@@ -1,16 +1,22 @@
 "use server"
+import { auth } from "@/auth"
 import { addItemFormSchema } from "@/components/create-listing/AddItemForm"
 import { db } from "@/db/db"
 import { favorites } from "@/db/schema/favorites"
 import { productImages } from "@/db/schema/productImages"
 import { InsertProduct, products } from "@/db/schema/products"
 import { revalidatePath } from "next/cache"
+import { redirect } from "next/navigation"
 
 import { z } from "zod"
 
 
-export async function addItem(formValues:z.infer<typeof addItemFormSchema>,uID:string) {
-    let newProduct:InsertProduct = { ...formValues, userId:uID}
+export async function addItem(formValues:z.infer<typeof addItemFormSchema>) {
+    const session = await auth()
+    if(!session?.user?.id){
+        redirect('/signin')
+    }
+    let newProduct:InsertProduct = { ...formValues, userId:session.user.id}
     let addedProduct=await db.insert(products).values(newProduct).returning({newProductId:products.id})
     return addedProduct[0].newProductId
 }
@@ -23,9 +29,14 @@ export async function addImage(productId:number,Url:string,index:number){
     }
   
 }
-export async function addToFavorites(productId:number, userId:string){
+export async function addToFavorites(productId:number){
     try {
-        await db.insert(favorites).values({productId:productId,userId:userId,})
+        const session = await auth()
+        if(!session?.user?.id){
+            redirect('/signin')
+        }
+        
+        await db.insert(favorites).values({productId:productId,userId:session.user.id})
         revalidatePath('account/favorites') 
     } catch (error) {
         console.error(error)

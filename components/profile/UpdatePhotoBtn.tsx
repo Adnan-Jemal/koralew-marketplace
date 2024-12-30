@@ -9,7 +9,6 @@ import {
 } from "@/components/ui/dialog";
 import { updateUserPhoto } from "@/actions/update";
 import React, { useRef, useState } from "react";
-import { Session } from "next-auth";
 import { getDownloadURL, ref, uploadBytesResumable } from "firebase/storage";
 import { storage } from "@/firebase";
 import { toast } from "sonner";
@@ -18,7 +17,7 @@ import { Ellipsis, UploadCloud, XCircle } from "lucide-react";
 import Image from "next/image";
 
 
-const UpdatePhotoBtn = ({ session }: {session:Session}) => {
+const UpdatePhotoBtn = ({userId}:{userId:string | undefined}) => {
   const [imgFile, setImgFile] = useState<File | null>();
   const [open, setOpen] = useState(false);
   const [uploading, setUploading] = useState(false);
@@ -35,12 +34,6 @@ const UpdatePhotoBtn = ({ session }: {session:Session}) => {
   };
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-
-    if (!session) {
-      console.error("You need to be logged in");
-      return;
-    }
-    const userId = session?.user?.id;
     if (!userId) {
       console.error("The user does not exist");
       return;
@@ -59,7 +52,7 @@ const UpdatePhotoBtn = ({ session }: {session:Session}) => {
       const newImageRef = ref(storage, `images/users/${userId}`);
       await uploadBytesResumable(newImageRef, imgFile as Blob);
       const imgUrl = await getDownloadURL(newImageRef);
-      await updateUserPhoto(userId, imgUrl).then(() => update());
+      await updateUserPhoto(imgUrl).then(() => update());
       setOpen(false);
       setImgFile(null);
       setUploading(false);

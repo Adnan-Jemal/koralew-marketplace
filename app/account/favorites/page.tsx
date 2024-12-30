@@ -6,10 +6,6 @@ import React from "react";
 export default async function favoritesPage() {
   const favoriteItems = await getFavoriteItems();
 
-  if (!favoriteItems) {
-    return <div>No Items Found</div>;
-  }
-
   return (
     <div className="p-10 gap-10  flex flex-col">
       <h1 className="text-4xl capitalize font-semibold text-center sm:text-start">

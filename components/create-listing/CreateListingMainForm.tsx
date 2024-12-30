@@ -47,7 +47,7 @@ export default function CreateListingMainForm({
     try {
       setIsUploading(true);
       setUploadMessage("Creating Listing");
-      await addItem(formValues, session.user.id).then(async (newProductId) => {
+      await addItem(formValues).then(async (newProductId) => {
         window.scrollTo({ top: 0, behavior: "smooth" });
         setUploadMessage("Uploading Images");
         // Loop through all imgFiles and upload each one

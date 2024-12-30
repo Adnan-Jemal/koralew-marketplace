@@ -1,18 +1,22 @@
 "use server"
+import { auth } from '@/auth';
 import SignOut from '@/components/SignOut';
 import { db } from '@/db/db';
 import { favorites } from '@/db/schema/favorites';
 import { productImages } from '@/db/schema/productImages';
 import { products} from '@/db/schema/products';
-import { SelectUser, users } from '@/db/schema/users';
+import { users } from '@/db/schema/users';
 
 import { and, eq, inArray } from 'drizzle-orm';
 import { revalidatePath } from 'next/cache';
 import { redirect } from 'next/navigation';
-export async function deleteUser(userId: SelectUser['id']) {
-  // await db.delete(users).where(eq(users.id, id)).);
-  // await db.delete(productImages).
+export async function deleteUser() {
+  
   try {
+    const session = await auth()
+    const userId=session?.user?.id
+    if(!userId)
+      redirect('/signin')
     // Start a transaction
     await db.transaction(async (trx) => {
       // First, get all product IDs for the specified user
@@ -50,9 +54,12 @@ export async function deleteUser(userId: SelectUser['id']) {
   }
 }
 
-export async function  deleteFavorite(productId:number,userId:string) {
+export async function  deleteFavorite(productId:number) {
   try {
-    await db.delete(favorites).where(and(eq(favorites.productId, productId),eq(favorites.userId, userId)))
+    const session = await auth()
+      if(!session?.user?.id)
+        redirect('/signin')
+    await db.delete(favorites).where(and(eq(favorites.productId, productId),eq(favorites.userId, session.user.id)))
     revalidatePath('account/favorites')
   } catch (error) {
     console.error(error)

@@ -1,10 +1,11 @@
 import { getItem, getItemSeller } from "@/actions/read";
+import AddToFavoriteBtn from "@/components/itemDetails/AddToFavoriteBtn";
 import ItemBreadCrumbs from "@/components/itemDetails/ItemBreadCrumbs";
 import ItemDescription from "@/components/itemDetails/ItemDescription";
 import ItemImages from "@/components/itemDetails/ItemImages";
 import ItemInfo from "@/components/itemDetails/ItemInfo";
 import { SellerProfile } from "@/components/itemDetails/SellerProfile";
-import { ShareAndFavoriteBtns } from "@/components/itemDetails/ShareAndFavoriteBtns";
+import ShareBtn from "@/components/itemDetails/ShareBtn";
 import { SimilarItems } from "@/components/itemDetails/SimilarItems";
 import { Navbar } from "@/components/layouts/nav/Navbar";
 
@@ -17,8 +18,10 @@ export default async function page({ params }: { params: { itemId: string } }) {
       <Navbar />
       <div className="w-[85%] max-w-6xl mx-auto flex justify-between items-center py-4 ">
         <ItemBreadCrumbs category={item.category} />
-        <div className="flex"></div>
-        <ShareAndFavoriteBtns productID={item.id} />
+        <div className="flex">
+          <AddToFavoriteBtn productID={item.id} />
+          <ShareBtn />
+        </div>
       </div>
 
       <div className="max-w-7xl mx-auto w-full flex gap-2 flex-col lg:flex-row ">

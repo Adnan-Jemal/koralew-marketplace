@@ -3,27 +3,24 @@ import { Button } from "../ui/button";
 import { addToFavorites } from "@/actions/create";
 import { toast } from "sonner";
 import { Heart, HeartCrack } from "lucide-react";
-import { Session } from "next-auth";
 import { useEffect, useState } from "react";
 import { isProductFavorited } from "@/actions/read";
 import { deleteFavorite } from "@/actions/delete";
 import { useRouter } from "next/navigation";
+import { useSession } from "next-auth/react";
 
 type propTypes = {
   productID: number;
-  userSession: Session | null;
 };
 
-export default function AddToFavoriteBtn({
-  productID,
-  userSession,
-}: propTypes) {
+export default function AddToFavoriteBtn({ productID }: propTypes) {
   const [favorited, setFavorited] = useState<boolean>(false);
   const [loading, setLoading] = useState<boolean>(false);
   const router = useRouter();
+  const session = useSession();
 
   const checkSession = () => {
-    if (!userSession) {
+    if (session.status == "unauthenticated") {
       const redirectURL = encodeURIComponent(window.location.href);
       router.push(`/signin?callbackUrl=${redirectURL}`);
       toast.info("Please Sign in First");
@@ -32,13 +29,11 @@ export default function AddToFavoriteBtn({
 
   useEffect(() => {
     async function checkFavoriteStatus() {
-      if (userSession?.user?.id) {
+      if (session.status == "authenticated") {
         try {
           setLoading(true);
-          const favorited = await isProductFavorited(
-            productID,
-            userSession?.user?.id
-          );
+          const favorited = await isProductFavorited(productID);
+          console.log(favorited)
           setFavorited(favorited);
           setLoading(false);
         } catch (error) {
@@ -48,15 +43,15 @@ export default function AddToFavoriteBtn({
       }
     }
     checkFavoriteStatus();
-  }, [productID, userSession?.user?.id]);
+  }, [productID, session.status]);
 
   const handelAddToFavorites = async () => {
     checkSession();
-    if (userSession?.user?.id) {
+    if (session.status == "authenticated") {
       try {
         setLoading(true);
         setFavorited(true);
-        await addToFavorites(productID, userSession.user.id);
+        await addToFavorites(productID);
         toast.success("Item Added To Favorites");
         setLoading(false);
       } catch (error) {
@@ -70,10 +65,10 @@ export default function AddToFavoriteBtn({
 
   const handelRemoveFromFavorites = async () => {
     checkSession();
-    if (favorited && userSession?.user?.id) {
+    if (favorited && session.status == "authenticated") {
       try {
         setLoading(true);
-        await deleteFavorite(productID, userSession.user.id);
+        await deleteFavorite(productID);
         setFavorited(false);
         toast.success("Item Removed From Favorites");
         setLoading(false);

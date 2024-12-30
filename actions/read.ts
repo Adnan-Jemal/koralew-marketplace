@@ -7,14 +7,19 @@ import { productImages } from "@/db/schema/productImages";
 import { products } from "@/db/schema/products";
 import { SelectUser, users } from "@/db/schema/users";
 import { ItemWithImages } from "@/lib/types";
-import { and, eq,ne,sql } from "drizzle-orm";
+import { and, desc, eq,ne,sql } from "drizzle-orm";
 import { revalidatePath } from "next/cache";
+import { redirect } from "next/navigation";
 
 
 
-export async function getUserById(id: SelectUser['id']) {
+export async function getUser() {
   try {
-    const user = await db.select().from(users).where(eq(users.id, id));
+    const session = await auth()
+    if(!session?.user?.id){
+      throw new Error('not authenticated')
+    }
+    const user = await db.select().from(users).where(eq(users.id, session.user.id));
     return user.at(0)
   } catch (error) {
     console.error(error)
@@ -25,13 +30,10 @@ export async function getUserById(id: SelectUser['id']) {
 }
 
 export async function getUserItems() {
-  
-  const session = await auth()
-  if(!session?.user?.id){
-    console.error("no user id")
-    return
-  }
   try {
+    const session = await auth()
+    if(!session?.user?.id)
+      redirect('/signin')
     const items = await db
     .select({
       id: products.id,
@@ -63,7 +65,6 @@ export async function getUserItems() {
   
 }
 export async function getCategoryItems(category:string) {
-
     const items = await db
     .select({
       id: products.id,
@@ -149,10 +150,13 @@ export async function getItemSeller(userId:string) {
   
 }
 
-export async function isProductFavorited(productId:number, userId: string) {
+export async function isProductFavorited(productId:number) {
   try {
+    const session = await auth()
+      if(!session?.user?.id)
+         redirect('/signin')
     const result = await db.select().from(favorites)
-      .where(and(eq(favorites.productId, productId),eq(favorites.userId, userId)))
+      .where(and(eq(favorites.productId, productId),eq(favorites.userId, session.user.id)))
     return result.length > 0; 
   } catch (error) {
     console.error('Error checking favorite status:', error);
@@ -163,6 +167,9 @@ export async function isProductFavorited(productId:number, userId: string) {
 export async function getFavoriteItems() {
   
   try {
+    const session = await auth()
+    if(!session?.user?.id)
+      redirect('/signin')
     const items = await db
     .select({
       id: products.id,
@@ -181,8 +188,9 @@ export async function getFavoriteItems() {
     }).from(favorites)
     .innerJoin(products, eq(favorites.productId,products.id) )
     .innerJoin(productImages, eq(products.id, productImages.productId))
-    .groupBy(products.id)
-    .orderBy(sql`${products.createdAt} DESC`);
+    .where(eq(favorites.userId,session.user.id))
+    .groupBy(products.id,favorites.createdAt)
+    .orderBy(desc(favorites.createdAt));
     return items as ItemWithImages[];
   } catch (error) {
     console.log(error)

@@ -6,11 +6,9 @@ import { fromDashedToCapitalizedWord } from "@/lib/utils";
 import { Button } from "../ui/button";
 import { Separator } from "../ui/separator";
 import { CallSellerBtn } from "./CallSellerBtn";
-import { auth } from "@/auth";
 import Link from "next/link";
 
 export const SellerProfile = async ({ seller }: { seller: SelectUser }) => {
-  const session = await auth();
   return (
     <div className="flex p-6 border border-secondary rounded-2xl shadow-sm gap-4 flex-col md:flex-row">
       <Avatar className="size-20 mx-auto">
@@ -56,10 +54,7 @@ export const SellerProfile = async ({ seller }: { seller: SelectUser }) => {
         </div>
         <Separator className="my-2" />
         <div className="flex w-full gap-4">
-          <CallSellerBtn
-            session={session}
-            sellerPhoneNumber={seller.phoneNumber}
-          />
+          <CallSellerBtn sellerPhoneNumber={seller.phoneNumber} />
 
           <Button asChild className="w-full flex gap-2 text-lg rounded-xl">
             <Link href="/account/messages">

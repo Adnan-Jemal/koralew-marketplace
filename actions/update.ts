@@ -1,22 +1,40 @@
 "use server"
 
+import { auth } from '@/auth';
 import { db } from '@/db/db';
 import { SelectUser, users } from '@/db/schema/users';
 import { eq } from 'drizzle-orm';
 import { revalidatePath } from 'next/cache';
+import { redirect } from 'next/navigation';
 
 
 
 
-export async function updateUser(id: SelectUser['id'], data: Partial<Omit<SelectUser, 'id'>>) {
-  await db.update(users).set(data).where(eq(users.id, id));
-}
-export async function updateUserPhoto(userId: SelectUser['id'], imgUrl: string) {
+export async function updateUser( data: Partial<Omit<SelectUser, 'id'>>) {
   try {
-    await db.update(users).set({ image: imgUrl }).where(eq(users.id, userId));
+     const session = await auth()
+      if(!session?.user?.id){
+        redirect('/signin') 
+        
+      }
+        
+    await db.update(users).set(data).where(eq(users.id, session.user.id));
+  } catch (error) {
+    console.error(error);
+    throw error
+  }
+  
+}
+export async function updateUserPhoto(imgUrl: string) {
+  try {
+    const session = await auth()
+      if(!session?.user?.id)
+        redirect('/signin')
+    await db.update(users).set({ image: imgUrl }).where(eq(users.id, session.user.id));
     revalidatePath('/account/profile')
   } catch (error) {
     console.log(error);
+    throw error
   }
   
   // const session = await auth();
@@ -54,8 +72,8 @@ export async function updateUserPhoto(userId: SelectUser['id'], imgUrl: string) 
 
 
 
-export async function clgImag(formdata:FormData) {
-  const image = formdata.get('profileImg');
-  console.log(image)
+// export async function clgImag(formdata:FormData) {
+//   const image = formdata.get('profileImg');
+//   console.log(image)
  
-}
+// }

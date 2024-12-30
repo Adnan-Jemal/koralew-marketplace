@@ -14,17 +14,14 @@ import { useState } from "react";
 import { Ellipsis} from "lucide-react";
 import { deleteUser } from "@/actions/delete";
 
-type propTypes = {
-  userId: string;
-};
 
-const DeleteAccount = ({ userId }: propTypes) => {
+const DeleteAccount = () => {
   const [loading, setLoading] = useState(false);
   //delete user and data from db and navigate /
   const DeleteUser = async () => {
     setLoading(true);
     try {
-      await deleteUser(userId);
+      await deleteUser();
       toast("User Deleted Successfully");
       setLoading(false);
     } catch (error) {
