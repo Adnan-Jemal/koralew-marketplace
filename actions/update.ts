@@ -14,10 +14,8 @@ export async function updateUser( data: Partial<Omit<SelectUser, 'id'>>) {
   try {
      const session = await auth()
       if(!session?.user?.id){
-        redirect('/signin') 
-        
-      }
-        
+        return  redirect('/signin') 
+        }  
     await db.update(users).set(data).where(eq(users.id, session.user.id));
   } catch (error) {
     console.error(error);
@@ -29,7 +27,7 @@ export async function updateUserPhoto(imgUrl: string) {
   try {
     const session = await auth()
       if(!session?.user?.id)
-        redirect('/signin')
+        return redirect('/signin')
     await db.update(users).set({ image: imgUrl }).where(eq(users.id, session.user.id));
     revalidatePath('/account/profile')
   } catch (error) {

@@ -1,31 +1,24 @@
 "use client";
 import { addImage, addItem } from "@/actions/create";
-
 import AddItemHeader from "@/components/create-listing/AddItemHeader";
 import AddItemForm, { addItemFormSchema } from "./AddItemForm";
 import UploadedImages from "@/components/create-listing/UploadedImages";
 import { storage } from "@/firebase";
 import { getDownloadURL, ref, uploadBytesResumable } from "firebase/storage";
-import { Session } from "next-auth";
 import { useRouter } from "next/navigation";
-
 import { useState } from "react";
 import { toast } from "sonner";
 import { z } from "zod";
 import UploadLoading from "./UploadLoading";
 import AddItemImgInput from "@/components/create-listing/AddItemImgInput";
+import { useSession } from "next-auth/react";
 
-
-export default function CreateListingMainForm({
-  session,
-}: {
-  session: Session | null;
-}) {
-
+export default function CreateListingMainForm() {
   const [imgFiles, setImgFiles] = useState<File[]>([]);
   const [imgError, setImgError] = useState<string>("");
   const [isUploading, setIsUploading] = useState<boolean>(false);
   const [uploadMessage, setUploadMessage] = useState<string>("");
+  const session = useSession().data;
   const router = useRouter();
 
   async function onSubmit(formValues: z.infer<typeof addItemFormSchema>) {

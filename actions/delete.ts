@@ -16,7 +16,7 @@ export async function deleteUser() {
     const session = await auth()
     const userId=session?.user?.id
     if(!userId)
-      redirect('/signin')
+      return redirect('/signin')
     // Start a transaction
     await db.transaction(async (trx) => {
       // First, get all product IDs for the specified user
@@ -58,7 +58,7 @@ export async function  deleteFavorite(productId:number) {
   try {
     const session = await auth()
       if(!session?.user?.id)
-        redirect('/signin')
+        return redirect('/signin')
     await db.delete(favorites).where(and(eq(favorites.productId, productId),eq(favorites.userId, session.user.id)))
     revalidatePath('account/favorites')
   } catch (error) {

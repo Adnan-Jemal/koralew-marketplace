@@ -14,7 +14,7 @@ import { z } from "zod"
 export async function addItem(formValues:z.infer<typeof addItemFormSchema>) {
     const session = await auth()
     if(!session?.user?.id){
-        redirect('/signin')
+        return redirect('/signin')
     }
     let newProduct:InsertProduct = { ...formValues, userId:session.user.id}
     let addedProduct=await db.insert(products).values(newProduct).returning({newProductId:products.id})
@@ -33,7 +33,7 @@ export async function addToFavorites(productId:number){
     try {
         const session = await auth()
         if(!session?.user?.id){
-            redirect('/signin')
+            return redirect('/signin')
         }
         
         await db.insert(favorites).values({productId:productId,userId:session.user.id})
