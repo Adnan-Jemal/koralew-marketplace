@@ -11,7 +11,7 @@ export default async function MyItemsPage() {
       <h1 className="text-4xl capitalize font-semibold text-center sm:text-start">
         Your Listed Items
       </h1>
-      {userItems && (
+      {userItems.length < 1 && (
         <div className="flex flex-col w-full h-80 items-center justify-center text-center">
           <PackageOpen className="size-36" />
           <h2 className="text-3xl font-bold">No Items Found</h2>

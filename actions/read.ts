@@ -14,11 +14,11 @@ import { redirect } from "next/navigation";
 
 
 export async function getUser() {
+  const session = await auth()
+  if(!session?.user?.id){
+    redirect('/signin')
+  }
   try {
-    const session = await auth()
-    if(!session?.user?.id){
-      throw new Error('not authenticated')
-    }
     const user = await db.select().from(users).where(eq(users.id, session.user.id));
     return user.at(0)
   } catch (error) {
@@ -29,11 +29,12 @@ export async function getUser() {
   
 }
 
-export async function getUserItems() {
-  try {
-    const session = await auth()
+export async function getUserItems() { 
+     const session = await auth()
     if(!session?.user?.id)
       redirect('/signin')
+  try {
+
     const items = await db
     .select({
       id: products.id,
@@ -150,11 +151,11 @@ export async function getItemSeller(userId:string) {
   
 }
 
-export async function isProductFavorited(productId:number) {
-  try {
-    const session = await auth()
+export async function isProductFavorited(productId:number) {    
+  const session = await auth()
       if(!session?.user?.id)
          redirect('/signin')
+  try {
     const result = await db.select().from(favorites)
       .where(and(eq(favorites.productId, productId),eq(favorites.userId, session.user.id)))
     return result.length > 0; 
@@ -165,11 +166,11 @@ export async function isProductFavorited(productId:number) {
 }
 
 export async function getFavoriteItems() {
-  
-  try {
     const session = await auth()
     if(!session?.user?.id)
       redirect('/signin')
+  try {
+  
     const items = await db
     .select({
       id: products.id,
