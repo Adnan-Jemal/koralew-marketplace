@@ -9,7 +9,6 @@ import NavProfileDropdown from "./NavProfileDropdown";
 import { Button } from "../../ui/button";
 import Link from "next/link";
 import { useSession } from "next-auth/react";
-import { Skeleton } from "@/components/ui/skeleton";
 
 export const NavProfile = () => {
   const session = useSession();
@@ -23,10 +22,10 @@ export const NavProfile = () => {
   }
   if (session.status == "loading") {
     return (
-      <Skeleton className=" cursor-pointer border-secondary border-2 hover:shadow-md transition-shadow rounded-2xl px-2 py-1.5 gap-3 flex items-center">
+      <div className=" cursor-pointer border-secondary border-2 hover:shadow-md transition-shadow rounded-2xl px-2 py-1.5 gap-3 flex items-center">
         <MenuIcon />
         <User2 className="bg-secondary rounded-full p-2 h-[40px] w-[40px]" />
-      </Skeleton>
+      </div>
     );
   }
   return (
