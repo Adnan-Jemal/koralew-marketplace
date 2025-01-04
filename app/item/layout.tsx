@@ -1,17 +1,14 @@
 import { Navbar } from "@/components/layouts/nav/Navbar";
-import React from "react";
 
-export const layout = ({
+export default function ItemLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
-}>) => {
+}>) {
   return (
-    <>
+    <div>
       <Navbar />
       {children}
-    </>
+    </div>
   );
-};
-
-export default layout;
+}
