@@ -1,5 +1,5 @@
 import { getItem, getItemSeller } from "@/actions/read";
-import AddToFavoriteBtn from "@/components/itemDetails/AddToFavoriteBtn";
+import FavoriteBtns from "@/components/itemDetails/FavoriteBtns";
 import ItemBreadCrumbs from "@/components/itemDetails/ItemBreadCrumbs";
 import ItemDescription from "@/components/itemDetails/ItemDescription";
 import ItemImages from "@/components/itemDetails/ItemImages";
@@ -19,7 +19,7 @@ export default async function page({ params }: { params: { itemId: string } }) {
       <div className="w-[85%] max-w-6xl mx-auto flex justify-between items-center py-4 ">
         <ItemBreadCrumbs category={item.category} />
         <div className="flex">
-          <AddToFavoriteBtn productID={item.id} />
+          <FavoriteBtns productID={parseInt(params.itemId)} />
           <ShareBtn />
         </div>
       </div>

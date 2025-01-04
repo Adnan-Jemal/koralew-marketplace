@@ -1,3 +1,4 @@
+import 'server-only'
 import { auth } from "@/auth";
 import { db } from "@/db/db"
 import { favorites } from "@/db/schema/favorites";
@@ -151,15 +152,15 @@ export async function getItemSeller(userId:string) {
 
 export async function isProductFavorited(productId:number) {    
   const session = await auth()
-      if(!session?.user?.id)
-        return redirect('/signin')
+  if(!session?.user?.id)
+    return redirect('/signin')
   try {
     const result = await db.select().from(favorites)
-      .where(and(eq(favorites.productId, productId),eq(favorites.userId, session.user.id)))
+      .where(and(eq(favorites.productId, productId),eq(favorites.userId, session?.user?.id)))
     return result.length > 0; 
   } catch (error) {
     console.error('Error checking favorite status:', error);
-    throw new Error('Unable to check favorite status');
+    throw error
   }
 }
 
