@@ -38,7 +38,6 @@ export default function ItemLoading() {
           </div>
 
           <Skeleton className="h-32 w-full md:h-44" />
-          <Skeleton className="h-8 w-full md:h-8" />
         </div>
       </div>
 
