@@ -21,20 +21,21 @@ export default async function Home({ searchParams }: propType) {
 
       <div className="max-w-7xl mx-auto flex  flex-wrap gap-8 mt-10 items-center justify-around ">
         {categoryItems?.map((item) => {
-          
           return (
             <Suspense
-            key={item.id}
+              key={item.id}
               fallback={
                 <Skeleton className="bg-primary-foreground w-64 h-80 rounded-2xl shadow-md cursor-pointer" />
               }
             >
-              {" "}
               <ItemCard
                 id={item.id}
                 key={item.id}
                 title={item.title}
-                imageUrl={item.images.find(img=>img.order==1)?.imageUrl||item.images[0].imageUrl}
+                imageUrl={
+                  item.images.find((img) => img.order == 1)?.imageUrl ||
+                  item.images[0].imageUrl
+                }
                 price={parseFloat(item.price)}
                 condition={item.condition}
               />

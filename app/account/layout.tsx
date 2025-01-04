@@ -2,7 +2,7 @@ import AccountHeader from "@/components/layouts/nav/AccountHeader";
 import Sidebar from "@/components/layouts/nav/Sidebar";
 
 
-export default function RootLayout({
+export default function AccountLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
