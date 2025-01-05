@@ -1,7 +1,7 @@
 import { Skeleton } from "@/components/ui/skeleton";
 import React from "react";
 
-export default function loading() {
+export default function MyItemsLoading() {
   return (
     <div className="p-10 gap-10 flex flex-col">
       <h1 className="text-4xl capitalize font-semibold  text-center sm:text-start">Your Listed Items</h1>

@@ -17,10 +17,10 @@ export default function ItemLoading() {
         <div className="flex lg:w-[50%] w-[90%] gap-4 m-4">
           {/* Image Section */}
           <div className="flex  flex-col gap-4 justify-center lg:justify-start">
-            <Skeleton className="size-20 md:w-28 md:h-28 lg:w-32 lg:h-32" />
-            <Skeleton className="size-20 md:w-28 md:h-28 lg:w-32 lg:h-32" />
-            <Skeleton className="size-20 md:w-28 md:h-28 lg:w-32 lg:h-32" />
-            <Skeleton className="size-20 md:w-28 md:h-28 lg:w-32 lg:h-32" />
+            <Skeleton className="size-20 md:size-28" />
+            <Skeleton className="size-20 md:size-28" />
+            <Skeleton className="size-20 md:size-28" />
+            <Skeleton className="size-20 md:size-28" />
           </div>
           <Skeleton className=" w-full mx-auto " />
         </div>
@@ -42,12 +42,10 @@ export default function ItemLoading() {
       </div>
 
       {/* Similar Items Section */}
-      <div className="max-w-7xl mx-auto mt-12 md:mt-16">
-        <h3 className="text-lg font-semibold mb-4">
-          <Skeleton className="h-6 w-40 m-4" />
-        </h3>
-        <div className="flex flex-wrap gap-12 m-4">
-          <Skeleton className="w-56 h-72" />
+      <div className="max-w-7xl space-y-8 mx-auto mt-12 md:mt-16">
+        <Skeleton className="h-6 w-40 m-4" />
+
+        <div className="flex flex-wrap gap-12 m-4 items-center justify-center">
           <Skeleton className="w-56 h-72" />
           <Skeleton className="w-56 h-72" />
           <Skeleton className="w-56 h-72" />
