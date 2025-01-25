@@ -6,9 +6,10 @@ import { Skeleton } from "@/components/ui/skeleton";
 import { Suspense } from "react";
 
 type propType = {
-  searchParams: { category: string };
+  searchParams: Promise<{ category: string }>;
 };
-export default async function Home({ searchParams }: propType) {
+export default async function Home(props: propType) {
+  const searchParams = await props.searchParams;
   const capitalizedCategory =
     searchParams?.category?.charAt(0).toUpperCase() +
     searchParams.category?.slice(1);

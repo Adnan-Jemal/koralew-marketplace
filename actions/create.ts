@@ -30,12 +30,12 @@ export async function addImage(productId:number,Url:string,index:number){
   
 }
 export async function addToFavorites(productId:number){
-    try {
-        const session = await auth()
+         const session = await auth()
         if(!session?.user?.id){
             return redirect('/signin')
         }
-        
+         try {
+  
         await db.insert(favorites).values({productId:productId,userId:session.user.id})
         revalidatePath('account/favorites') 
     } catch (error) {

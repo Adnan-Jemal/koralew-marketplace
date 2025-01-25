@@ -8,7 +8,8 @@ import { SellerProfile } from "@/components/itemDetails/SellerProfile";
 import ShareBtn from "@/components/itemDetails/ShareBtn";
 import { SimilarItems } from "@/components/itemDetails/SimilarItems";
 
-export default async function page({ params }: { params: { itemId: string } }) {
+export default async function page(props: { params: Promise<{ itemId: string }> }) {
+  const params = await props.params;
   const item = await getItem(Number(params.itemId));
   const seller = await getItemSeller(item.userId);
 

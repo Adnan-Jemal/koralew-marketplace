@@ -7,7 +7,7 @@ import { products } from "@/db/schema/products";
 import { SelectUser, users } from "@/db/schema/users";
 import { ItemWithImages } from "@/lib/types";
 import { and, desc, eq,ne,sql } from "drizzle-orm";
-import { revalidatePath } from "next/cache";
+
 import { redirect } from "next/navigation";
 
 
@@ -85,7 +85,7 @@ export async function getCategoryItems(category:string) {
     .innerJoin(productImages, eq(products.id, productImages.productId))
     .where(eq(products.category,category))
     .groupBy(products.id)
-    revalidatePath(`/?category=${category.toLowerCase}`)
+   
   
     return items as ItemWithImages[];
   
@@ -144,7 +144,7 @@ export async function getItemSeller(userId:string) {
     .innerJoin(productImages, eq(products.id, productImages.productId))
     .where(and(eq(products.category,category),ne(products.id,productId)))
     .groupBy(products.id)
-    revalidatePath(`/?category=${category.toLowerCase}`)
+    
   
     return items as ItemWithImages[];
   
