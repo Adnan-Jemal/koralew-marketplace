@@ -7,12 +7,12 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { useSession } from "next-auth/react";
 
-
 type propTypes = {
   sellerPhoneNumber: string | null;
+  disabled: boolean;
 };
 
-export const CallSellerBtn = ({ sellerPhoneNumber }: propTypes) => {
+export const CallSellerBtn = ({ sellerPhoneNumber, disabled }: propTypes) => {
   const [open, setOpen] = useState(false);
   const router = useRouter();
   const session = useSession();
@@ -58,6 +58,7 @@ export const CallSellerBtn = ({ sellerPhoneNumber }: propTypes) => {
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <Button
+        disabled={disabled}
         onClick={checkSession}
         className="w-full flex gap-2 text-lg rounded-xl"
       >

@@ -7,8 +7,14 @@ import { Button } from "../ui/button";
 import { Separator } from "../ui/separator";
 import { CallSellerBtn } from "./CallSellerBtn";
 import Link from "next/link";
+import { Session } from "next-auth";
 
-export const SellerProfile = async ({ seller }: { seller: SelectUser }) => {
+type SellerProfileTypes = { seller: SelectUser; session: Session | null };
+
+export const SellerProfile = async ({
+  seller,
+  session,
+}: SellerProfileTypes) => {
   return (
     <div className="flex p-6 border border-secondary rounded-2xl shadow-sm gap-4 flex-col md:flex-row">
       <Avatar className="size-20 mx-auto">
@@ -54,13 +60,21 @@ export const SellerProfile = async ({ seller }: { seller: SelectUser }) => {
         </div>
         <Separator className="my-2" />
         <div className="flex w-full gap-4">
-          <CallSellerBtn sellerPhoneNumber={seller.phoneNumber} />
-
-          <Button asChild className="w-full flex gap-2 text-lg rounded-xl">
-            <Link href="/account/messages">
+          <CallSellerBtn
+            disabled={session?.user?.id == seller.id}
+            sellerPhoneNumber={seller.phoneNumber}
+          />
+          {session?.user?.id == seller.id ? (
+            <Button disabled className="w-full flex gap-2 text-lg rounded-xl">
               <MessageSquareText /> Message
-            </Link>
-          </Button>
+            </Button>
+          ) : (
+            <Button asChild className="w-full flex gap-2 text-lg rounded-xl">
+              <Link href="/account/messages">
+                <MessageSquareText /> Message
+              </Link>
+            </Button>
+          )}
         </div>
       </div>
     </div>

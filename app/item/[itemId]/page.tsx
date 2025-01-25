@@ -1,4 +1,5 @@
 import { getItem, getItemSeller } from "@/actions/read";
+import { auth } from "@/auth";
 import FavoriteBtns from "@/components/itemDetails/FavoriteBtns";
 import ItemBreadCrumbs from "@/components/itemDetails/ItemBreadCrumbs";
 import ItemDescription from "@/components/itemDetails/ItemDescription";
@@ -8,8 +9,11 @@ import { SellerProfile } from "@/components/itemDetails/SellerProfile";
 import ShareBtn from "@/components/itemDetails/ShareBtn";
 import { SimilarItems } from "@/components/itemDetails/SimilarItems";
 
-export default async function page(props: { params: Promise<{ itemId: string }> }) {
+export default async function page(props: {
+  params: Promise<{ itemId: string }>;
+}) {
   const params = await props.params;
+  const session = await auth();
   const item = await getItem(Number(params.itemId));
   const seller = await getItemSeller(item.userId);
 
@@ -36,7 +40,7 @@ export default async function page(props: { params: Promise<{ itemId: string }> 
             condition={item.condition}
           />
 
-          <SellerProfile seller={seller} />
+          <SellerProfile seller={seller} session={session} />
           <ItemDescription description={item.description} />
         </div>
       </div>
