@@ -9,8 +9,7 @@ import {
   UserCog,
 } from "lucide-react";
 import Link from "next/link";
-import { usePathname } from "next/navigation";
-import React, { Dispatch, SetStateAction} from "react";
+import React, { Dispatch, SetStateAction, useEffect, useState } from "react";
 
 const menuItems = [
   {
@@ -50,24 +49,30 @@ type PropType = {
 };
 
 const SidebarMenuItems = ({ setOpen }: PropType) => {
-  const pathname = usePathname();
+  const [currentPath, setCurrentPath] = useState("account/dashboard");
+  useEffect(() => {
+    setCurrentPath(
+      typeof window !== "undefined" ? window.location.pathname : ""
+    );
+  }, []);
 
   return (
     <>
       {menuItems.map((item) => (
         <Button
-          key={item.text}
+        key={item.text}
           asChild
           onClick={() => {
+            setCurrentPath(item.link);
             if (setOpen) setOpen(false);
           }}
           variant={"outline"}
           size={"lg"}
           className={`flex items-center justify-start w-full text-md border-none transition-colors select-none ${
-            pathname === item.link && "bg-secondary"
+            currentPath === item.link && "bg-secondary"
           }`}
         >
-          <Link href={item.link}>
+          <Link key={item.text} href={item.link}>
             {item.icon} {item.text}
           </Link>
         </Button>

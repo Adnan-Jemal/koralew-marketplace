@@ -9,7 +9,7 @@ type propTypes = {
   setError: Dispatch<SetStateAction<string>>;
 };
 const maxImgSizeInBytes = 2 * 1024 * 1024;
-export default function UploadedImages({
+export default function AddedImages({
   setImages,
   images,
   setError,

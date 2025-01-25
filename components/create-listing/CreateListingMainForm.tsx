@@ -2,7 +2,6 @@
 import { addImage, addItem } from "@/actions/create";
 import AddItemHeader from "@/components/create-listing/AddItemHeader";
 import AddItemForm, { addItemFormSchema } from "./AddItemForm";
-import UploadedImages from "@/components/create-listing/UploadedImages";
 import { storage } from "@/firebase";
 import { getDownloadURL, ref, uploadBytesResumable } from "firebase/storage";
 import { useRouter } from "next/navigation";
@@ -11,14 +10,19 @@ import { toast } from "sonner";
 import { z } from "zod";
 import UploadLoading from "./UploadLoading";
 import AddItemImgInput from "@/components/create-listing/AddItemImgInput";
-import { useSession } from "next-auth/react";
+import { Session } from "next-auth";
+import AddedImages from "./AddedImages";
 
-export default function CreateListingMainForm() {
+export default function CreateListingMainForm({
+  session,
+}: {
+  session: Session | null;
+}) {
   const [imgFiles, setImgFiles] = useState<File[]>([]);
   const [imgError, setImgError] = useState<string>("");
   const [isUploading, setIsUploading] = useState<boolean>(false);
   const [uploadMessage, setUploadMessage] = useState<string>("");
-  const session = useSession().data;
+
   const router = useRouter();
 
   async function onSubmit(formValues: z.infer<typeof addItemFormSchema>) {
@@ -95,7 +99,7 @@ export default function CreateListingMainForm() {
           <div className="w-full p-6 shadow-lg rounded-3xl dark:border dark:border-secondary mt-3 flex flex-col gap-4">
             <h2 className="text-xl ml-1 ">PHOTOS</h2>
             {imgFiles.length > 0 ? (
-              <UploadedImages
+              <AddedImages
                 setError={setImgError}
                 setImages={setImgFiles}
                 images={imgFiles}
