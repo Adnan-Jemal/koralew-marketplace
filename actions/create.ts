@@ -1,6 +1,6 @@
 "use server";
 import { auth } from "@/auth";
-import { addItemFormSchema } from "@/components/create-listing/AddItemForm";
+import { addItemFormSchema } from "@/components/createEditListing/AddItemForm";
 import { db } from "@/db/db";
 import { favorites } from "@/db/schema/favorites";
 import { productImages } from "@/db/schema/productImages";

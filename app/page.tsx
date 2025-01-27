@@ -17,7 +17,7 @@ export default async function Home(props: propType) {
 
   return (
     <>
-      <Navbar />
+    <Navbar />
       <NavCategories />
 
       <div className="max-w-7xl mx-auto flex  flex-wrap gap-8 mt-10 items-center justify-around ">

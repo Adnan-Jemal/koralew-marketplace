@@ -1,6 +1,6 @@
 "use client";
 import { addImage, addItem } from "@/actions/create";
-import AddItemHeader from "@/components/create-listing/AddItemHeader";
+
 import AddItemForm, { addItemFormSchema } from "./AddItemForm";
 import { storage } from "@/firebase";
 import { getDownloadURL, ref, uploadBytesResumable } from "firebase/storage";
@@ -9,7 +9,7 @@ import { useState } from "react";
 import { toast } from "sonner";
 import { z } from "zod";
 import UploadLoading from "./UploadLoading";
-import AddItemImgInput from "@/components/create-listing/AddItemImgInput";
+import AddItemImgInput from "@/components/createEditListing/AddItemImgInput";
 import { Session } from "next-auth";
 import AddedImages from "./AddedImages";
 
@@ -27,11 +27,7 @@ export default function CreateListingMainForm({
 
   async function onSubmit(formValues: z.infer<typeof addItemFormSchema>) {
     if (imgFiles.length < 2) {
-      setImgError("Please upload 2 or more images");
-      window.scrollTo({ top: 0, behavior: "smooth" });
-      return;
-    }
-    if (imgError != "") {
+      setImgError("Please upload 2 or more images!");
       window.scrollTo({ top: 0, behavior: "smooth" });
       return;
     }
@@ -75,37 +71,24 @@ export default function CreateListingMainForm({
     }
   }
 
-  const handleImgChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const files = Array.from(e.currentTarget.files || []);
-    if (files.length > 8) {
-      setImgError("You can only upload up to 8 images");
-      return;
-    }
-    if (files.length == 1) {
-      setImgError("Please add more than one image");
-      return;
-    } else {
-      setImgError("");
-    }
-    setImgFiles(files);
-  };
-
   return (
     <>
       <div className="relative">
-        <AddItemHeader />
         <div className="sm:max-w-[65%] w-[80%] mx-auto flex flex-col  gap-14   my-16">
           <h1 className="text-center text-4xl font-bold">Create a Listing</h1>
           <div className="w-full p-6 shadow-lg rounded-3xl dark:border dark:border-secondary mt-3 flex flex-col gap-4">
-            <h2 className="text-xl ml-1 ">PHOTOS</h2>
+            <h2 className="text-xl ml-1 ">ITEM IMAGES</h2>
             {imgFiles.length > 0 ? (
               <AddedImages
-                setError={setImgError}
-                setImages={setImgFiles}
-                images={imgFiles}
+                setImgError={setImgError}
+                setImgFiles={setImgFiles}
+                imgFiles={imgFiles}
               />
             ) : (
-              <AddItemImgInput handleChange={handleImgChange} />
+              <AddItemImgInput
+                setImgError={setImgError}
+                setImgFiles={setImgFiles}
+              />
             )}
             <p className="text-sm text-white bg-red-400 w-fit px-2 rounded-md text-center  ">
               {imgError}

@@ -1,5 +1,5 @@
 import { auth } from "@/auth";
-import CreateListingMainForm from "@/components/create-listing/CreateListingMainForm";
+import CreateListingMainForm from "@/components/createEditListing/CreateListingMainForm";
 
 export default async function page() {
   const session = await auth();

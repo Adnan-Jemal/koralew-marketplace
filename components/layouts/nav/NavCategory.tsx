@@ -1,9 +1,5 @@
 "use client";
-import {
-  usePathname,
-  useRouter,
-  useSearchParams,
-} from "next/navigation";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
 
 type propTypes = {
   categoryName: string;
@@ -24,22 +20,19 @@ export default function NavCategory({
   const handelClick = () => {
     params.set("category", categoryLink);
     route.push(`${currentPath}?${params}`);
-    
   };
 
-  if (params.get("category") == categoryLink ) {
+  if (params.get("category") == categoryLink) {
     return (
-      
-        <button
-          className={`flex flex-col items-center cursor-pointer w-full group  transition-opacity hover:opacity-100 `}
-        >
-          {categoryIcon}
-          <p className="text-[.85rem] font-medium mt-1">{categoryName}</p>
-          <div
-            className={`h-[2px] w-full bg-primary transition-colors ease-in rounded-full mt-2 `}
-          ></div>
-        </button>
-     
+      <button
+        className={`flex flex-col items-center cursor-pointer w-full group  transition-opacity hover:opacity-100 `}
+      >
+        {categoryIcon}
+        <p className="text-[.85rem] font-medium mt-1">{categoryName}</p>
+        <div
+          className={`h-[2px] w-full bg-primary transition-colors ease-in rounded-full mt-2 `}
+        ></div>
+      </button>
     );
   }
 

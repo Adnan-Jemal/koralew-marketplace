@@ -8,6 +8,10 @@ import ItemInfo from "@/components/itemDetails/ItemInfo";
 import { SellerProfile } from "@/components/itemDetails/SellerProfile";
 import ShareBtn from "@/components/itemDetails/ShareBtn";
 import { SimilarItems } from "@/components/itemDetails/SimilarItems";
+import { Navbar } from "@/components/layouts/nav/Navbar";
+import { Button } from "@/components/ui/button";
+import { InfoIcon } from "lucide-react";
+import Link from "next/link";
 
 export default async function page(props: {
   params: Promise<{ itemId: string }>;
@@ -19,32 +23,64 @@ export default async function page(props: {
 
   return (
     <>
-      <div className="w-[85%] max-w-6xl mx-auto flex justify-between items-center py-4 ">
-        <ItemBreadCrumbs category={item.category} />
-        <div className="flex">
-          <FavoriteBtns productID={parseInt(params.itemId)} />
-          <ShareBtn />
-        </div>
-      </div>
+      <Navbar />
+      <div className="max-w-7xl mx-auto">
+        {seller.id == session?.user?.id && (
+          <div className="bg-secondary mt-6 mx-8 py-6 px-6 flex items-center justify-center gap-4 rounded-xl flex-col sm:flex-row text-center sm:text-left">
+            <InfoIcon size={72} className="size-20" />
+            <div className="sm:max-w-[50%] mx-4">
+              <h3 className="text-2xl font-semibold">This is Your Item</h3>
+              <p className="">
+                You are viewing an item you listed. Use the buttons here to
+                update the details or make changes to your listing.
+              </p>
+            </div>
+            <div className="flex flex-wrap items-center justify-end mx-4 gap-4">
+              <Button asChild size={"lg"} className=" text-lg rounded-xl ">
+                <Link href={`/item/${params.itemId}/edit`}>Edit Item</Link>
+              </Button>
+              <Button
+                size={"lg"}
+                variant={"outline"}
+                className=" text-lg rounded-xl p-6"
+              >
+                Delete Item
+              </Button>
+            </div>
+          </div>
+        )}
 
-      <div className="max-w-7xl mx-auto w-full flex gap-2 flex-col lg:flex-row ">
-        <ItemImages images={item?.images.sort((a, b) => a.order - b.order)} />
-        <div className="w-[90%] mx-auto lg:w-[45%] flex flex-col pt-4 gap-4 ">
-          <h2 className="text-5xl  ">{item.title}</h2>
-          <p className="text-4xl py-2">
-            ${parseInt(item.price).toLocaleString()}
-          </p>
-          <ItemInfo
-            createdAt={item.createdAt}
-            category={item.category}
-            condition={item.condition}
-          />
-
-          <SellerProfile seller={seller} session={session} />
-          <ItemDescription description={item.description} />
+        <div className="w-[85%]  mx-auto flex justify-between items-center py-4 ">
+          <ItemBreadCrumbs category={item.category} />
+          <div className="flex">
+            <FavoriteBtns
+              session={session}
+              sellerId={seller.id}
+              productID={parseInt(params.itemId)}
+            />
+            <ShareBtn />
+          </div>
         </div>
+
+        <div className=" mx-auto w-full flex gap-2 flex-col lg:flex-row ">
+          <ItemImages images={item?.images.sort((a, b) => a.order - b.order)} />
+          <div className="w-[90%] mx-auto lg:w-[45%] flex flex-col pt-4 gap-4 ">
+            <h2 className="text-5xl  ">{item.title}</h2>
+            <p className="text-4xl py-2">
+              ${parseInt(item.price).toLocaleString()}
+            </p>
+            <ItemInfo
+              createdAt={item.createdAt}
+              category={item.category}
+              condition={item.condition}
+            />
+
+            <SellerProfile seller={seller} session={session} />
+            <ItemDescription description={item.description} />
+          </div>
+        </div>
+        <SimilarItems category={item.category} itemId={item.id} />
       </div>
-      <SimilarItems category={item.category} itemId={item.id} />
     </>
   );
 }
