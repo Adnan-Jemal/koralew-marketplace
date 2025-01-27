@@ -13,7 +13,7 @@ import {
 import { Input } from "../ui/input";
 import { Button } from "../ui/button";
 import { Label } from "../ui/label";
-import { conditionEnum } from "@/db/schema/products";
+import { conditionEnum, SelectProduct } from "@/db/schema/products";
 import { Ellipsis } from "lucide-react";
 import { Textarea } from "../ui/textarea";
 import {
@@ -49,16 +49,18 @@ export const addItemFormSchema = z.object({
 
 type propTypes = {
   onSubmit: (values: z.infer<typeof addItemFormSchema>) => Promise<void>;
+  item?: SelectProduct;
 };
 
-export default function AddItemForm({ onSubmit }: propTypes) {
+export default function AddItemForm({ onSubmit, item }: propTypes) {
   const form = useForm<z.infer<typeof addItemFormSchema>>({
     resolver: zodResolver(addItemFormSchema),
     defaultValues: {
-      title: "",
-      category: "",
-      description: "",
-      price: "",
+      title: item?.title || "",
+      category: item?.category || "",
+      description: item?.description || "",
+      price: item?.price || "",
+      condition: item?.condition ,
     },
   });
 
@@ -198,6 +200,7 @@ export default function AddItemForm({ onSubmit }: propTypes) {
             {form.formState.isSubmitting ? (
               <Ellipsis className="text-4xl animate-bounce" />
             ) : (
+              item?"Update Item":
               "List Item"
             )}
           </Button>

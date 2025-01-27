@@ -3,7 +3,7 @@ import { auth } from "@/auth";
 import { db } from "@/db/db";
 import { favorites } from "@/db/schema/favorites";
 import { productImages } from "@/db/schema/productImages";
-import { products } from "@/db/schema/products";
+import { products, SelectProduct } from "@/db/schema/products";
 import { SelectUser, users } from "@/db/schema/users";
 import { ItemWithImages } from "@/lib/types";
 import { and, desc, eq, ne, sql } from "drizzle-orm";
@@ -195,4 +195,17 @@ export async function getFavoriteItems() {
     console.log(error);
     throw error;
   }
+}
+
+export function getItemImgs(productId: number) {
+  const productImgs = db
+    .select()
+    .from(productImages)
+    .where(eq(productImages.productId, productId));
+  return productImgs;
+}
+
+export function getItemWithOutImgs(itemId: number) {
+  const item = db.select().from(products).where(eq(products.id, itemId));
+  return item;
 }

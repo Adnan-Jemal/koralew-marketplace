@@ -18,7 +18,7 @@ export default async function page(props: {
 }) {
   const params = await props.params;
   const session = await auth();
-  const item = await getItem(Number(params.itemId));
+  const item = await getItem(parseInt(params.itemId));
   const seller = await getItemSeller(item.userId);
 
   return (
@@ -35,7 +35,7 @@ export default async function page(props: {
                 update the details or make changes to your listing.
               </p>
             </div>
-            <div className="flex flex-wrap items-center justify-end mx-4 gap-4">
+            <div className="flex flex-wrap items-center justify-center mx-4 gap-4">
               <Button asChild size={"lg"} className=" text-lg rounded-xl ">
                 <Link href={`/item/${params.itemId}/edit`}>Edit Item</Link>
               </Button>
