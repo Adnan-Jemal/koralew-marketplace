@@ -1,6 +1,7 @@
 "use client";
 import { UploadCloud } from "lucide-react";
 import React, { Dispatch, SetStateAction, useRef } from "react";
+import { toast } from "sonner";
 const maxImgSizeInBytes = 2 * 1024 * 1024;
 const MaxNumOfImgs = 8;
 type propTypes = {
@@ -29,13 +30,14 @@ export default function AddItemImgInput({
       return;
     }
     if (numOfLargeFiles > 0) {
-      setImgError(
+      toast.error(
         numOfLargeFiles + " of the selected files not added due to size limits!"
       );
     } else {
       setImgError("");
     }
     setImgFiles(files);
+    //remove large files
     setImgFiles((prevImgs) =>
       prevImgs.filter((img) => img.size < maxImgSizeInBytes)
     );

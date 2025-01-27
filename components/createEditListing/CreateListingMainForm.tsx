@@ -1,6 +1,5 @@
 "use client";
 import { addImage, addItem } from "@/actions/create";
-
 import AddItemForm, { addItemFormSchema } from "./AddItemForm";
 import { storage } from "@/firebase";
 import { getDownloadURL, ref, uploadBytesResumable } from "firebase/storage";
@@ -28,6 +27,10 @@ export default function CreateListingMainForm({
   async function onSubmit(formValues: z.infer<typeof addItemFormSchema>) {
     if (imgFiles.length < 2) {
       setImgError("Please upload 2 or more images!");
+      window.scrollTo({ top: 0, behavior: "smooth" });
+      return;
+    }
+    if (imgError != "") {
       window.scrollTo({ top: 0, behavior: "smooth" });
       return;
     }

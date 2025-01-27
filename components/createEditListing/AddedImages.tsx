@@ -2,6 +2,7 @@
 import Image from "next/image";
 import React, { Dispatch, SetStateAction, useRef } from "react";
 import { UploadCloud, X } from "lucide-react";
+import { toast } from "sonner";
 
 type propTypes = {
   imgFiles: File[];
@@ -31,8 +32,8 @@ export default function AddedImages({
       return;
     }
     if (numOfLargeFiles > 0) {
-      setImgError(
-        numOfLargeFiles + " of the files not added due to size limits!"
+      toast.error(
+        numOfLargeFiles + " of the selected files not added due to size limits!"
       );
     } else {
       setImgError("");
