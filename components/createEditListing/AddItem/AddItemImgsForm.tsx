@@ -58,8 +58,10 @@ function AddItemImgsForm({
     );
   };
 
-  const removeImgItem = (img: string) => {
-    setImgFiles((prevImgs) => prevImgs.filter((Pimg) => Pimg.url != img));
+  const removeImgItem = (removedImgUrl: string) => {
+    setImgFiles((prevImgs) =>
+      prevImgs.filter((img) => img.url != removedImgUrl)
+    );
     setImgError("");
   };
 
@@ -67,7 +69,6 @@ function AddItemImgsForm({
     <>
       {imgFiles.length > 0 ? (
         <AddedImagesList
-          
           imgUrls={imgFiles.map((i) => i.url)}
           handleImgAddChange={handleImgAddChange}
           removeImgItem={removeImgItem}

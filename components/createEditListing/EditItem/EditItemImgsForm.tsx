@@ -58,9 +58,9 @@ function EditItemImgsForm({
     }
   };
 
-  const removeImgItem = async (imgURL: string) => {
-    setRemovedImgUrls((prev) => [...prev, imgURL]);
-    setImgFiles((prevImgs) => prevImgs.filter((Pimg) => Pimg.url != imgURL));
+  const removeImgItem =  (RemovedImgURL: string) => {
+    setRemovedImgUrls((prev) => [...prev, RemovedImgURL]);
+    setImgFiles((prevImgs) => prevImgs.filter((img) => img.url != RemovedImgURL));
     setImgError("");
   };
 
