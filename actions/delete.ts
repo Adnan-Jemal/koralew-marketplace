@@ -6,8 +6,10 @@ import { favorites } from "@/db/schema/favorites";
 import { productImages } from "@/db/schema/productImages";
 import { products } from "@/db/schema/products";
 import { users } from "@/db/schema/users";
+import { storage } from "@/firebase";
 
 import { and, eq, inArray } from "drizzle-orm";
+import { deleteObject, ref } from "firebase/storage";
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 export async function deleteUser() {
@@ -67,5 +69,29 @@ export async function deleteFavorite(productId: number) {
   } catch (error) {
     console.error(error);
     throw error;
+  }
+}
+
+export async function deleteItemImgs(itemImgUrls: string[], itemId: number) {
+  for (const imgURL of itemImgUrls) {
+    // ex. https://firebasestorage.googleapis.com/v0/b/koralew-fb48a.appspot.com/o/images%2Fproducts%2F1022%2Fimage_2?alt=media&token=7e03e839-9329-43a1-96c7-4a69bf028799
+
+    const encodedPath = imgURL.split("/o/")[1].split("?")[0];
+    const decodedPath = decodeURIComponent(encodedPath);
+    await db
+      .delete(productImages)
+      .where(
+        and(
+          eq(productImages.productId, itemId),
+          eq(productImages.imageUrl, imgURL)
+        )
+      );
+    //delete form cloud storage
+    // Create a reference to the file to delete
+    const desertRef = ref(storage, decodedPath);
+    // Delete the file
+    await deleteObject(desertRef).catch((error) => {
+      console.error(error);
+    });
   }
 }

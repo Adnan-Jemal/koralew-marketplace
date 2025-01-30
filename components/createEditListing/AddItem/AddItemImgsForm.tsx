@@ -1,13 +1,13 @@
 "use client";
-import { Dispatch, SetStateAction, useState } from "react";
+import { Dispatch, SetStateAction } from "react";
 import { toast } from "sonner";
 import AddItemImgInput from "../AddEditItemImgInput";
 
 import { ImgFilesT } from "./CreateListingMainForm";
 import AddedImagesList from "../AddedImagesList";
 
-const maxImgSizeInBytes = 2 * 1024 * 1024;
-const MaxNumOfImgs = 8;
+export const maxImgSizeInBytes = 1024 * 1024;
+export const MaxNumOfImgs = 8;
 type propTypes = {
   imgFiles: ImgFilesT[];
   setImgFiles: Dispatch<SetStateAction<ImgFilesT[]>>;
@@ -67,7 +67,7 @@ function AddItemImgsForm({
     <>
       {imgFiles.length > 0 ? (
         <AddedImagesList
-          MaxNumOfImgs={MaxNumOfImgs}
+          
           imgUrls={imgFiles.map((i) => i.url)}
           handleImgAddChange={handleImgAddChange}
           removeImgItem={removeImgItem}

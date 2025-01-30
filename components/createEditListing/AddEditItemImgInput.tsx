@@ -22,7 +22,7 @@ export default function AddItemImgInput({ handleImgAddChange }: propTypes) {
         // disabled={uploading}
         onChange={handleImgAddChange}
         hidden
-        accept="image/*"
+        accept="image/jpeg, image/png, image/webp"
         name="productImages"
         type="file"
         multiple

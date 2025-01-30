@@ -1,15 +1,15 @@
 "use client";
-import { Dispatch, SetStateAction, useState } from "react";
+import { Dispatch, SetStateAction} from "react";
 import { toast } from "sonner";
 import AddItemImgInput from "../AddEditItemImgInput";
 import AddedImagesList from "../AddedImagesList";
 import { EditImgFilesT } from "./EditListingMain";
+import { maxImgSizeInBytes, MaxNumOfImgs } from "../AddItem/AddItemImgsForm";
 
-const maxImgSizeInBytes = 2 * 1024 * 1024;
-const MaxNumOfImgs = 8;
 type propTypes = {
   imgFiles: EditImgFilesT[];
   setImgFiles: Dispatch<SetStateAction<EditImgFilesT[]>>;
+  setRemovedImgUrls: Dispatch<SetStateAction<string[]>>;
   setImgError: Dispatch<SetStateAction<string>>;
   imgError: string;
 };
@@ -17,9 +17,9 @@ function EditItemImgsForm({
   setImgFiles,
   imgFiles,
   setImgError,
+  setRemovedImgUrls,
   imgError,
 }: propTypes) {
-  
   const handleImgAddChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     let FilesFromInput = Array.from(e.currentTarget.files || []);
     const numOfLargeFiles = FilesFromInput.filter(
@@ -50,16 +50,17 @@ function EditItemImgsForm({
     } else {
       setImgError("");
     }
-    FilesFromInput.forEach((file) =>
+    for (const file of FilesFromInput) {
       setImgFiles((prev) => [
         ...prev,
         { file: file, url: URL.createObjectURL(file) },
-      ])
-    );
+      ]);
+    }
   };
 
-  const removeImgItem = (img: string) => {
-    setImgFiles((prevImgs) => prevImgs.filter((Pimg) => Pimg.url != img));
+  const removeImgItem = async (imgURL: string) => {
+    setRemovedImgUrls((prev) => [...prev, imgURL]);
+    setImgFiles((prevImgs) => prevImgs.filter((Pimg) => Pimg.url != imgURL));
     setImgError("");
   };
 
@@ -67,7 +68,6 @@ function EditItemImgsForm({
     <>
       {imgFiles.length > 0 ? (
         <AddedImagesList
-          MaxNumOfImgs={MaxNumOfImgs}
           imgUrls={imgFiles.map((i) => i.url)}
           handleImgAddChange={handleImgAddChange}
           removeImgItem={removeImgItem}

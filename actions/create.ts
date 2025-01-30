@@ -22,11 +22,15 @@ export async function addItem(formValues: z.infer<typeof addItemFormSchema>) {
     .returning({ newProductId: products.id });
   return addedProduct[0].newProductId;
 }
-export async function addImage(productId: number, Url: string, index: number) {
+export async function addImage(productId: number, Url: string, order: number) {
+  const session = await auth();
+  if (!session?.user?.id) {
+    return redirect("/signin");
+  }
   try {
     await db
       .insert(productImages)
-      .values({ productId: productId, imageUrl: Url, order: index });
+      .values({ productId: productId, imageUrl: Url, order: order });
     console.log("added to db");
   } catch (error) {
     console.error(error);

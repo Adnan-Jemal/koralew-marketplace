@@ -9,9 +9,7 @@ export default function ItemImages({
 }: {
   images: SelectProductImages[];
 }) {
-  const [currentImg, setCurrentImg] = useState(
-    images.find((img) => img.order == 1)?.imageUrl || ""
-  );
+  const [currentImg, setCurrentImg] = useState(images[0].imageUrl);
   return (
     <>
       <div className="w-[90%] relative lg:w-1/2 lg:sticky h-fit lg:top-28 mx-auto rounded-2xl  flex gap-2">

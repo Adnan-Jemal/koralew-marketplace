@@ -1,11 +1,14 @@
 "use server";
 
 import { auth } from "@/auth";
+import { addItemFormSchema } from "@/components/createEditListing/AddItemForm";
 import { db } from "@/db/db";
+import { products } from "@/db/schema/products";
 import { SelectUser, users } from "@/db/schema/users";
-import { eq } from "drizzle-orm";
+import { and, eq } from "drizzle-orm";
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
+import { z } from "zod";
 
 export async function updateUser(data: Partial<Omit<SelectUser, "id">>) {
   const session = await auth();
@@ -70,3 +73,24 @@ export async function updateUserPhoto(imgUrl: string) {
 //   console.log(image)
 
 // }
+
+export async function updateItem(
+  formValues: z.infer<typeof addItemFormSchema>,
+  itemId: number
+) {
+  const session = await auth();
+  if (!session?.user?.id) {
+    return redirect("/");
+  }
+  await db
+    .update(products)
+    .set({
+      title: formValues.title,
+      category: formValues.category,
+      description: formValues.description,
+      price: formValues.price,
+      condition: formValues.condition,
+    })
+    .where(and(eq(products.userId, session.user.id), eq(products.id, itemId)))
+ 
+}

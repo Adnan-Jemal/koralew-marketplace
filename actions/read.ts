@@ -3,10 +3,10 @@ import { auth } from "@/auth";
 import { db } from "@/db/db";
 import { favorites } from "@/db/schema/favorites";
 import { productImages } from "@/db/schema/productImages";
-import { products, SelectProduct } from "@/db/schema/products";
+import { products } from "@/db/schema/products";
 import { SelectUser, users } from "@/db/schema/users";
 import { ItemWithImages } from "@/lib/types";
-import { and, desc, eq, ne, sql } from "drizzle-orm";
+import { and, desc, eq, max, ne, sql } from "drizzle-orm";
 
 import { redirect } from "next/navigation";
 
@@ -197,15 +197,22 @@ export async function getFavoriteItems() {
   }
 }
 
-export function getItemImgs(productId: number) {
-  const productImgs = db
+export async function getItemImgs(productId: number) {
+  const productImgs = await db
     .select()
     .from(productImages)
     .where(eq(productImages.productId, productId));
   return productImgs;
 }
 
-export function getItemWithOutImgs(itemId: number) {
-  const item = db.select().from(products).where(eq(products.id, itemId));
-  return item;
+export async function getItemWithOutImgs(itemId: number) {
+  const item = await db.select().from(products).where(eq(products.id, itemId));
+  return item[0];
+}
+export async function getItemImgsMaxOrder(itemId: number) {
+  const res = await db
+    .select({ maxImgOrder: max(productImages.order) })
+    .from(productImages)
+    .where(eq(productImages.productId, itemId));
+  return res[0].maxImgOrder;
 }

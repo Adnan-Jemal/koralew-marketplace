@@ -2,18 +2,17 @@
 import Image from "next/image";
 import React, { useRef } from "react";
 import { UploadCloud, X } from "lucide-react";
+import { MaxNumOfImgs } from "./AddItem/AddItemImgsForm";
 
 type propTypes = {
   imgUrls: string[];
   handleImgAddChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
   removeImgItem: (img: string) => void;
-  MaxNumOfImgs: number;
 };
 export default function AddedImagesList({
   imgUrls,
   removeImgItem,
   handleImgAddChange,
-  MaxNumOfImgs,
 }: propTypes) {
   const imgInputRef = useRef<HTMLInputElement>(null);
 
@@ -52,7 +51,7 @@ export default function AddedImagesList({
               ref={imgInputRef}
               onChange={handleImgAddChange}
               hidden
-              accept="image/*"
+              accept="image/jpeg, image/png, image/webp"
               name="productImages"
               type="file"
               multiple

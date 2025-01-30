@@ -8,9 +8,7 @@ import { useState } from "react";
 import { toast } from "sonner";
 import { z } from "zod";
 import UploadLoading from "../UploadLoading";
-import AddItemImgInput from "@/components/createEditListing/AddEditItemImgInput";
 import { Session } from "next-auth";
-import AddedImages from "../AddedImagesList";
 import AddItemImgsForm from "./AddItemImgsForm";
 
 export type ImgFilesT = {
@@ -44,27 +42,31 @@ export default function CreateListingMainForm({
     try {
       setIsUploading(true);
       setUploadMessage("Creating Listing");
-      await addItem(formValues).then(async (newProductId) => {
-        window.scrollTo({ top: 0, behavior: "smooth" });
-        setUploadMessage("Uploading Images");
-        // Loop through all imgFiles and upload each one
-        const uploadPromises = imgFiles.map(async (imgFile, index) => {
-          const newImageRef = ref(
-            storage,
-            `images/products/${newProductId}/image_${index}`
-          );
-          const uploadTask = await uploadBytesResumable(
-            newImageRef,
-            imgFile.file as Blob
-          );
-          const imgUrl = await getDownloadURL(uploadTask.ref);
-          await addImage(newProductId, imgUrl, index + 1);
-          setUploadMessage("Almost Done");
-        });
+      //add item to db
+      const newProductId = await addItem(formValues);
+      window.scrollTo({ top: 0, behavior: "smooth" });
+      setUploadMessage("Uploading Images");
 
-        // Wait for all images to be uploaded
-        await Promise.all(uploadPromises);
+      // Loop through all imgFiles and upload each one
+      const uploadPromises = imgFiles.map(async (imgFile, index) => {
+        //upload each img to cloud storage
+        const newImageRef = ref(
+          storage,
+          `images/products/${newProductId}/image_${index}`
+        );
+        const uploadTask = await uploadBytesResumable(
+          newImageRef,
+          imgFile.file as Blob
+        );
+
+        //get img url and add each to db in product imgs table 
+        const imgUrl = await getDownloadURL(uploadTask.ref);
+        await addImage(newProductId, imgUrl, index + 1);
+        setUploadMessage("Almost Done");
       });
+
+      // Wait for all images to be uploaded
+      await Promise.all(uploadPromises);
       router.push("/account/my-items");
       toast.success("Item Added Successfully");
     } catch (err) {

@@ -38,9 +38,9 @@ export const addItemFormSchema = z.object({
     .min(10, { message: "description is too short" }),
   price: z
     .string({ message: "please enter price" })
-    .regex(/^[0-9]*$/, { message: "Please enter a correct price" })
+    .regex(/^\d+(\.\d{1,2})?$/, { message: "Please enter a correct price" })
     .min(1)
-    .max(6, { message: "your item is not worth this much" }),
+    .max(10, { message: "your item is not worth this much" }),
 
   condition: z.enum(conditionEnum.enumValues, {
     message: "please select a condition",
@@ -60,10 +60,9 @@ export default function AddItemForm({ onSubmit, item }: propTypes) {
       category: item?.category || "",
       description: item?.description || "",
       price: item?.price || "",
-      condition: item?.condition ,
+      condition: item?.condition,
     },
   });
-
   return (
     <div className="w-full p-4 shadow-lg rounded-2xl dark:border flex flex-col gap-6 dark:border-secondary">
       <div className=" w-[95%] border-b dark:border-b-secondary border-b-gray-200 self-center text-start">
@@ -191,16 +190,12 @@ export default function AddItemForm({ onSubmit, item }: propTypes) {
               )}
             />
           </div>
-          <Button
-            // disabled={!form.formState.isDirty || form.formState.isSubmitting}
-            className="w-full text-lg"
-            size={"lg"}
-            type="submit"
-          >
+          <Button className="w-full text-lg" size={"lg"} type="submit">
             {form.formState.isSubmitting ? (
               <Ellipsis className="text-4xl animate-bounce" />
+            ) : item ? (
+              "Update Item"
             ) : (
-              item?"Update Item":
               "List Item"
             )}
           </Button>
