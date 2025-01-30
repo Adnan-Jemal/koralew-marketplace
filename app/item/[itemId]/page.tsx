@@ -1,5 +1,6 @@
 import { getItem, getItemSeller } from "@/actions/read";
 import { auth } from "@/auth";
+import DeleteItemBtn from "@/components/itemDetails/DeleteItemBtn";
 import FavoriteBtns from "@/components/itemDetails/FavoriteBtns";
 import ItemBreadCrumbs from "@/components/itemDetails/ItemBreadCrumbs";
 import ItemDescription from "@/components/itemDetails/ItemDescription";
@@ -10,7 +11,7 @@ import ShareBtn from "@/components/itemDetails/ShareBtn";
 import { SimilarItems } from "@/components/itemDetails/SimilarItems";
 import { Navbar } from "@/components/layouts/nav/Navbar";
 import { Button } from "@/components/ui/button";
-import { InfoIcon } from "lucide-react";
+import { InfoIcon, PackageOpen } from "lucide-react";
 import Link from "next/link";
 
 export default async function page(props: {
@@ -19,6 +20,19 @@ export default async function page(props: {
   const params = await props.params;
   const session = await auth();
   const item = await getItem(parseInt(params.itemId));
+  if (!item) {
+    return (
+      <>
+        <Navbar />
+        <div className="flex flex-col w-full h-96 items-center justify-center text-center">
+          <PackageOpen className="size-36 mb-6" />
+          <h2 className="text-3xl font-bold">Item Not Found</h2>
+          <p>{"sorry this item is not available:("}</p>
+        </div>
+      </>
+    );
+  }
+
   const seller = await getItemSeller(item.userId);
 
   return (
@@ -39,13 +53,7 @@ export default async function page(props: {
               <Button asChild size={"lg"} className=" text-lg rounded-xl ">
                 <Link href={`/item/${params.itemId}/edit`}>Edit Item</Link>
               </Button>
-              <Button
-                size={"lg"}
-                variant={"outline"}
-                className=" text-lg rounded-xl p-6"
-              >
-                Delete Item
-              </Button>
+              <DeleteItemBtn itemId={parseInt(params.itemId)} />
             </div>
           </div>
         )}
@@ -64,7 +72,7 @@ export default async function page(props: {
 
         <div className=" mx-auto w-full flex gap-2 flex-col lg:flex-row ">
           <ItemImages images={item?.images.sort((a, b) => a.order - b.order)} />
-          <div className="w-[90%] mx-auto lg:w-[45%] flex flex-col pt-4 gap-4 ">
+          <div className="w-[90%] mx-auto lg:w-[45%] flex flex-col pt-4 gap-4 overflow-x-clip">
             <h2 className="text-5xl  ">{item.title}</h2>
             <p className="text-4xl py-2">
               ${parseInt(item.price).toLocaleString()}

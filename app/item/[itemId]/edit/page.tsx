@@ -7,6 +7,7 @@ import { auth } from "@/auth";
 import AddEditItemHeader from "@/components/createEditListing/AddEditItemHeader";
 import EditListingMain from "@/components/createEditListing/EditItem/EditListingMain";
 
+
 export default async function ItemEditPage(props: {
   params: Promise<{ itemId: string }>;
 }) {
@@ -16,6 +17,7 @@ export default async function ItemEditPage(props: {
   const item = await getItemWithOutImgs(parseInt(params.itemId));
   //to add new imgs after this so they do not conflict with previous once
   const maxImgOrder = await getItemImgsMaxOrder(parseInt(params.itemId));
+
   return (
     <>
       <AddEditItemHeader />

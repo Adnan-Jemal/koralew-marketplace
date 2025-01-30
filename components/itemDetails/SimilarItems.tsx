@@ -11,13 +11,13 @@ export const SimilarItems = async ({
   itemId: number;
 }) => {
   const SimilarCategoryItems = await getSimilarCategoryItems(category, itemId);
-  if(SimilarCategoryItems.length==0){
-   return <div className="py-14"></div>
+  if (SimilarCategoryItems.length == 0) {
+    return <div className="py-14"></div>;
   }
   return (
-    <div className="max-w-6xl mx-auto my-20 px-8 ">
+    <div className=" mx-auto my-20 px-8 ">
       <h3 className="text-3xl font-semibold mb-10">Similar Items</h3>
-      <div className=" flex  flex-wrap gap-8  items-center justify-center sm:justify-start  ">
+      <div className=" flex  flex-wrap gap-10  items-center justify-center sm:justify-normal  ">
         {SimilarCategoryItems?.map((item) => {
           return (
             <Suspense

@@ -7,11 +7,15 @@ import { productImages } from "@/db/schema/productImages";
 import { products } from "@/db/schema/products";
 import { users } from "@/db/schema/users";
 import { storage } from "@/firebase";
-
-import { and, eq, inArray } from "drizzle-orm";
-import { deleteObject, ref } from "firebase/storage";
+import { and, eq, ExtractTablesWithRelations, inArray } from "drizzle-orm";
+import { NeonQueryResultHKT } from "drizzle-orm/neon-serverless";
+import { PgTransaction } from "drizzle-orm/pg-core";
+import { deleteObject,  ref } from "firebase/storage";
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
+
+
+
 export async function deleteUser() {
   const session = await auth();
   const userId = session?.user?.id;
@@ -72,26 +76,67 @@ export async function deleteFavorite(productId: number) {
   }
 }
 
-export async function deleteItemImgs(itemImgUrls: string[], itemId: number) {
+export async function deleteItemImgs(
+  itemImgUrls: string[],
+  itemId: number,
+  trx?: PgTransaction<
+    NeonQueryResultHKT,
+    Record<string, never>,
+    ExtractTablesWithRelations<Record<string, never>>
+  > // Accept transaction as an optional parameter
+) {
   for (const imgURL of itemImgUrls) {
-    // ex. https://firebasestorage.googleapis.com/v0/b/koralew-fb48a.appspot.com/o/images%2Fproducts%2F1022%2Fimage_2?alt=media&token=7e03e839-9329-43a1-96c7-4a69bf028799
+    try {
+      // Use Firebase SDK to parse the URL safely
+      
+      const desertRef = ref(storage, imgURL);
+      // const decodedPath = desertRef.fullPath
 
-    const encodedPath = imgURL.split("/o/")[1].split("?")[0];
-    const decodedPath = decodeURIComponent(encodedPath);
-    await db
-      .delete(productImages)
-      .where(
-        and(
-          eq(productImages.productId, itemId),
-          eq(productImages.imageUrl, imgURL)
-        )
-      );
-    //delete form cloud storage
-    // Create a reference to the file to delete
-    const desertRef = ref(storage, decodedPath);
-    // Delete the file
-    await deleteObject(desertRef).catch((error) => {
-      console.error(error);
+      // Delete from database (use transaction if provided)
+      const dbInstance = trx || db; // Use transaction or global db
+      await dbInstance
+        .delete(productImages)
+        .where(
+          and(
+            eq(productImages.productId, itemId),
+            eq(productImages.imageUrl, imgURL)
+          )
+        );
+
+      // Delete from Cloud Storage
+      await deleteObject(desertRef);
+    } catch (error) {
+      console.error("Error deleting image:", error);
+      throw error; // Propagate error to abort transaction
+    }
+  }
+}
+
+export async function deleteItem(itemId: number) {
+  const session = await auth();
+  const userId = session?.user?.id;
+  if (!userId) return redirect("/signin");
+
+  try {
+    await db.transaction(async (trx) => {
+      // Get current images using the transaction
+      const currentImgs = await trx
+        .select({ url: productImages.imageUrl })
+        .from(productImages)
+        .where(eq(productImages.productId, itemId));
+
+      const currentImgUrls = currentImgs.map((img) => img.url);
+
+      // Delete images using the transaction
+      await deleteItemImgs(currentImgUrls, itemId, trx);
+
+      // Delete the product itself
+      await trx
+        .delete(products)
+        .where(and(eq(products.userId, userId), eq(products.id, itemId)));
     });
+  } catch (error) {
+    console.error("Error deleting item:", error);
+    throw error;
   }
 }

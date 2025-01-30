@@ -20,7 +20,7 @@ export default function ItemCard({
   
   return (
     <Link href={`/item/${id}`}>
-      <div className="flex flex-col bg-primary-foreground justify-between w-64 h-80 rounded-2xl overflow-hidden shadow-md cursor-pointer ">
+      <div className="flex flex-col bg-primary-foreground justify-between sm:w-64 w-72 h-80 rounded-2xl overflow-hidden shadow-md cursor-pointer ">
         <div className="  h-[60%] select-none ">
           <Image
             src={imageUrl}

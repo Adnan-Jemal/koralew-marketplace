@@ -1,17 +1,15 @@
-import AddEditItemHeader from "@/components/createEditListing/AddEditItemHeader";
 import { Skeleton } from "@/components/ui/skeleton";
 import React from "react";
 
-export default function EditLoading() {
+export default function Loading() {
   return (
     <>
-      <AddEditItemHeader />
       <div className="relative">
         <div className="sm:max-w-[65%] w-[80%] mx-auto flex flex-col gap-14 my-16">
-          <h1 className="text-center text-4xl font-bold">Edit Listing</h1>
+          <h1 className="text-center text-4xl font-bold">Create a Listing</h1>
           <div className="w-full p-6 shadow-lg rounded-3xl dark:border dark:border-secondary mt-3 flex flex-col gap-4">
             <h2 className="text-xl ml-1 ">ITEM IMAGES</h2>
-            <Skeleton className="h-48 rounded-xl bg-secondary flex items-center justify-center"></Skeleton>
+            <Skeleton className="h-40 rounded-xl bg-secondary flex items-center justify-center"></Skeleton>
           </div>
           <div className="w-full p-6 shadow-lg rounded-3xl dark:border dark:border-secondary flex flex-col gap-4">
             <h2 className="text-xl my-4 ml-1 uppercase ">Item Information</h2>
