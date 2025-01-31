@@ -6,7 +6,7 @@ import {
 import { auth } from "@/auth";
 import AddEditItemHeader from "@/components/createEditListing/AddEditItemHeader";
 import EditListingMain from "@/components/createEditListing/EditItem/EditListingMain";
-
+import { redirect } from "next/navigation";
 
 export default async function ItemEditPage(props: {
   params: Promise<{ itemId: string }>;
@@ -15,6 +15,9 @@ export default async function ItemEditPage(props: {
   const session = await auth();
   const itemImgs = await getItemImgs(parseInt(params.itemId));
   const item = await getItemWithOutImgs(parseInt(params.itemId));
+  if (!item) {
+   return redirect("/");
+  }
   //to add new imgs after this so they do not conflict with previous once
   const maxImgOrder = await getItemImgsMaxOrder(parseInt(params.itemId));
 

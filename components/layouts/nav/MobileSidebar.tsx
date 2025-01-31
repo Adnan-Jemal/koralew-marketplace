@@ -1,7 +1,12 @@
 "use client";
 import { Button } from "@/components/ui/button";
-import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
-import { Menu} from "lucide-react";
+import {
+  Sheet,
+  SheetContent,
+  SheetTitle,
+  SheetTrigger,
+} from "@/components/ui/sheet";
+import { Menu } from "lucide-react";
 
 import { useState } from "react";
 import SidebarMenus from "./SidebarMenuItems";
@@ -18,6 +23,8 @@ export default function MobileSidebar() {
             <Menu className="size-8" />
           </Button>
         </SheetTrigger>
+
+        <SheetTitle hidden>Sidebar Menu</SheetTitle>
 
         <SheetContent side="left" className="flex flex-col border-secondary">
           <div className="grow flex flex-col px-4 mt-6 gap-4">

@@ -9,6 +9,7 @@ import {
   UserCog,
 } from "lucide-react";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import React, { Dispatch, SetStateAction, useEffect, useState } from "react";
 
 const menuItems = [
@@ -49,18 +50,14 @@ type PropType = {
 };
 
 const SidebarMenuItems = ({ setOpen }: PropType) => {
-  const [currentPath, setCurrentPath] = useState("account/dashboard");
-  useEffect(() => {
-    setCurrentPath(
-      typeof window !== "undefined" ? window.location.pathname : ""
-    );
-  }, []);
+  const path = usePathname();
+  const [currentPath, setCurrentPath] = useState(path);
 
   return (
     <>
       {menuItems.map((item) => (
         <Button
-        key={item.text}
+          key={item.text}
           asChild
           onClick={() => {
             setCurrentPath(item.link);
