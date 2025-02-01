@@ -58,6 +58,7 @@ function MessageSellerBtn({
 
   const sendMessage = async () => {
     if (!session?.user?.id) {
+      setOpen(false);
       return;
     }
     setSending(true);
