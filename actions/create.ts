@@ -5,10 +5,19 @@ import { db } from "@/db/db";
 import { favorites } from "@/db/schema/favorites";
 import { productImages } from "@/db/schema/productImages";
 import { InsertProduct, products } from "@/db/schema/products";
+import { firestore } from "@/firebase";
+import {
+  addDoc,
+  collection,
+  doc,
+  getDoc,
+  serverTimestamp,
+} from "firebase/firestore";
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 
 import { z } from "zod";
+import { getChat } from "./read";
 
 export async function addItem(formValues: z.infer<typeof addItemFormSchema>) {
   const session = await auth();
@@ -50,5 +59,44 @@ export async function addToFavorites(productId: number) {
   } catch (error) {
     console.error(error);
     throw error;
+  }
+}
+
+export async function createChat(
+  sellerId: string,
+  buyerId: string,
+  itemId: number,
+  message: string
+) {
+  const session = await auth();
+  if (!session?.user?.id) {
+    return redirect("/signin");
+  }
+  if (buyerId != session.user.id) {
+    return redirect("/");
+  }
+
+  try {
+    // Check if the chat already exists
+    const existingChatId = await getChat(sellerId,itemId);
+    if (existingChatId) {
+      return existingChatId;
+    }
+    const chatRef = await addDoc(collection(firestore, "chats"), {
+      chatId:
+        itemId.toString() +
+        "-" +
+        sellerId.slice(0, 4) +
+        "-" +
+        buyerId.slice(0, 4),
+      sellerId: sellerId,
+      buyerId: buyerId,
+      productId: itemId,
+      createdAt: serverTimestamp(),
+      lastMessage: message,
+    });
+    return chatRef.id;
+  } catch (e) {
+    console.error("Error adding document: ", e);
   }
 }

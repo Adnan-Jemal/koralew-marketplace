@@ -9,6 +9,8 @@ import { ItemWithImages } from "@/lib/types";
 import { and, desc, eq, max, ne, sql } from "drizzle-orm";
 
 import { redirect } from "next/navigation";
+import { collection, getDocs, query, where } from "firebase/firestore";
+import { firestore } from "@/firebase";
 
 export async function getUser() {
   const session = await auth();
@@ -215,4 +217,38 @@ export async function getItemImgsMaxOrder(itemId: number) {
     .from(productImages)
     .where(eq(productImages.productId, itemId));
   return res[0].maxImgOrder;
+}
+export async function getChat(sellerId: string, itemId: number) {
+  const session = await auth();
+  if (!session?.user?.id) return null;
+  const buyerId = session.user.id;
+  try {
+    const chatsRef = collection(firestore, "chats");
+    const chatQuery = query(
+      chatsRef,
+      where("productId", "==", itemId),
+      where("sellerId", "==", sellerId),
+      where("buyerId", "==", buyerId),
+      where(
+        "chatId",
+        "==",
+        itemId.toString() +
+          "-" +
+          sellerId.slice(0, 4) +
+          "-" +
+          buyerId.slice(0, 4)
+      )
+    );
+    const querySnapshot = await getDocs(chatQuery);
+
+    if (!querySnapshot.empty) {
+      // Return the first matching chat's id
+      return querySnapshot.docs[0].id;
+    }
+    // Return null if no chat is found
+    return null;
+  } catch (e) {
+    console.error("Error querying chat: ", e);
+    throw e;
+  }
 }

@@ -6,15 +6,22 @@ import { fromDashedToCapitalizedWord } from "@/lib/utils";
 import { Button } from "../ui/button";
 import { Separator } from "../ui/separator";
 import { CallSellerBtn } from "./CallSellerBtn";
-import Link from "next/link";
 import { Session } from "next-auth";
+import MessageSellerBtn from "./MessageSellerBtn";
+import { getChat } from "@/actions/read";
 
-type SellerProfileTypes = { seller: SelectUser; session: Session | null };
+type SellerProfileTypes = {
+  seller: SelectUser;
+  session: Session | null;
+  itemId: number;
+};
 
 export const SellerProfile = async ({
   seller,
   session,
+  itemId,
 }: SellerProfileTypes) => {
+  const existingChatId = await getChat(seller.id, itemId);
   return (
     <div className="flex p-6 border border-secondary rounded-2xl shadow-sm gap-4 flex-col md:flex-row">
       <Avatar className="size-20 mx-auto">
@@ -69,11 +76,12 @@ export const SellerProfile = async ({
               <MessageSquareText /> Message
             </Button>
           ) : (
-            <Button asChild className="w-full flex gap-2 text-lg rounded-xl">
-              <Link href="/account/messages">
-                <MessageSquareText /> Message
-              </Link>
-            </Button>
+            <MessageSellerBtn
+              existingChatId={existingChatId}
+              itemId={itemId}
+              session={session}
+              sellerId={seller.id}
+            />
           )}
         </div>
       </div>

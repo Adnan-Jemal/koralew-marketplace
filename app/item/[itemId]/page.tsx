@@ -83,7 +83,11 @@ export default async function page(props: {
               condition={item.condition}
             />
 
-            <SellerProfile seller={seller} session={session} />
+            <SellerProfile
+              itemId={parseInt(params.itemId)}
+              seller={seller}
+              session={session}
+            />
             <ItemDescription description={item.description} />
           </div>
         </div>
