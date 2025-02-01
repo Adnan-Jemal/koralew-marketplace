@@ -57,10 +57,13 @@ function MessageSellerBtn({
   };
 
   const sendMessage = async () => {
+    if (!session?.user?.id) {
+      return;
+    }
     setSending(true);
     const newChatId = await createChat(
       sellerId,
-      session?.user?.id!,
+      session.user.id,
       itemId,
       message
     );
@@ -84,7 +87,7 @@ function MessageSellerBtn({
                 <CheckCheck className="text-green-500" />
               </TooltipTrigger>
               <TooltipContent>
-                <p>you've already sent a message</p>
+                <p>{"you've already sent a message"}</p>
               </TooltipContent>
             </Tooltip>
           </TooltipProvider>
