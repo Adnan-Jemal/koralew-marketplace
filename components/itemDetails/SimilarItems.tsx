@@ -17,7 +17,7 @@ export const SimilarItems = async ({
   return (
     <div className=" mx-auto my-20 px-8 ">
       <h3 className="text-3xl font-semibold mb-10">Similar Items</h3>
-      <div className=" flex  flex-wrap gap-10  items-center justify-center sm:justify-normal  ">
+      <div className=" flex  flex-wrap gap-x-4 gap-y-10  items-center justify-center sm:justify-normal  ">
         {SimilarCategoryItems?.map((item) => {
           return (
             <Suspense

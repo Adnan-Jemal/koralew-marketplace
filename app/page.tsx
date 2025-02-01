@@ -20,7 +20,7 @@ export default async function Home(props: propType) {
     <Navbar />
       <NavCategories />
 
-      <div className="max-w-7xl mx-auto flex  flex-wrap gap-8 mt-10 items-center justify-around ">
+      <div className="max-w-7xl mx-auto flex  flex-wrap gap-x-4 gap-y-10 mt-10 items-center justify-evenly ">
         {categoryItems?.map((item) => {
           return (
             <Suspense
