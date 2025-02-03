@@ -84,7 +84,7 @@ export default async function page(props: {
             />
 
             <SellerProfile
-              itemId={parseInt(params.itemId)}
+              item={item}
               seller={seller}
               session={session}
             />

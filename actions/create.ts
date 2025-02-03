@@ -4,7 +4,7 @@ import { addItemFormSchema } from "@/components/createEditListing/AddItemForm";
 import { db } from "@/db/db";
 import { favorites } from "@/db/schema/favorites";
 import { productImages } from "@/db/schema/productImages";
-import { InsertProduct, products } from "@/db/schema/products";
+import { InsertProduct, products, SelectProduct } from "@/db/schema/products";
 import { firestore } from "@/firebase";
 import {
   addDoc,
@@ -18,6 +18,8 @@ import { redirect } from "next/navigation";
 
 import { z } from "zod";
 import { getChat } from "./read";
+import { ItemWithImages } from "@/lib/types";
+import { SelectUser } from "@/db/schema/users";
 
 export async function addItem(formValues: z.infer<typeof addItemFormSchema>) {
   const session = await auth();
@@ -63,9 +65,9 @@ export async function addToFavorites(productId: number) {
 }
 
 export async function createChat(
-  sellerId: string,
+  seller: SelectUser,
   buyerId: string,
-  itemId: number,
+  item: ItemWithImages,
   message: string
 ) {
   const session = await auth();
@@ -78,22 +80,33 @@ export async function createChat(
 
   try {
     // Check if the chat already exists
-    const existingChatId = await getChat(sellerId,itemId);
+    const existingChatId = await getChat(seller.id, item.id);
     if (existingChatId) {
       return existingChatId;
     }
     const chatRef = await addDoc(collection(firestore, "chats"), {
       chatId:
-        itemId.toString() +
+        item.id.toString() +
         "-" +
-        sellerId.slice(0, 4) +
+        seller.id.slice(0, 4) +
         "-" +
         buyerId.slice(0, 4),
-      sellerId: sellerId,
+      sellerId: seller.id,
       buyerId: buyerId,
-      productId: itemId,
+      productId: item.id,
       createdAt: serverTimestamp(),
       lastMessage: message,
+      lastMessageAt: serverTimestamp(),
+      sellerSnapshot: {
+        sellerName: seller.name,
+        sellerImg: seller.image,
+      },
+      itemSnapshot: {
+        title: item.title,
+        thumbnail: item.images[0].imageUrl,
+        originalPrice: item.price,
+        status: (item.status ?? "active").toString(),
+      },
     });
     return chatRef.id;
   } catch (e) {

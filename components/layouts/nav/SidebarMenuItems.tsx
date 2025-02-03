@@ -66,7 +66,7 @@ const SidebarMenuItems = ({ setOpen }: PropType) => {
           variant={"outline"}
           size={"lg"}
           className={`flex items-center justify-start w-full text-md border-none transition-colors select-none ${
-            currentPath === item.link && "bg-secondary"
+            currentPath.includes(item.link) && "bg-secondary"
           }`}
         >
           <Link key={item.text} href={item.link}>

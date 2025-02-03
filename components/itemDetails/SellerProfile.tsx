@@ -9,19 +9,20 @@ import { CallSellerBtn } from "./CallSellerBtn";
 import { Session } from "next-auth";
 import MessageSellerBtn from "./MessageSellerBtn";
 import { getChat } from "@/actions/read";
+import { ItemWithImages } from "@/lib/types";
 
 type SellerProfileTypes = {
   seller: SelectUser;
   session: Session | null;
-  itemId: number;
+  item: ItemWithImages;
 };
 
 export const SellerProfile = async ({
   seller,
   session,
-  itemId,
+  item,
 }: SellerProfileTypes) => {
-  const existingChatId = await getChat(seller.id, itemId);
+  const existingChatId = await getChat(seller.id, item.id);
   return (
     <div className="flex p-6 border border-secondary rounded-2xl shadow-sm gap-4 flex-col md:flex-row">
       <Avatar className="size-20 mx-auto">
@@ -78,9 +79,9 @@ export const SellerProfile = async ({
           ) : (
             <MessageSellerBtn
               existingChatId={existingChatId}
-              itemId={itemId}
+              item={item}
               session={session}
-              sellerId={seller.id}
+              seller={seller}
             />
           )}
         </div>

@@ -21,17 +21,20 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from "../ui/tooltip";
+import { SelectProduct } from "@/db/schema/products";
+import { ItemWithImages } from "@/lib/types";
+import { SelectUser } from "@/db/schema/users";
 
 type propTypes = {
-  sellerId: string;
+  seller: SelectUser;
   session: Session | null;
-  itemId: number;
+  item: ItemWithImages;
   existingChatId: string | null;
 };
 
 function MessageSellerBtn({
-  sellerId,
-  itemId,
+  seller,
+  item,
   session,
   existingChatId,
 }: propTypes) {
@@ -63,15 +66,21 @@ function MessageSellerBtn({
     }
     setSending(true);
     const newChatId = await createChat(
-      sellerId,
+      seller,
       session.user.id,
-      itemId,
+      item,
       message
     );
-    toast.success("Message Sent");
-    setSending(false);
-    setOpen(false);
-    setExistingChat(newChatId);
+    if (!newChatId) {
+      toast.error("something went wrong");
+      setSending(false);
+      setOpen(false);
+    } else {
+      toast.success("Message Sent");
+      setSending(false);
+      setOpen(false);
+      setExistingChat(newChatId);
+    }
   };
 
   return (

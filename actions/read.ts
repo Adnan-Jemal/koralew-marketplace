@@ -5,11 +5,22 @@ import { favorites } from "@/db/schema/favorites";
 import { productImages } from "@/db/schema/productImages";
 import { products } from "@/db/schema/products";
 import { SelectUser, users } from "@/db/schema/users";
-import { ItemWithImages } from "@/lib/types";
+import {
+  firebaseChatType,
+  firestoreChatTypeWithId,
+  ItemWithImages,
+} from "@/lib/types";
 import { and, desc, eq, max, ne, sql } from "drizzle-orm";
 
 import { redirect } from "next/navigation";
-import { collection, getDocs, query, where } from "firebase/firestore";
+import {
+  collection,
+  getDocs,
+  orderBy,
+  Query,
+  query,
+  where,
+} from "firebase/firestore";
 import { firestore } from "@/firebase";
 
 export async function getUser() {
@@ -250,5 +261,61 @@ export async function getChat(sellerId: string, itemId: number) {
   } catch (e) {
     console.error("Error querying chat: ", e);
     throw e;
+  }
+}
+export async function getSellingChats() {
+  const session = await auth();
+  if (!session?.user?.id) return redirect("/");
+
+  try {
+    const chatsRef = collection(firestore, "chats");
+    const chatQuery = query(
+      chatsRef,
+      where("sellerId", "==", session.user.id),
+      orderBy("lastMessageAt", "desc")
+    ) as Query<firebaseChatType>;
+    const querySnapshot = await getDocs(chatQuery);
+
+    // Convert documents to usable data
+    return querySnapshot.docs.map((doc) => {
+      const data = doc.data();
+      return {
+        id: doc.id,
+        ...data,
+        lastMessageAt: data.lastMessageAt?.toDate(),
+        createdAt: data.createdAt?.toDate(),
+      } as firestoreChatTypeWithId;
+    });
+  } catch (e) {
+    console.error("Error querying chats: ", e);
+    throw new Error("Failed to fetch selling chats"); // Better error message
+  }
+}
+
+export async function getBuyingChats() {
+  const session = await auth();
+  if (!session?.user?.id) return redirect("/");
+
+  try {
+    const chatsRef = collection(firestore, "chats");
+    const chatQuery = query(
+      chatsRef,
+      where("buyerId", "==", session.user.id),
+      orderBy("lastMessageAt", "desc")
+    ) as Query<firebaseChatType>;
+    const querySnapshot = await getDocs(chatQuery);
+
+    return querySnapshot.docs.map((doc) => {
+      const data = doc.data();
+      return {
+        id: doc.id,
+        ...data,
+        lastMessageAt: data.lastMessageAt?.toDate(),
+        createdAt: data.createdAt?.toDate(),
+      } as firestoreChatTypeWithId;
+    });
+  } catch (e) {
+    console.error("Error querying chats: ", e);
+    throw new Error("Failed to fetch buying chats");
   }
 }
