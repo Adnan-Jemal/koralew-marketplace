@@ -21,7 +21,6 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from "../ui/tooltip";
-import { SelectProduct } from "@/db/schema/products";
 import { ItemWithImages } from "@/lib/types";
 import { SelectUser } from "@/db/schema/users";
 
