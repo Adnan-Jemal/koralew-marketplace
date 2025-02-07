@@ -101,6 +101,10 @@ export async function createChat(
         sellerName: seller.name,
         sellerImg: seller.image,
       },
+      BuyerSnapshot: {
+        BuyerName: session.user.name,
+        BuyerImg: session.user.image,
+      },
       itemSnapshot: {
         title: item.title,
         thumbnail: item.images[0].imageUrl,

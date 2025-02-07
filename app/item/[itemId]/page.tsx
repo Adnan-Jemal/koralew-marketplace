@@ -1,11 +1,13 @@
 import { getItem, getItemSeller } from "@/actions/read";
 import { auth } from "@/auth";
+import Notice from "@/components/general/Notice";
 import DeleteItemBtn from "@/components/itemDetails/DeleteItemBtn";
 import FavoriteBtns from "@/components/itemDetails/FavoriteBtns";
 import ItemBreadCrumbs from "@/components/itemDetails/ItemBreadCrumbs";
 import ItemDescription from "@/components/itemDetails/ItemDescription";
 import ItemImages from "@/components/itemDetails/ItemImages";
 import ItemInfo from "@/components/itemDetails/ItemInfo";
+import MarkaAsSoldBtn from "@/components/itemDetails/MarkaAsSoldBtn";
 import { SellerProfile } from "@/components/itemDetails/SellerProfile";
 import ShareBtn from "@/components/itemDetails/ShareBtn";
 import { SimilarItems } from "@/components/itemDetails/SimilarItems";
@@ -39,25 +41,34 @@ export default async function page(props: {
     <>
       <Navbar />
       <div className="max-w-7xl mx-auto">
-        {seller.id == session?.user?.id && (
+        {seller.id == session?.user?.id && item.status != "Sold" && (
           <div className="bg-secondary mt-6 mx-8 py-6 px-6 flex items-center justify-center gap-4 rounded-xl flex-col sm:flex-row text-center sm:text-left">
             <InfoIcon size={72} className="size-20" />
-            <div className="sm:max-w-[50%] mx-4">
+            <div className="mx-4">
               <h3 className="text-2xl font-semibold">This is Your Item</h3>
               <p className="">
                 You are viewing an item you listed. Use the buttons here to
                 update the details or make changes to your listing.
               </p>
             </div>
-            <div className="flex flex-wrap items-center justify-center mx-4 gap-4">
+            <div className="flex flex-wrap items-center justify-center mx-4 gap-4 w-full">
               <Button asChild size={"lg"} className=" text-lg rounded-xl ">
                 <Link href={`/item/${params.itemId}/edit`}>Edit Item</Link>
               </Button>
+              <MarkaAsSoldBtn itemId={parseInt(params.itemId)} />
               <DeleteItemBtn itemId={parseInt(params.itemId)} />
             </div>
           </div>
         )}
 
+        {item.status === "Sold" && (
+          <div className="m-6">
+            <Notice
+              title="This Item is Sold"
+              message="You are viewing an item with a status of sold meaning the item is no longer available for purchase."
+            />
+          </div>
+        )}
         <div className="w-[85%]  mx-auto flex justify-between items-center py-4 ">
           <ItemBreadCrumbs category={item.category} />
           <div className="flex">
@@ -83,11 +94,7 @@ export default async function page(props: {
               condition={item.condition}
             />
 
-            <SellerProfile
-              item={item}
-              seller={seller}
-              session={session}
-            />
+            <SellerProfile item={item} seller={seller} session={session} />
             <ItemDescription description={item.description} />
           </div>
         </div>

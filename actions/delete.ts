@@ -10,11 +10,10 @@ import { storage } from "@/firebase";
 import { and, eq, ExtractTablesWithRelations, inArray } from "drizzle-orm";
 import { NeonQueryResultHKT } from "drizzle-orm/neon-serverless";
 import { PgTransaction } from "drizzle-orm/pg-core";
-import { deleteObject,  ref } from "firebase/storage";
+import { deleteObject, ref } from "firebase/storage";
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
-
-
+import { updateItemStatusForChat } from "./update";
 
 export async function deleteUser() {
   const session = await auth();
@@ -88,7 +87,7 @@ export async function deleteItemImgs(
   for (const imgURL of itemImgUrls) {
     try {
       // Use Firebase SDK to parse the URL safely
-      
+
       const desertRef = ref(storage, imgURL);
       // const decodedPath = desertRef.fullPath
 
@@ -111,7 +110,6 @@ export async function deleteItemImgs(
     }
   }
 }
-
 export async function deleteItem(itemId: number) {
   const session = await auth();
   const userId = session?.user?.id;
@@ -129,7 +127,8 @@ export async function deleteItem(itemId: number) {
 
       // Delete images using the transaction
       await deleteItemImgs(currentImgUrls, itemId, trx);
-
+      //update chat item snapshot to item status removed
+      await updateItemStatusForChat(itemId, "Removed");
       // Delete the product itself
       await trx
         .delete(products)

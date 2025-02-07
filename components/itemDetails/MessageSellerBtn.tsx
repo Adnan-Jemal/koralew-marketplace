@@ -64,12 +64,7 @@ function MessageSellerBtn({
       return;
     }
     setSending(true);
-    const newChatId = await createChat(
-      seller,
-      session.user.id,
-      item,
-      message
-    );
+    const newChatId = await createChat(seller, session.user.id, item, message);
     if (!newChatId) {
       toast.error("something went wrong");
       setSending(false);
@@ -85,6 +80,7 @@ function MessageSellerBtn({
   return (
     <Dialog open={sending ? sending : open} onOpenChange={setOpen}>
       <Button
+        disabled={item.status != "Active"}
         onClick={checkChatAndSession}
         className="w-full flex gap-2 text-lg rounded-xl"
       >

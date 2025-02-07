@@ -1,3 +1,5 @@
+import { ItemStatusType } from "@/lib/types";
+import clsx from "clsx";
 import Image from "next/image";
 import Link from "next/link";
 import React from "react";
@@ -7,6 +9,7 @@ type propType = {
   imageUrl: string;
   price: number;
   condition: string;
+  itemStatus?: ItemStatusType;
   id: number;
 };
 
@@ -16,10 +19,11 @@ export default function ItemCard({
   price,
   condition,
   id,
+  itemStatus,
 }: propType) {
   return (
     <Link href={`/item/${id}`}>
-      <div className="flex flex-col bg-primary-foreground justify-between  w-72 h-80 rounded-2xl overflow-hidden shadow-md cursor-pointer ">
+      <div className="flex flex-col bg-primary-foreground justify-between  w-72 h-80 rounded-2xl overflow-hidden shadow-md cursor-pointer relative ">
         <div className="  h-[60%] select-none ">
           <Image
             src={imageUrl}
@@ -42,6 +46,21 @@ export default function ItemCard({
             </span>
           </div>
         </div>
+        {itemStatus && (
+          <div
+            className={clsx(
+              "absolute py-1 px-2 top-0 right-0 rounded-r-none rounded-l-md rounded-t-none",
+              {
+                "bg-green-500": itemStatus === "Active",
+                "bg-gray-500": itemStatus === "Sold",
+                "bg-yellow-500 ": itemStatus === "Under Review",
+                "bg-red-500": itemStatus === "Rejected",
+              }
+            )}
+          >
+            {itemStatus}
+          </div>
+        )}
       </div>
     </Link>
   );

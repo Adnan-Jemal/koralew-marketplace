@@ -16,11 +16,13 @@ export default async function ItemEditPage(props: {
   const itemImgs = await getItemImgs(parseInt(params.itemId));
   const item = await getItemWithOutImgs(parseInt(params.itemId));
   if (!item) {
-   return redirect("/");
+    return redirect("/");
   }
   //to add new imgs after this so they do not conflict with previous once
   const maxImgOrder = await getItemImgsMaxOrder(parseInt(params.itemId));
-
+  if (item.status == "Sold") {
+    return redirect("/account/my-items");
+  }
   return (
     <>
       <AddEditItemHeader />

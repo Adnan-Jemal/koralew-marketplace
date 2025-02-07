@@ -36,10 +36,10 @@ function DeleteItemBtn({ itemId }: { itemId: number }) {
       <DialogTrigger asChild>
         <Button
           size={"lg"}
-          variant={"outline"}
+          variant={"destructive"}
           className=" text-lg rounded-xl p-6"
         >
-          Delete Item
+          Remove Item
         </Button>
       </DialogTrigger>
       <DialogContent className="w-[80%] rounded-xl dark:border-secondary">

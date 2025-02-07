@@ -27,6 +27,10 @@ export type firebaseChatType = {
     sellerName: string;
     sellerImg: string;
   };
+  BuyerSnapshot: {
+    BuyerName: string;
+    BuyerImg: string;
+  };
   itemSnapshot: {
     title: string;
     thumbnail: string;
@@ -47,11 +51,22 @@ export type firestoreChatTypeWithId = {
     sellerName: string;
     sellerImg: string;
   };
+  BuyerSnapshot: {
+    BuyerName: string;
+    BuyerImg: string;
+  };
   itemSnapshot: {
     title: string;
     thumbnail: string;
     originalPrice: string;
-    status: "Active" | "Under Review" | "Rejected" | "Sold" | "Removed";
+    status: ItemStatusType;
   };
   id: string;
 };
+
+export type ItemStatusType =
+  | "Active"
+  | "Under Review"
+  | "Rejected"
+  | "Sold"
+  | "Removed";

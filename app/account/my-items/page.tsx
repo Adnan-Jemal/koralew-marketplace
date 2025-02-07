@@ -1,7 +1,6 @@
 import { getUserItems } from "@/actions/read";
 import ItemCard from "@/components/ItemCard/ItemCard";
-import {  PackageOpen } from "lucide-react";
-
+import { PackageOpen } from "lucide-react";
 
 export default async function MyItemsPage() {
   const userItems = await getUserItems();
@@ -20,19 +19,21 @@ export default async function MyItemsPage() {
       )}
       <div className="flex flex-wrap gap-8 items-center justify-around ">
         {userItems?.map((item) => {
-          const image = item.images.find(img=>img.order==1)?.imageUrl||item.images[0].imageUrl;
+          const image =
+            item.images.find((img) => img.order == 1)?.imageUrl ||
+            item.images[0].imageUrl;
           return (
             <ItemCard
-            id={item.id}
-            key={item.id}
-            title={item.title}
-            imageUrl={image}
-            price={parseFloat(item.price)}
-            condition={item.condition}
-          />
+              id={item.id}
+              key={item.id}
+              title={item.title}
+              imageUrl={image}
+              price={parseFloat(item.price)}
+              condition={item.condition}
+              itemStatus={item.status}
+            />
           );
         })}
-  
       </div>
     </div>
   );

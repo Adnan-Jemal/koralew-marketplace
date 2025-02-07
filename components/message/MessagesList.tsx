@@ -11,12 +11,11 @@ type propTypes = {
 
 const MessagesList = ({ buyingChats, sellingChats }: propTypes) => {
   const path = usePathname();
-  //hide in chat details page when in small screen
 
   return (
     <div
       className={`lg:w-[40%] min-w-80 w-full h-[88vh] overflow-y-scroll scrollbar-none sm:bg-inherit  border-r-2 border-secondary p-8 flex flex-col gap-4 ${
-        //hide comp on small screen chat page and visible on large screen chat page. 
+        //hide comp on small screen chat page and visible on large screen chat page.
         path.split("/").at(-1) != "messages" && "hidden lg:flex"
       }`}
     >
@@ -38,8 +37,8 @@ const MessagesList = ({ buyingChats, sellingChats }: propTypes) => {
                 id={c.id}
                 key={c.chatId}
                 itemImg={c.itemSnapshot.thumbnail}
-                sellerImg={c.sellerSnapshot.sellerImg}
-                sellerName={c.sellerSnapshot.sellerName}
+                sellerOrBuyerImg={c.sellerSnapshot.sellerImg}
+                sellerOrBuyerName={c.sellerSnapshot.sellerName}
                 lastMessageAt={c.lastMessageAt}
                 itemTitle={c.itemSnapshot.title}
                 lastMessage={c.lastMessage}
@@ -56,8 +55,8 @@ const MessagesList = ({ buyingChats, sellingChats }: propTypes) => {
                 id={c.id}
                 key={c.chatId}
                 itemImg={c.itemSnapshot.thumbnail}
-                sellerImg={c.sellerSnapshot.sellerImg}
-                sellerName={c.sellerSnapshot.sellerName}
+                sellerOrBuyerImg={c.BuyerSnapshot.BuyerImg}
+                sellerOrBuyerName={c.BuyerSnapshot.BuyerName}
                 lastMessageAt={c.lastMessageAt}
                 itemTitle={c.itemSnapshot.title}
                 lastMessage={c.lastMessage}

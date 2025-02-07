@@ -50,6 +50,7 @@ export async function getUserItems() {
         title: products.title,
         condition: products.condition,
         price: products.price,
+        status: products.status,
         images: sql`
       JSON_AGG(
         JSON_BUILD_OBJECT(
@@ -91,7 +92,7 @@ export async function getCategoryItems(category: string) {
     })
     .from(products)
     .innerJoin(productImages, eq(products.id, productImages.productId))
-    .where(eq(products.category, category))
+    .where(and(eq(products.category, category), eq(products.status, "Active")))
     .groupBy(products.id);
 
   return items as ItemWithImages[];
@@ -108,6 +109,7 @@ export async function getItem(id: number) {
       createdAt: products.createdAt,
       price: products.price,
       description: products.description,
+      status: products.status,
       images: sql`
       JSON_AGG(
         JSON_BUILD_OBJECT(
@@ -272,6 +274,7 @@ export async function getSellingChats() {
     const chatQuery = query(
       chatsRef,
       where("sellerId", "==", session.user.id),
+      where("itemSnapshot.status", "!=", "Removed"),
       orderBy("lastMessageAt", "desc")
     ) as Query<firebaseChatType>;
     const querySnapshot = await getDocs(chatQuery);
@@ -301,6 +304,7 @@ export async function getBuyingChats() {
     const chatQuery = query(
       chatsRef,
       where("buyerId", "==", session.user.id),
+      where("itemSnapshot.status", "!=", "Removed"),
       orderBy("lastMessageAt", "desc")
     ) as Query<firebaseChatType>;
     const querySnapshot = await getDocs(chatQuery);

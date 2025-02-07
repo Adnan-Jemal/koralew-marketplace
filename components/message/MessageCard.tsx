@@ -8,8 +8,8 @@ type propTypes = {
   id: string;
   active: boolean;
   itemImg: string;
-  sellerImg: string;
-  sellerName: string;
+  sellerOrBuyerImg: string;
+  sellerOrBuyerName: string;
   lastMessageAt: Date | undefined;
   itemTitle: string;
   lastMessage: string;
@@ -22,8 +22,8 @@ const MessageCard = ({
   itemTitle,
   lastMessage,
   lastMessageAt,
-  sellerImg,
-  sellerName,
+  sellerOrBuyerImg,
+  sellerOrBuyerName,
 }: propTypes) => {
   return (
     <Link href={`/account/messages/${id}`}>
@@ -44,15 +44,15 @@ const MessageCard = ({
           </AspectRatio>
 
           <Avatar className="absolute -bottom-2 -right-2">
-            <AvatarImage className="object-cover" src={sellerImg} />
+            <AvatarImage className="object-cover" src={sellerOrBuyerImg} />
             <AvatarFallback>
-              {sellerName?.charAt(0).toUpperCase()}
+              {sellerOrBuyerName?.charAt(0).toUpperCase()}
             </AvatarFallback>
           </Avatar>
         </div>
         <div className=" flex-col pl-4  pr-2 flex-1">
           <div className="flex justify-between ">
-            <p className="text-sm">{sellerName}</p>
+            <p className="text-sm">{sellerOrBuyerName}</p>
             <p className="text-xs">
               {formatDistanceToNowStrict(lastMessageAt || "", {
                 addSuffix: true,
