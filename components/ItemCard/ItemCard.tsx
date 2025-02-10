@@ -49,7 +49,7 @@ export default function ItemCard({
         {itemStatus && (
           <div
             className={clsx(
-              "absolute py-1 px-2 top-0 right-0 rounded-r-none rounded-l-md rounded-t-none",
+              "absolute py-1 px-2 top-0 right-0 text-white rounded-r-none rounded-l-md rounded-t-none",
               {
                 "bg-green-500": itemStatus === "Active",
                 "bg-gray-500": itemStatus === "Sold",

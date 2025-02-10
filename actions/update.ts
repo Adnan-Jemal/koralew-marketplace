@@ -10,8 +10,10 @@ import { ItemStatusType } from "@/lib/types";
 import { and, eq } from "drizzle-orm";
 import {
   collection,
+  doc,
   getDocs,
   query,
+  serverTimestamp,
   updateDoc,
   where,
 } from "firebase/firestore";
@@ -144,5 +146,17 @@ export async function updateItemStatusForChat(
     });
   } catch (e) {
     console.error("Error updating item status: ", e);
+  }
+}
+
+export async function updateChat(newMessage: string, chatDocId: string) {
+  try {
+    const chatRef = doc(firestore, "chats", chatDocId);
+    await updateDoc(chatRef, {
+      lastMessage: newMessage,
+      lastMessageAt: serverTimestamp(),
+    });
+  } catch (error) {
+    console.error("Error updating chat:", error);
   }
 }

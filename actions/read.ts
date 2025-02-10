@@ -8,6 +8,7 @@ import { SelectUser, users } from "@/db/schema/users";
 import {
   firebaseChatType,
   firestoreChatTypeWithId,
+  firestoreMessageTypeWithId,
   ItemWithImages,
 } from "@/lib/types";
 import { and, desc, eq, max, ne, sql } from "drizzle-orm";
@@ -15,11 +16,17 @@ import { and, desc, eq, max, ne, sql } from "drizzle-orm";
 import { redirect } from "next/navigation";
 import {
   collection,
+  doc,
+  Firestore,
+  getDoc,
   getDocs,
+  or,
   orderBy,
   Query,
   query,
   where,
+  and as fbAnd,
+  onSnapshot,
 } from "firebase/firestore";
 import { firestore } from "@/firebase";
 
@@ -321,5 +328,113 @@ export async function getBuyingChats() {
   } catch (e) {
     console.error("Error querying chats: ", e);
     throw new Error("Failed to fetch buying chats");
+  }
+}
+export async function getChatById(ChatId: string) {
+  const session = await auth();
+  if (!session?.user?.id) return redirect("/");
+
+  try {
+    const chatRef = doc(firestore, "chats", ChatId);
+    const docSnap = await getDoc(chatRef);
+
+    if (docSnap.exists()) {
+      return {
+        id: docSnap.id,
+        ...docSnap.data(),
+        lastMessageAt: docSnap.data().lastMessageAt?.toDate(),
+        createdAt: docSnap.data().createdAt?.toDate(),
+      } as firestoreChatTypeWithId;
+    } else {
+      console.log("No such document!");
+      return null;
+    }
+  } catch (e) {
+    console.error("Error querying chat: ", e);
+    throw e;
+  }
+}
+export async function getMessages(chatId: string) {
+  const session = await auth();
+  if (!session?.user?.id) return redirect("/");
+
+  try {
+    const messagesRef = collection(firestore, "messages");
+    const messagesQuery = query(
+      messagesRef,
+      fbAnd(
+        where("chatId", "==", chatId),
+        or(
+          where("senderId", "==", session.user.id),
+          where("receiverId", "==", session.user.id)
+        )
+      ),
+      orderBy("sentAt", "asc")
+    );
+    const querySnapshot = await getDocs(messagesQuery);
+
+    return querySnapshot.docs.map((doc) => {
+      const data = doc.data();
+      return {
+        id: doc.id,
+        ...data,
+        sentAt: data.sentAt?.toDate(),
+      } as firestoreMessageTypeWithId;
+    });
+  } catch (e) {
+    console.error("Error querying messages: ", e);
+    throw new Error("Failed to fetch messages");
+  }
+}
+
+export async function getRealtimeMessages(
+  chatId: string,
+  callback: (messages: firestoreMessageTypeWithId[]) => void
+) {
+  try {
+    // Get the current session.
+    const session = await auth();
+    if (!session?.user?.id) {
+      console.warn(
+        "No authenticated user; cannot subscribe to realtime messages."
+      );
+      return () => {};
+    }
+
+    // Reference to the messages subcollection inside the specific chat.
+    const messagesRef = collection(firestore, "chats", chatId, "messages");
+
+    // If your data is stored in the subcollection, you might not need to filter by chatId.
+    // Otherwise, uncomment the where clause if necessary.
+    const messagesQuery = query(
+      messagesRef,
+      // where("chatId", "==", chatId), // Possibly redundant in a subcollection.
+      orderBy("sentAt", "asc") // Chronological order: oldest messages first.
+    );
+
+    // Set up the realtime listener.
+    const unsubscribe = onSnapshot(
+      messagesQuery,
+      (querySnapshot) => {
+        const messages = querySnapshot.docs.map((doc) => {
+          const data = doc.data();
+          return {
+            id: doc.id,
+            ...data,
+            // Convert Firestore Timestamp to JS Date.
+            sentAt: data.sentAt?.toDate(),
+          } as firestoreMessageTypeWithId;
+        });
+        callback(messages);
+      },
+      (error) => {
+        console.error("Real-time messages error:", error);
+      }
+    );
+
+    return unsubscribe; // Return the cleanup function.
+  } catch (error) {
+    console.error("Error setting up realtime messages:", error);
+    return () => {};
   }
 }

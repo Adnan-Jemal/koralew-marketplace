@@ -20,6 +20,7 @@ import { z } from "zod";
 import { getChat } from "./read";
 import { ItemWithImages } from "@/lib/types";
 import { SelectUser } from "@/db/schema/users";
+import { updateChat } from "./update";
 
 export async function addItem(formValues: z.infer<typeof addItemFormSchema>) {
   const session = await auth();
@@ -84,13 +85,14 @@ export async function createChat(
     if (existingChatId) {
       return existingChatId;
     }
+    const chatId =
+      item.id.toString() +
+      "-" +
+      seller.id.slice(0, 4) +
+      "-" +
+      buyerId.slice(0, 4);
     const chatRef = await addDoc(collection(firestore, "chats"), {
-      chatId:
-        item.id.toString() +
-        "-" +
-        seller.id.slice(0, 4) +
-        "-" +
-        buyerId.slice(0, 4),
+      chatId: chatId,
       sellerId: seller.id,
       buyerId: buyerId,
       productId: item.id,
@@ -112,7 +114,46 @@ export async function createChat(
         status: (item.status ?? "active").toString(),
       },
     });
+    await createMessage(
+      chatRef.id,
+      chatId,
+      session.user.id,
+      seller.id,
+      message
+    );
     return chatRef.id;
+  } catch (e) {
+    console.error("Error adding document: ", e);
+  }
+}
+
+export async function createMessage(
+  chatDocId: string,
+  chatId: string,
+  senderId: string,
+  receiverId: string,
+  message: string
+) {
+  const session = await auth();
+  if (!session?.user?.id) {
+    return redirect("/signin");
+  }
+  if (session.user.id != senderId && session.user.id != receiverId) {
+    return redirect("/signin");
+  }
+
+  try {
+    const messageRef = await addDoc(collection(firestore, "messages"), {
+      chatDocId: chatDocId,
+      chatId: chatId,
+      senderId: senderId,
+      receiverId: receiverId,
+      message: message,
+      messageRead: false,
+      sentAt: serverTimestamp(),
+    });
+    await updateChat(message,chatDocId)
+    return messageRef.id;
   } catch (e) {
     console.error("Error adding document: ", e);
   }

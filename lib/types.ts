@@ -70,3 +70,23 @@ export type ItemStatusType =
   | "Rejected"
   | "Sold"
   | "Removed";
+
+export type firebaseMessageType = {
+  chatDocId: string;
+  chatId: string;
+  senderId: string;
+  receiverId: string;
+  message: string;
+  messageRead: string;
+  sentAt: Date | undefined;
+}
+export type firestoreMessageTypeWithId = {
+  id:string
+  chatDocId: string;
+  chatId: string;
+  senderId: string;
+  receiverId: string;
+  message: string;
+  messageRead: string;
+  sentAt: Date | undefined;
+};
