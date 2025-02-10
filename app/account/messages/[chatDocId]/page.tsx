@@ -40,7 +40,7 @@ async function page({ params }: { params: Promise<{ chatDocId: string }> }) {
         } as chatPartnerType);
 
   return (
-    <div className="lg:max-w-[60%] flex flex-col w-full max-h-[88dvh] min-h-0">
+    <div className="lg:max-w-[60%] flex flex-col w-full h-[88dvh] min-h-0">
       <div className="grid grid-cols-2 divide-x-2 items-center justify-between py-2 gap-2 border-b-2 px-4">
         <div className="flex gap-2 items-center justify-start p-1 w-full">
           <Button asChild className="size-10 p-2" variant={"secondary"}>
