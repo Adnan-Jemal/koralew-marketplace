@@ -37,7 +37,7 @@ const SendMessageForm = ({
   };
 
   return (
-    <div className="p-4 border-t-2 ">
+    <div className="p-4 border-t-2 abs ">
       <div className=" flex w-full gap-4">
         <TextareaAutosize
           disabled={sending}
