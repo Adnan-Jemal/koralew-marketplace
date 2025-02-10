@@ -1,5 +1,5 @@
 "use client";
-import { Ellipsis, icons, Send } from "lucide-react";
+import { Ellipsis, Send } from "lucide-react";
 import { Button } from "../ui/button";
 import TextareaAutosize from "react-textarea-autosize";
 import { useState } from "react";
