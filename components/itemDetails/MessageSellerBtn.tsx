@@ -12,7 +12,7 @@ import React, { useState } from "react";
 import { Input } from "../ui/input";
 import { CheckCheck, Ellipsis, MessageSquareText } from "lucide-react";
 import { useRouter } from "next/navigation";
-import { createChat } from "@/actions/create";
+
 import { Session } from "next-auth";
 import { toast } from "sonner";
 import {
@@ -23,6 +23,8 @@ import {
 } from "../ui/tooltip";
 import { ItemWithImages } from "@/lib/types";
 import { SelectUser } from "@/db/schema/users";
+import { createChat } from "@/actions/chat";
+import { createNotification } from "@/actions/notification";
 
 type propTypes = {
   seller: SelectUser;
@@ -65,6 +67,12 @@ function MessageSellerBtn({
     }
     setSending(true);
     const newChatId = await createChat(seller, session.user.id, item, message);
+    await createNotification(
+      seller.id,
+      "New Message",
+      `you have a new message from ${session.user?.name}`,
+      `/account/messages/${newChatId}`
+    );
     if (!newChatId) {
       toast.error("something went wrong");
       setSending(false);

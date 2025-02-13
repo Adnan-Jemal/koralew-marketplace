@@ -1,11 +1,7 @@
-import {
-  getItemImgs,
-  getItemImgsMaxOrder,
-  getItemWithOutImgs,
-} from "@/actions/read";
 import { auth } from "@/auth";
-import AddEditItemHeader from "@/components/createEditListing/AddEditItemHeader";
 import EditListingMain from "@/components/createEditListing/EditItem/EditListingMain";
+import { getItemWithOutImgs } from "@/data/item";
+import { getItemImgs, getItemImgsMaxOrder } from "@/data/itemImage";
 import { redirect } from "next/navigation";
 
 export default async function ItemEditPage(props: {
@@ -25,7 +21,6 @@ export default async function ItemEditPage(props: {
   }
   return (
     <>
-      <AddEditItemHeader />
       <EditListingMain
         maxImgOrder={maxImgOrder || 0}
         item={item}

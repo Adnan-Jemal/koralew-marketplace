@@ -1,5 +1,4 @@
 "use client";
-import { addImage, addItem } from "@/actions/create";
 import AddItemForm, { addItemFormSchema } from "../AddItemForm";
 import { storage } from "@/firebase";
 import { getDownloadURL, ref, uploadBytesResumable } from "firebase/storage";
@@ -10,6 +9,8 @@ import { z } from "zod";
 import UploadLoading from "../UploadLoading";
 import { Session } from "next-auth";
 import AddItemImgsForm from "./AddItemImgsForm";
+import { addItem } from "@/actions/item";
+import { addImage } from "@/actions/itemImage";
 
 export type ImgFilesT = {
   file: File;

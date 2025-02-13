@@ -1,6 +1,7 @@
-import { getBuyingChats, getSellingChats } from "@/actions/read";
+
 import { auth } from "@/auth";
 import MessagesList from "@/components/message/MessagesList";
+import { getBuyingChats, getSellingChats } from "@/data/chat";
 
 export default async function MessagesLayout({
   children,

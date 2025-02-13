@@ -1,8 +1,9 @@
-import { getCategoryItems } from "@/actions/read";
+
 import ItemCard from "@/components/ItemCard/ItemCard";
-import { Navbar } from "@/components/layouts/nav/Navbar";
+
 import NavCategories from "@/components/layouts/nav/NavCategories";
 import { Skeleton } from "@/components/ui/skeleton";
+import { getCategoryItems } from "@/data/item";
 import { Suspense } from "react";
 
 type propType = {
@@ -13,11 +14,12 @@ export default async function Home(props: propType) {
   const capitalizedCategory =
     searchParams?.category?.charAt(0).toUpperCase() +
     searchParams.category?.slice(1);
+
   const categoryItems = await getCategoryItems(capitalizedCategory);
 
   return (
     <>
-    <Navbar />
+    
       <NavCategories />
 
       <div className="max-w-7xl mx-auto flex  flex-wrap gap-x-4 gap-y-10 mt-10 items-center justify-evenly ">

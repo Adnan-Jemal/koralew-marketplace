@@ -7,7 +7,7 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
-import { updateUserPhoto } from "@/actions/update";
+
 import React, { useRef, useState } from "react";
 import { getDownloadURL, ref, uploadBytesResumable } from "firebase/storage";
 import { storage } from "@/firebase";
@@ -15,6 +15,7 @@ import { toast } from "sonner";
 import { useSession } from "next-auth/react";
 import { Ellipsis, UploadCloud, XCircle } from "lucide-react";
 import Image from "next/image";
+import { updateUserPhoto } from "@/actions/user";
 
 
 const UpdatePhotoBtn = ({userId}:{userId:string | undefined}) => {

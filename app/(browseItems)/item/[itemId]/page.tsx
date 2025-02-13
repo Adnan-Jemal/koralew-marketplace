@@ -1,4 +1,4 @@
-import { getItem, getItemSeller } from "@/actions/read";
+
 import { auth } from "@/auth";
 import Notice from "@/components/general/Notice";
 import DeleteItemBtn from "@/components/itemDetails/DeleteItemBtn";
@@ -11,8 +11,10 @@ import MarkaAsSoldBtn from "@/components/itemDetails/MarkaAsSoldBtn";
 import { SellerProfile } from "@/components/itemDetails/SellerProfile";
 import ShareBtn from "@/components/itemDetails/ShareBtn";
 import { SimilarItems } from "@/components/itemDetails/SimilarItems";
-import { Navbar } from "@/components/layouts/nav/Navbar";
+
 import { Button } from "@/components/ui/button";
+import { getItem } from "@/data/item";
+import { getItemSeller } from "@/data/user";
 import { InfoIcon, PackageOpen } from "lucide-react";
 import Link from "next/link";
 
@@ -25,7 +27,7 @@ export default async function page(props: {
   if (!item) {
     return (
       <>
-        <Navbar />
+    
         <div className="flex flex-col w-full h-96 items-center justify-center text-center">
           <PackageOpen className="size-36 mb-6" />
           <h2 className="text-3xl font-bold">Item Not Found</h2>
@@ -39,7 +41,7 @@ export default async function page(props: {
 
   return (
     <>
-      <Navbar />
+     
       <div className="max-w-7xl mx-auto">
         {seller.id == session?.user?.id && item.status != "Sold" && (
           <div className="bg-secondary mt-6 mx-8 py-6 px-6 flex items-center justify-center gap-4 rounded-xl flex-col sm:flex-row text-center sm:text-left">

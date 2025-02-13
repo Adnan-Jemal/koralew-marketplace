@@ -1,5 +1,6 @@
-import { getUserItems } from "@/actions/read";
+
 import ItemCard from "@/components/ItemCard/ItemCard";
+import { getUserItems } from "@/data/item";
 import { PackageOpen } from "lucide-react";
 
 export default async function MyItemsPage() {

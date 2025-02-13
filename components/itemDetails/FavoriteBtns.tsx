@@ -1,7 +1,7 @@
 import { Session } from "next-auth";
 import AddToFavoritesBtn from "./AddToFavoritesBtn";
 import { RemoveFromFavBtn } from "./RemoveFromFavBtn";
-import { isProductFavorited } from "@/actions/read";
+import { isProductFavorited } from "@/data/favorite";
 
 type propTypes = {
   productID: number;

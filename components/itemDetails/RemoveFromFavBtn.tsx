@@ -1,9 +1,10 @@
 "use client";
 import { Button } from "../ui/button";
 import { HeartCrack } from "lucide-react";
-import { deleteFavorite } from "@/actions/delete";
+
 import { toast } from "sonner";
 import { useState } from "react";
+import { deleteFavorite } from "@/actions/favorite";
 
 export const RemoveFromFavBtn = ({ productID }: { productID: number }) => {
   const [removing, setRemoving] = useState(false);

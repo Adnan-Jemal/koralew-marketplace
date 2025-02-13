@@ -1,5 +1,5 @@
 "use client";
-import { updateItemStatus } from "@/actions/update";
+
 import { Ellipsis } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { toast } from "sonner";
@@ -13,6 +13,7 @@ import {
 } from "../ui/dialog";
 import { Button } from "../ui/button";
 import { useState } from "react";
+import { updateItemStatus } from "@/actions/item";
 
 const MarkaAsSoldBtn = ({ itemId }: { itemId: number }) => {
   const [updating, setUpdating] = useState(false);

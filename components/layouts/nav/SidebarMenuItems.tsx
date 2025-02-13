@@ -1,11 +1,11 @@
 "use client";
 import { Button } from "@/components/ui/button";
 import {
+  BellIcon,
   Heart,
   LayoutDashboard,
   MessagesSquare,
   Package,
-  Settings,
   UserCog,
 } from "lucide-react";
 import Link from "next/link";
@@ -19,9 +19,9 @@ const menuItems = [
     text: "Dashboard",
   },
   {
-    link: "/account/profile",
-    icon: <UserCog className="mr-2 size-6" />,
-    text: "Profile",
+    link: "/account/messages",
+    icon: <MessagesSquare className="mr-2 size-6" />,
+    text: "Messages",
   },
   {
     link: "/account/my-items",
@@ -34,14 +34,15 @@ const menuItems = [
     text: "Favorites",
   },
   {
-    link: "/account/messages",
-    icon: <MessagesSquare className="mr-2 size-6" />,
-    text: "Messages",
+    link: "/account/notifications",
+    icon: <BellIcon className="mr-2 size-6" />, // Replace with your preferred icon
+    text: "Notifications",
   },
+
   {
-    link: "/account/settings",
-    icon: <Settings className="mr-2 size-6" />,
-    text: "Settings",
+    link: "/account/profile",
+    icon: <UserCog className="mr-2 size-6" />,
+    text: "Profile",
   },
 ];
 

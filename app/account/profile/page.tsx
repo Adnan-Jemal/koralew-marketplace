@@ -1,8 +1,8 @@
-import { getUser } from "@/actions/read";
 import Notice from "@/components/general/Notice";
 import DeleteAccount from "@/components/profile/DeleteAccount";
 import ProfileForm from "@/components/profile/ProfileForm";
 import ProfileView from "@/components/profile/ProfileView";
+import { getUser } from "@/data/user";
 
 export default async function ProfilePage() {
   const user = await getUser();

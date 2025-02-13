@@ -11,9 +11,8 @@ import {
 
 import { toast } from "sonner";
 import { useState } from "react";
-import { Ellipsis} from "lucide-react";
-import { deleteUser } from "@/actions/delete";
-
+import { Ellipsis } from "lucide-react";
+import { deleteUser } from "@/actions/user";
 
 const DeleteAccount = () => {
   const [loading, setLoading] = useState(false);

@@ -79,14 +79,31 @@ export type firebaseMessageType = {
   message: string;
   messageRead: string;
   sentAt: Date | undefined;
-}
+};
 export type firestoreMessageTypeWithId = {
-  id:string
+  id: string;
   chatDocId: string;
   chatId: string;
   senderId: string;
   receiverId: string;
   message: string;
   messageRead: string;
+  sentAt: Date | undefined;
+};
+
+export type notificationTypes =
+  | "New Message"
+  | "Item Listed"
+  | "Item Updated"
+  | "Item Sold"
+  | "Promotional";
+
+export type firestoreNotificationsWithId = {
+  id:string;
+  receiver: string;
+  type: notificationTypes;
+  message: string;
+  link: string;
+  read: boolean;
   sentAt: Date | undefined;
 };

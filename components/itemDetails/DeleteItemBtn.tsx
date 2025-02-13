@@ -8,11 +8,12 @@ import {
 } from "../ui/dialog";
 import { Button } from "../ui/button";
 import { DialogHeader } from "../ui/dialog";
-import { deleteItem } from "@/actions/delete";
+
 import { useState } from "react";
 import { Ellipsis } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { toast } from "sonner";
+import { deleteItem } from "@/actions/item";
 
 function DeleteItemBtn({ itemId }: { itemId: number }) {
   const [isDeleting, setIsDeleting] = useState(false);

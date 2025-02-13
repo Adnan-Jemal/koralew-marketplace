@@ -1,5 +1,5 @@
-import { getFavoriteItems } from "@/actions/read";
 import ItemCard from "@/components/ItemCard/ItemCard";
+import { getFavoriteItems } from "@/data/favorite";
 import { HeartCrack } from "lucide-react";
 import React from "react";
 

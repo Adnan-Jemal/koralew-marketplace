@@ -8,8 +8,9 @@ import { Separator } from "../ui/separator";
 import { CallSellerBtn } from "./CallSellerBtn";
 import { Session } from "next-auth";
 import MessageSellerBtn from "./MessageSellerBtn";
-import { getChat } from "@/actions/read";
+
 import { ItemWithImages } from "@/lib/types";
+import { getChat } from "@/data/chat";
 
 type SellerProfileTypes = {
   seller: SelectUser;

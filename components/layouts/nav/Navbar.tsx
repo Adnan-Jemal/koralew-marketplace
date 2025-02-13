@@ -1,9 +1,13 @@
 import Link from "next/link";
 import { Search } from "lucide-react";
-import { ModeToggle } from "../../ui/ModeToggle";
-import { NavProfile } from "./NavProfile";
 
-export const Navbar = () => {
+import NotificationIcon from "@/components/notifications/NotificationIcon";
+import { NavProfile } from "./NavProfile";
+import { ModeToggle } from "@/components/ui/ModeToggle";
+import { auth } from "@/auth";
+
+export const Navbar = async () => {
+  const session = await auth();
   return (
     <div
       className={` border-b-2 border-secondary sticky  top-0 z-10 bg-background`}
@@ -25,9 +29,12 @@ export const Navbar = () => {
         </div>
 
         <div className="flex items-center md:gap-4 gap-2">
-          <NavProfile />
-          <ModeToggle />
-        </div>
+      {session&& (
+        <NotificationIcon session={session} />
+      )}
+      <NavProfile session={session} />
+      <ModeToggle />
+    </div>
       </div>
       <div
         className={`sm:hidden flex border-2 rounded-lg transition-shadow border-secondary p-2  mx-4 mb-2  `}

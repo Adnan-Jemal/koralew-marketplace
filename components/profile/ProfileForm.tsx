@@ -14,12 +14,13 @@ import { Input } from "../ui/input";
 import { Button } from "../ui/button";
 import { Label } from "../ui/label";
 import { SelectUser } from "@/db/schema/users";
-import { updateUser } from "@/actions/update";
+
 
 import { toast } from "sonner";
 import { CountrySelect } from "./CountrySelect";
 import { Ellipsis } from "lucide-react";
 import { useSession } from "next-auth/react";
+import { updateUser } from "@/actions/user";
 
 const formSchema = z.object({
   name: z.string().min(2, { message: "Invalid full name" }).max(25),

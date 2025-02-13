@@ -5,6 +5,7 @@ import { ThemeProvider } from "@/components/layouts/theme-provider";
 import { Toaster } from "@/components/ui/sonner";
 import { SessionProvider } from "next-auth/react";
 
+
 export const metadata: Metadata = {
   title: "Koralew Marketplace",
   description: "An All In One Marketplace",

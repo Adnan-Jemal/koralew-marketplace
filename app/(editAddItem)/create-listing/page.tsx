@@ -1,6 +1,7 @@
-import { getUser } from "@/actions/read";
+
 import { auth } from "@/auth";
 import CreateListingMainForm from "@/components/createEditListing/AddItem/CreateListingMainForm";
+import { getUser } from "@/data/user";
 import { redirect } from "next/navigation";
 
 

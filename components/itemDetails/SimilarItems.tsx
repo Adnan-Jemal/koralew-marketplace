@@ -1,7 +1,7 @@
-import { getSimilarCategoryItems } from "@/actions/read";
 import React, { Suspense } from "react";
 import ItemCard from "../ItemCard/ItemCard";
 import { Skeleton } from "../ui/skeleton";
+import { getSimilarCategoryItems } from "@/data/item";
 
 export const SimilarItems = async ({
   category,

@@ -1,5 +1,5 @@
 "use client";
-import { addImage } from "@/actions/create";
+
 import AddItemForm, { addItemFormSchema } from "../AddItemForm";
 import { storage } from "@/firebase";
 import { getDownloadURL, ref, uploadBytesResumable } from "firebase/storage";
@@ -12,8 +12,8 @@ import { Session } from "next-auth";
 import { SelectProductImages } from "@/db/schema/productImages";
 import EditItemImgsForm from "./EditItemImgsForm";
 import { SelectProduct } from "@/db/schema/products";
-import { updateItem } from "@/actions/update";
-import { deleteItemImgs } from "@/actions/delete";
+import { updateItem } from "@/actions/item";
+import { addImage, deleteItemImgs } from "@/actions/itemImage";
 
 export type EditImgFilesT = {
   file?: File;

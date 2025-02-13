@@ -1,11 +1,11 @@
-import AddEditItemHeader from "@/components/createEditListing/AddEditItemHeader";
+
 import { Skeleton } from "@/components/ui/skeleton";
 import React from "react";
 
 export default function EditLoading() {
   return (
     <>
-      <AddEditItemHeader />
+    
       <div className="relative">
         <div className="sm:max-w-[65%] w-[80%] mx-auto flex flex-col gap-14 my-16">
           <h1 className="text-center text-4xl font-bold">Edit Listing</h1>

@@ -1,10 +1,9 @@
-import { Navbar } from "@/components/layouts/nav/Navbar";
+
 import { Skeleton } from "@/components/ui/skeleton";
 
 export default function ItemLoading() {
   return (
     <>
-    <Navbar />
       {/* Breadcrumbs and Action Buttons */}
       <div className="w-[90%] max-w-6xl mx-auto flex  justify-between items-start md:items-center gap-4 py-4">
         <Skeleton className="w-1/3 md:w-1/4 h-6" />

@@ -2,10 +2,11 @@
 import { Button } from "../ui/button";
 import { useRouter } from "next/navigation";
 import { toast } from "sonner";
-import { addToFavorites } from "@/actions/create";
+
 import { Heart } from "lucide-react";
 import { Session } from "next-auth";
 import { useState } from "react";
+import { addToFavorites } from "@/actions/favorite";
 
 type AddToFavoritesBtnType = {
   productID: number;

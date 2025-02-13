@@ -1,14 +1,23 @@
-import React from "react";
+"use client";
 
-import { PackagePlus, ArrowLeft } from "lucide-react";
+import { PackagePlus, House } from "lucide-react";
 
 import Link from "next/link";
 import MobileSidebar from "./MobileSidebar";
 import { Button } from "@/components/ui/button";
 import { ModeToggle } from "@/components/ui/ModeToggle";
 import { SessionProvider } from "next-auth/react";
+import {
+  Breadcrumb,
+  BreadcrumbItem,
+  BreadcrumbLink,
+  BreadcrumbList,
+  BreadcrumbSeparator,
+} from "@/components/ui/breadcrumb";
+import { usePathname } from "next/navigation";
 
 const AccountHeader = () => {
+  const path = usePathname();
   return (
     <div className=" border-b-2 border-secondary sticky top-0 z-10 bg-background">
       <div className=" max-w-7xl select-none px-4 m-auto flex items-center justify-between gap-2">
@@ -16,18 +25,26 @@ const AccountHeader = () => {
           <SessionProvider>
             <MobileSidebar />
           </SessionProvider>
-          {/* <Breadcrumb>
-        <BreadcrumbList className="text-md text-gray-500 dark:text-gray-400">
-          <BreadcrumbItem>
-            <BreadcrumbLink href="/">Home</BreadcrumbLink>
-          </BreadcrumbItem>
-          <BreadcrumbSeparator />
-          <BreadcrumbItem>
-            Account
-          </BreadcrumbItem>
-        </BreadcrumbList>
-      </Breadcrumb> */}{" "}
-          <Button
+          <Breadcrumb>
+            <BreadcrumbList className=" text-sm sm:text-lg text-gray-500 dark:text-gray-400">
+              <BreadcrumbItem>
+                <BreadcrumbLink href="/" className="flex gap-1 items-center">
+                  <House className="size-5" />
+                  Home
+                </BreadcrumbLink>
+              </BreadcrumbItem>
+              <BreadcrumbSeparator />
+              <BreadcrumbItem className="hidden md:inline-block">
+                Account
+              </BreadcrumbItem>
+
+              <BreadcrumbSeparator className="hidden md:inline-block" />
+              <BreadcrumbItem className="capitalize">
+                {path.split("/").at(2)}
+              </BreadcrumbItem>
+            </BreadcrumbList>
+          </Breadcrumb>
+          {/* <Button
             asChild
             variant={"link"}
             className=" items-center py-6 text-lg "
@@ -35,7 +52,7 @@ const AccountHeader = () => {
             <Link href={"/"}>
               <ArrowLeft className="mr-2 size-6" /> Home
             </Link>
-          </Button>
+          </Button> */}
         </div>
 
         <div className="flex items-center md:gap-4 gap-2">

@@ -1,9 +1,10 @@
-import { getChatById, getMessages } from "@/actions/read";
 import { auth } from "@/auth";
 import Messages from "@/components/message/Messages";
 import SendMessageForm from "@/components/message/SendMessageForm";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
+import { getChatById } from "@/data/chat";
+import { getMessages } from "@/data/messag";
 
 import { ArrowLeft } from "lucide-react";
 import Link from "next/link";
@@ -88,7 +89,7 @@ async function page({ params }: { params: Promise<{ chatDocId: string }> }) {
       <SendMessageForm
         chatDocId={param.chatDocId}
         chatId={chatDoc.chatId}
-        senderId={session?.user?.id}
+        session={session}
         receiverId={
           chatDoc.sellerId == session.user.id
             ? chatDoc.buyerId

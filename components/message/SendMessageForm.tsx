@@ -3,12 +3,15 @@ import { Ellipsis, Send } from "lucide-react";
 import { Button } from "../ui/button";
 import TextareaAutosize from "react-textarea-autosize";
 import { useState } from "react";
-import { createMessage } from "@/actions/create";
+
+import { Session } from "next-auth";
+import { createMessage } from "@/actions/message";
+import { createNotification } from "@/actions/notification";
 
 type propTypes = {
   chatDocId: string;
   chatId: string;
-  senderId: string;
+  session: Session;
   receiverId: string;
 };
 
@@ -16,7 +19,7 @@ const SendMessageForm = ({
   chatDocId,
   chatId,
   receiverId,
-  senderId,
+  session,
 }: propTypes) => {
   const [message, setMessage] = useState("");
   const [sending, setSending] = useState(false);
@@ -24,7 +27,19 @@ const SendMessageForm = ({
   const handleSend = async () => {
     if (!message.trim()) return;
     setSending(true);
-    await createMessage(chatDocId, chatId, senderId, receiverId, message);
+    await createMessage(
+      chatDocId,
+      chatId,
+      session.user?.id || "",
+      receiverId,
+      message
+    );
+    await createNotification(
+      receiverId,
+      "New Message",
+      `you have a new message from ${session.user?.name}`,
+      `/account/messages/${chatDocId}`
+    );
     setMessage("");
     setSending(false);
     window.scrollTo({ behavior: "smooth" });
