@@ -71,7 +71,7 @@ function MessageSellerBtn({
       seller.id,
       "New Message",
       `you have a new message from ${session.user?.name}`,
-      `/account/messages/${newChatId}`
+      `/account/messages/${newChatId}?tab=selling`
     );
     if (!newChatId) {
       toast.error("something went wrong");
@@ -114,27 +114,27 @@ function MessageSellerBtn({
             Enter your message to the seller below.
           </DialogDescription>
         </DialogHeader>
+        <form onSubmit={sendMessage} className="flex flex-col w-full gap-4">
+          <Input
+            onChange={(e) => setMessage(e.target.value)}
+            value={message}
+            className=" w-full mx-auto px-4 text-lg rounded-xl py-2"
+          />
 
-        <Input
-          onChange={(e) => setMessage(e.target.value)}
-          value={message}
-          className=" w-full mx-auto px-4 text-lg rounded-xl py-2"
-        />
-
-        <DialogFooter>
-          <Button
-            disabled={sending}
-            onClick={sendMessage}
-            type="button"
-            className="w-full text-lg rounded-xl"
-          >
-            {sending ? (
-              <Ellipsis className="text-4xl animate-bounce" />
-            ) : (
-              <span>Send</span>
-            )}
-          </Button>
-        </DialogFooter>
+          <DialogFooter>
+            <Button
+              disabled={sending}
+              type="submit"
+              className="w-full text-lg rounded-xl"
+            >
+              {sending ? (
+                <Ellipsis className="text-4xl animate-bounce" />
+              ) : (
+                <span>Send</span>
+              )}
+            </Button>
+          </DialogFooter>
+        </form>
       </DialogContent>
     </Dialog>
   );

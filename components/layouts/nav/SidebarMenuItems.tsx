@@ -10,7 +10,7 @@ import {
 } from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import React, { Dispatch, SetStateAction, useState } from "react";
+import React, { Dispatch, SetStateAction} from "react";
 
 const menuItems = [
   {
@@ -52,7 +52,6 @@ type PropType = {
 
 const SidebarMenuItems = ({ setOpen }: PropType) => {
   const path = usePathname();
-  const [currentPath, setCurrentPath] = useState(path);
 
   return (
     <>
@@ -61,13 +60,12 @@ const SidebarMenuItems = ({ setOpen }: PropType) => {
           key={item.text}
           asChild
           onClick={() => {
-            setCurrentPath(item.link);
             if (setOpen) setOpen(false);
           }}
           variant={"outline"}
           size={"lg"}
           className={`flex items-center justify-start w-full text-md border-none transition-colors select-none ${
-            currentPath.includes(item.link) && "bg-secondary"
+            path.includes(item.link) && "bg-secondary"
           }`}
         >
           <Link key={item.text} href={item.link}>

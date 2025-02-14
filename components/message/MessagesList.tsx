@@ -12,7 +12,7 @@ import { firestore } from "@/firebase";
 import { firestoreChatTypeWithId } from "@/lib/types";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import MessageCard from "@/components/message/MessageCard";
-import { usePathname, useRouter } from "next/navigation";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { Session } from "next-auth";
 
 type MessagesListProps = {
@@ -28,17 +28,23 @@ const MessagesList: React.FC<MessagesListProps> = ({
 }) => {
   const path = usePathname();
   const router = useRouter();
+  const searchParams = useSearchParams();
 
   const [buyingChats, setBuyingChats] = useState(initialBuyingChats);
   const [sellingChats, setSellingChats] = useState(initialSellingChats);
-  const [activeTab, setActiveTab] = useState("Buying");
+  const [activeTab, setActiveTab] = useState(searchParams.get('tab') || 'buying');
 
   const onTabChange = (value: string) => {
     setActiveTab(value);
-    if (path.toString() != "/account/messages")
-      router.replace("/account/messages");
+    if (path.toString() != `/account/messages?tab=${value}`)
+      router.replace(`/account/messages?tab=${value}`);
   };
 
+  //update url
+  useEffect(() => {
+    if (!searchParams.has('tab')) router.push("/account/messages?tab=buying");
+  }, [path,searchParams,router]);
+  //listen for chat changes
   useEffect(() => {
     if (!session?.user?.id) return;
 
@@ -109,19 +115,19 @@ const MessagesList: React.FC<MessagesListProps> = ({
       <Tabs
         onValueChange={onTabChange}
         value={activeTab}
-        defaultValue="Buying"
+        
         className="w-full"
       >
-        <TabsList className="grid w-full grid-cols-2 text-lg h-fit">
-          <TabsTrigger className="text-lg" value="Buying">
+        <TabsList className="grid w-full grid-cols-2 text-lg h-fit ">
+          <TabsTrigger className="text-lg" value="buying">
             Buying
           </TabsTrigger>
-          <TabsTrigger className="text-lg" value="Selling">
+          <TabsTrigger className="text-lg" value="selling">
             Selling
           </TabsTrigger>
         </TabsList>
 
-        <TabsContent value="Buying">
+        <TabsContent value="buying">
           {buyingChats.length > 0 ? (
             buyingChats.map((c) => (
               <MessageCard
@@ -134,16 +140,17 @@ const MessagesList: React.FC<MessagesListProps> = ({
                 lastMessageAt={c.lastMessageAt}
                 itemTitle={c.itemSnapshot.title}
                 lastMessage={c.lastMessage}
+                tab={'buying'}
               />
             ))
           ) : (
             <p className="text-gray-500 text-center mt-4">
-              No buying chats yet.
+              No buying messages yet.
             </p>
           )}
         </TabsContent>
 
-        <TabsContent value="Selling">
+        <TabsContent value="selling">
           {sellingChats.length > 0 ? (
             sellingChats.map((c) => (
               <MessageCard
@@ -156,11 +163,12 @@ const MessagesList: React.FC<MessagesListProps> = ({
                 lastMessageAt={c.lastMessageAt}
                 itemTitle={c.itemSnapshot.title}
                 lastMessage={c.lastMessage}
+                tab='selling'
               />
             ))
           ) : (
             <p className="text-gray-500 text-center mt-4">
-              No selling chats yet.
+              No selling messages yet.
             </p>
           )}
         </TabsContent>

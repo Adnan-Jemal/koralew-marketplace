@@ -1,7 +1,6 @@
 import { firestoreNotificationsWithId } from "@/lib/types";
 import { formatDistanceToNow } from "date-fns";
 import { MessageSquareDotIcon } from "lucide-react";
-import Link from "next/link";
 import React from "react";
 
 import MarkaAsReadBtn from "./MarkaAsReadBtn";
@@ -12,10 +11,7 @@ const NotificationCard = ({
   notification: firestoreNotificationsWithId;
 }) => {
   return (
-    <Link
-      href={notification.link}
-      className="w-4/5 flex items-center justify-center"
-    >
+
       <div
         key={notification.id}
         className="w-full bg-secondary flex items-center justify-center text-center sm:justify-normal sm:text-start p-4 rounded-lg gap-3 flex-wrap"
@@ -31,11 +27,12 @@ const NotificationCard = ({
           </p>
         </div>
         <MarkaAsReadBtn
+          notificationLink={notification.link}
           notificationId={notification.id}
           notificationRead={notification.read}
         />
       </div>
-    </Link>
+   
   );
 };
 

@@ -12,7 +12,7 @@ const Sidebar = () => {
           </Link>
         </div>
 
-        <div className="grow flex flex-col px-4 mt-6 gap-4">
+        <div className="grow flex flex-col px-4 mt-6 gap-4 ">
           <SidebarMenuItems />
         </div>
         <SidebarProfile />

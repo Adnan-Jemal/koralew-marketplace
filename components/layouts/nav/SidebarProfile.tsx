@@ -1,14 +1,15 @@
-"use client";
 import { LogOut } from "lucide-react";
 import { Button } from "@/components/ui/button";
-
 import { Skeleton } from "@/components/ui/skeleton";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { signOut, useSession } from "next-auth/react";
 
-const SidebarProfile = () => {
-  const session = useSession();
-  const user = session.data?.user;
+import { auth } from "@/auth";
+import Form from "next/form";
+import { logOut } from "@/actions/auth";
+
+const SidebarProfile = async () => {
+  const session = await auth();
+  const user = session?.user;
 
   return (
     <div className="mb-6  w-[90%] mx-auto flex flex-col gap-5 justify-end">
@@ -41,12 +42,13 @@ const SidebarProfile = () => {
           )}
         </div>
       </div>
-      <form action={() => signOut()}>
+
+      <Form action={logOut}>
         <Button variant={"ghost"} className="hover:text-red-500 gap-2">
           <LogOut className="text-sm" />
           Log Out
         </Button>
-      </form>
+      </Form>
     </div>
   );
 };

@@ -13,6 +13,7 @@ type propTypes = {
   lastMessageAt: Date | undefined;
   itemTitle: string;
   lastMessage: string;
+  tab:'buying' | 'selling'
 };
 
 const MessageCard = ({
@@ -24,9 +25,10 @@ const MessageCard = ({
   lastMessageAt,
   sellerOrBuyerImg,
   sellerOrBuyerName,
+  tab
 }: propTypes) => {
   return (
-    <Link href={`/account/messages/${id}`}>
+    <Link href={`/account/messages/${id}?tab=${tab}`}>
       <div
         className={`w-full border-2 flex border-secondary ${
           active && "bg-secondary"

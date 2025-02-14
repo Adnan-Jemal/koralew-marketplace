@@ -3,16 +3,24 @@
 import { markaNotificationRead } from "@/actions/notification";
 import { Button } from "../ui/button";
 import { BellDot, CheckCheck } from "lucide-react";
+import { useRouter } from "next/navigation";
+
+type MarkaAsReadBtnPropType = {
+  notificationId: string;
+  notificationRead: boolean;
+  notificationLink: string | null | undefined;
+};
 
 const MarkaAsReadBtn = ({
   notificationId,
   notificationRead,
-}: {
-  notificationId: string;
-  notificationRead: boolean;
-}) => {
+  notificationLink,
+}: MarkaAsReadBtnPropType) => {
+  const router = useRouter();
+
   const handleClick = async () => {
     await markaNotificationRead(notificationId);
+    if (notificationLink) router.push(notificationLink);
   };
   if (notificationRead) {
     return (

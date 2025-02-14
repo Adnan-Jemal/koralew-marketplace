@@ -13,6 +13,7 @@ type propTypes = {
   chatId: string;
   session: Session;
   receiverId: string;
+  receiverType: "buying" | "selling";
 };
 
 const SendMessageForm = ({
@@ -20,6 +21,7 @@ const SendMessageForm = ({
   chatId,
   receiverId,
   session,
+  receiverType,
 }: propTypes) => {
   const [message, setMessage] = useState("");
   const [sending, setSending] = useState(false);
@@ -38,11 +40,10 @@ const SendMessageForm = ({
       receiverId,
       "New Message",
       `you have a new message from ${session.user?.name}`,
-      `/account/messages/${chatDocId}`
+      `/account/messages/${chatDocId}?tab=${receiverType}`
     );
     setMessage("");
     setSending(false);
-    window.scrollTo({ behavior: "smooth" });
   };
   const handleKeyDown = (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
     if (e.key === "Enter" && !e.shiftKey) {

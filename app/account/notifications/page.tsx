@@ -17,7 +17,7 @@ const NotificationsPage = async () => {
           <p>You do not have any notifications at the moment</p>
         </div>
       )}
-      <div className="flex flex-col gap-8 items-center justify-center ">
+      <div className="flex flex-col gap-8 items-center justify-center w-[80%] mx-auto ">
         {notifications?.map((n) => {
           return <NotificationCard key={n.id} notification={n} />;
         })}

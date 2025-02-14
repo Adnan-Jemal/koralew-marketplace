@@ -17,7 +17,6 @@ const NotificationIcon = ({ session }: { session?: Session | null }) => {
 
     const notificationRef = collection(firestore, "notifications");
 
-    // Verify your Firestore field names match these
     const notificationQuery = query(
       notificationRef,
       where("receiver", "==", session.user.id),
@@ -27,12 +26,11 @@ const NotificationIcon = ({ session }: { session?: Session | null }) => {
     const unsubscribe = onSnapshot(
       notificationQuery,
       (querySnapshot) => {
-        console.log(querySnapshot);
         setUnreadCount(querySnapshot.size);
       },
       (error) => {
         console.error("Error fetching notifications:", error);
-        // Consider adding error state handling
+        
       }
     );
 

@@ -95,6 +95,9 @@ async function page({ params }: { params: Promise<{ chatDocId: string }> }) {
             ? chatDoc.buyerId
             : chatDoc.sellerId
         }
+        receiverType={
+          chatDoc.sellerId == session.user.id ? "buying" : "selling"
+        }
       />
     </div>
   );
