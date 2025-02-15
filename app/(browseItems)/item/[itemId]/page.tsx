@@ -77,7 +77,7 @@ export default async function page(props: {
             <FavoriteBtns
               session={session}
               sellerId={seller.id}
-              productID={parseInt(params.itemId)}
+              itemId={parseInt(params.itemId)}
             />
             <ShareBtn />
           </div>

@@ -11,20 +11,21 @@ import { users } from "./users";
 export const authenticators = pgTable(
   "authenticator",
   {
-    credentialID: text("credentialID").notNull().unique(),
-    userId: text("userId")
+    credential_id: text("credential_id").notNull().unique(),
+    user_id: text("user_id")
       .notNull()
       .references(() => users.id, { onDelete: "cascade" }),
-    providerAccountId: text("providerAccountId").notNull(),
-    credentialPublicKey: text("credentialPublicKey").notNull(),
+    provider_account_id: text("provider_account_id").notNull(),
+    credential_public_key: text("credential_public_key").notNull(),
     counter: integer("counter").notNull(),
-    credentialDeviceType: text("credentialDeviceType").notNull(),
-    credentialBackedUp: boolean("credentialBackedUp").notNull(),
+    credential_device_type: text("credential_device_type").notNull(),
+    credential_backed_up: boolean("credential_backed_up").notNull(),
     transports: text("transports"),
   },
   (authenticator) => ({
     compositePK: primaryKey({
-      columns: [authenticator.userId, authenticator.credentialID],
+      columns: [authenticator.user_id, authenticator.credential_id],
     }),
   })
 );
+

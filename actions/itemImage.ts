@@ -1,7 +1,7 @@
 "use server";
 import { auth } from "@/auth";
 import { db } from "@/db/db";
-import { productImages } from "@/db/schema/productImages";
+import { itemImages } from "@/db/schema/itemImages";
 import { storage } from "@/firebase";
 import { and, eq, ExtractTablesWithRelations } from "drizzle-orm";
 import { NeonQueryResultHKT } from "drizzle-orm/neon-serverless";
@@ -9,15 +9,15 @@ import { PgTransaction } from "drizzle-orm/pg-core";
 import { deleteObject, ref } from "firebase/storage";
 import { redirect } from "next/navigation";
 
-export async function addImage(productId: number, Url: string, order: number) {
+export async function addImage(itemId: number, Url: string, order: number) {
   const session = await auth();
   if (!session?.user?.id) {
     return redirect("/signin");
   }
   try {
     await db
-      .insert(productImages)
-      .values({ productId: productId, imageUrl: Url, order: order });
+      .insert(itemImages)
+      .values({ itemId: itemId, imageUrl: Url, order: order });
     console.log("added to db");
   } catch (error) {
     console.error(error);
@@ -43,11 +43,11 @@ export async function deleteItemImgs(
       // Delete from database (use transaction if provided)
       const dbInstance = trx || db; // Use transaction or global db
       await dbInstance
-        .delete(productImages)
+        .delete(itemImages)
         .where(
           and(
-            eq(productImages.productId, itemId),
-            eq(productImages.imageUrl, imgURL)
+            eq(itemImages.itemId, itemId),
+            eq(itemImages.imageUrl, imgURL)
           )
         );
 

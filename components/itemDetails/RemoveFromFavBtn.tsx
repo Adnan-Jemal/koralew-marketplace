@@ -6,12 +6,12 @@ import { toast } from "sonner";
 import { useState } from "react";
 import { deleteFavorite } from "@/actions/favorite";
 
-export const RemoveFromFavBtn = ({ productID }: { productID: number }) => {
+export const RemoveFromFavBtn = ({ itemId }: { itemId: number }) => {
   const [removing, setRemoving] = useState(false);
   const handelRemoveFromFavorites = async () => {
     try {
       setRemoving(true);
-      await deleteFavorite(productID);
+      await deleteFavorite(itemId);
       toast.success("Item Removed From Favorites");
     } catch (error) {
       console.error(error);

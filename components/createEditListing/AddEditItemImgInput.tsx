@@ -23,7 +23,7 @@ export default function AddItemImgInput({ handleImgAddChange }: propTypes) {
         onChange={handleImgAddChange}
         hidden
         accept="image/jpeg, image/png, image/webp"
-        name="productImages"
+        name="itemImages"
         type="file"
         multiple
         max={MaxNumOfImgs}

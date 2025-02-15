@@ -1,13 +1,13 @@
 "use client";
 import { AspectRatio } from "../ui/aspect-ratio";
 import Image from "next/image";
-import { SelectProductImages } from "@/db/schema/productImages";
+import { SelectItemImages } from "@/db/schema/itemImages";
 import { useState } from "react";
 
 export default function ItemImages({
   images,
 }: {
-  images: SelectProductImages[];
+  images: SelectItemImages[];
 }) {
   const [currentImg, setCurrentImg] = useState(images[0].imageUrl);
   return (

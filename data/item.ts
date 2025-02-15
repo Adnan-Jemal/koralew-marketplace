@@ -1,8 +1,8 @@
 import "server-only";
 import { auth } from "@/auth";
 import { db } from "@/db/db";
-import { productImages } from "@/db/schema/productImages";
-import { products } from "@/db/schema/products";
+import { itemImages } from "@/db/schema/itemImages";
+import { items } from "@/db/schema/items";
 import { ItemWithImages } from "@/lib/types";
 import { and, eq, ne, sql } from "drizzle-orm";
 import { redirect } from "next/navigation";
@@ -11,29 +11,29 @@ export async function getUserItems() {
   const session = await auth();
   if (!session?.user?.id) return redirect("/signin");
   try {
-    const items = await db
+    const itemsWithImgs = await db
       .select({
-        id: products.id,
-        title: products.title,
-        condition: products.condition,
-        price: products.price,
-        status: products.status,
+        id: items.id,
+        title: items.title,
+        condition: items.condition,
+        price: items.price,
+        status: items.status,
         images: sql`
       JSON_AGG(
         JSON_BUILD_OBJECT(
-          'imageUrl', ${productImages.imageUrl},
-          'order', ${productImages.order},
-          'productId',${productImages.productId}
+          'imageUrl', ${itemImages.imageUrl},
+          'order', ${itemImages.order},
+          'itemId',${itemImages.itemId}
         )
       )
     `.as("images"),
       })
-      .from(products)
-      .innerJoin(productImages, eq(products.id, productImages.productId))
-      .where(eq(products.userId, session.user.id))
-      .groupBy(products.id)
-      .orderBy(sql`${products.createdAt} DESC`);
-    return items as ItemWithImages[];
+      .from(items)
+      .innerJoin(itemImages, eq(items.id, itemImages.itemId))
+      .where(eq(items.userId, session.user.id))
+      .groupBy(items.id)
+      .orderBy(sql`${items.createdAt} DESC`);
+    return itemsWithImgs as ItemWithImages[];
   } catch (error) {
     console.log(error);
     throw error;
@@ -41,88 +41,88 @@ export async function getUserItems() {
 }
 
 export async function getCategoryItems(category: string) {
-  const items = await db
+  const itemsWithImgs = await db
     .select({
-      id: products.id,
-      title: products.title,
-      condition: products.condition,
-      price: products.price,
+      id: items.id,
+      title: items.title,
+      condition: items.condition,
+      price: items.price,
       images: sql`
       JSON_AGG(
         JSON_BUILD_OBJECT(
-          'imageUrl', ${productImages.imageUrl},
-          'order', ${productImages.order},
-          'productId',${productImages.productId}
+          'imageUrl', ${itemImages.imageUrl},
+          'order', ${itemImages.order},
+          'itemId',${itemImages.itemId}
         )
       )
     `.as("images"),
     })
-    .from(products)
-    .innerJoin(productImages, eq(products.id, productImages.productId))
-    .where(and(eq(products.category, category), eq(products.status, "Active")))
-    .groupBy(products.id);
+    .from(items)
+    .innerJoin(itemImages, eq(items.id, itemImages.itemId))
+    .where(and(eq(items.category, category), eq(items.status, "Active")))
+    .groupBy(items.id);
 
-  return items as ItemWithImages[];
+  return itemsWithImgs as ItemWithImages[];
 }
 
 export async function getItem(id: number) {
   const item = await db
     .select({
-      id: products.id,
-      userId: products.userId,
-      title: products.title,
-      category: products.category,
-      condition: products.condition,
-      createdAt: products.createdAt,
-      price: products.price,
-      description: products.description,
-      status: products.status,
+      id: items.id,
+      userId: items.userId,
+      title: items.title,
+      category: items.category,
+      condition: items.condition,
+      createdAt: items.createdAt,
+      price: items.price,
+      description: items.description,
+      status: items.status,
       images: sql`
       JSON_AGG(
         JSON_BUILD_OBJECT(
-          'imageUrl', ${productImages.imageUrl},
-          'order', ${productImages.order},
-          'productId',${productImages.productId}
+          'imageUrl', ${itemImages.imageUrl},
+          'order', ${itemImages.order},
+          'itemId',${itemImages.itemId}
         )
       )
     `.as("images"),
     })
-    .from(products)
-    .innerJoin(productImages, eq(products.id, productImages.productId))
-    .where(eq(products.id, id))
-    .groupBy(products.id);
+    .from(items)
+    .innerJoin(itemImages, eq(items.id, itemImages.itemId))
+    .where(eq(items.id, id))
+    .groupBy(items.id);
   return item[0] as ItemWithImages;
 }
 
 export async function getSimilarCategoryItems(
   category: string,
-  productId: number
+  itemId: number
 ) {
-  const items = await db
+  const itemsWithImgs = await db
     .select({
-      id: products.id,
-      title: products.title,
-      condition: products.condition,
-      price: products.price,
+      id: items.id,
+      title: items.title,
+      condition: items.condition,
+      price: items.price,
       images: sql`
       JSON_AGG(
         JSON_BUILD_OBJECT(
-          'imageUrl', ${productImages.imageUrl},
-          'order', ${productImages.order},
-          'productId',${productImages.productId}
+          'imageUrl', ${itemImages.imageUrl},
+          'order', ${itemImages.order},
+          'itemId',${itemImages.itemId}
         )
       )
     `.as("images"),
     })
-    .from(products)
-    .innerJoin(productImages, eq(products.id, productImages.productId))
-    .where(and(eq(products.category, category), ne(products.id, productId)))
-    .groupBy(products.id);
+    .from(items)
+    .innerJoin(itemImages, eq(items.id, itemImages.itemId))
+    .where(and(eq(items.category, category), ne(items.id, itemId)))
+    .groupBy(items.id);
 
-  return items as ItemWithImages[];
+  return itemsWithImgs as ItemWithImages[];
 }
 
 export async function getItemWithOutImgs(itemId: number) {
-  const item = await db.select().from(products).where(eq(products.id, itemId));
+  const item = await db.select().from(items).where(eq(items.id, itemId));
   return item[0];
 }

@@ -1,30 +1,30 @@
 import { Session } from "next-auth";
 import AddToFavoritesBtn from "./AddToFavoritesBtn";
 import { RemoveFromFavBtn } from "./RemoveFromFavBtn";
-import { isProductFavorited } from "@/data/favorite";
+import { isItemFavorited } from "@/data/favorite";
 
 type propTypes = {
-  productID: number;
+  itemId: number;
   session: Session | null;
   sellerId: string;
 };
 
 export default async function FavoriteBtns({
-  productID,
+  itemId,
   session,
   sellerId,
 }: propTypes) {
   if (!session?.user) {
-    return <AddToFavoritesBtn productID={productID} session={session} />;
+    return <AddToFavoritesBtn itemId={itemId} session={session} />;
   }
   if (sellerId == session.user.id) {
     return;
   }
-  const favorited = await isProductFavorited(productID);
+  const favorited = await isItemFavorited(itemId);
 
   if (!favorited) {
-    return <AddToFavoritesBtn productID={productID} session={session} />;
+    return <AddToFavoritesBtn itemId={itemId} session={session} />;
   } else {
-    return <RemoveFromFavBtn productID={productID} />;
+    return <RemoveFromFavBtn itemId={itemId} />;
   }
 }

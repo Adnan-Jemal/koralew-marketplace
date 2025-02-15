@@ -9,9 +9,9 @@ import { toast } from "sonner";
 import { z } from "zod";
 import UploadLoading from "../UploadLoading";
 import { Session } from "next-auth";
-import { SelectProductImages } from "@/db/schema/productImages";
+import { SelectItemImages } from "@/db/schema/itemImages";
 import EditItemImgsForm from "./EditItemImgsForm";
-import { SelectProduct } from "@/db/schema/products";
+import { SelectItem } from "@/db/schema/items";
 import { updateItem } from "@/actions/item";
 import { addImage, deleteItemImgs } from "@/actions/itemImage";
 
@@ -21,8 +21,8 @@ export type EditImgFilesT = {
 };
 type EditListingMainTypes = {
   session: Session | null;
-  itemImgs: SelectProductImages[];
-  item: SelectProduct;
+  itemImgs: SelectItemImages[];
+  item: SelectItem;
   maxImgOrder: number;
 };
 
@@ -71,7 +71,7 @@ function EditListingMain({
         //upload each imgs to cloud storage
         const newImageRef = ref(
           storage,
-          `images/products/${item.id}/image_${maxImgOrder + index}`
+          `images/items/${item.id}/image_${maxImgOrder + index}`
         );
         const uploadTask = await uploadBytesResumable(
           newImageRef,

@@ -9,11 +9,11 @@ import { useState } from "react";
 import { addToFavorites } from "@/actions/favorite";
 
 type AddToFavoritesBtnType = {
-  productID: number;
+  itemId: number;
   session: Session | null;
 };
 export default function AddToFavoritesBtn({
-  productID,
+  itemId,
   session,
 }: AddToFavoritesBtnType) {
   const router = useRouter();
@@ -29,7 +29,7 @@ export default function AddToFavoritesBtn({
 
     try {
       setAdding(true);
-      await addToFavorites(productID);
+      await addToFavorites(itemId);
       toast.success("Item Added To Favorites");
     } catch (error) {
       toast.error("Something went wrong");

@@ -24,7 +24,7 @@ export const statusEnum = pgEnum("status", [
   "Removed",
 ]);
 
-export const products = pgTable("product", {
+export const items = pgTable("item", {
   id: serial("id").primaryKey(),
   title: text("title").notNull(),
   description: text("description").notNull(),
@@ -39,5 +39,5 @@ export const products = pgTable("product", {
   status: statusEnum("status").notNull().default("Active"),
 });
 
-export type InsertProduct = typeof products.$inferInsert;
-export type SelectProduct = typeof products.$inferSelect;
+export type InsertItem = typeof items.$inferInsert;
+export type SelectItem = typeof items.$inferSelect;

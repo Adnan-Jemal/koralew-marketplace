@@ -26,7 +26,7 @@ export default function AddedImagesList({
                 className={`rounded-md select-none ${
                   !img && "animate-pulse"
                 } bg-gray-200 dark:bg-gray-600 object-cover size-20 sm:size-32 md:size-40`}
-                alt="selected product images"
+                alt="selected item images"
                 width={200}
                 height={200}
                 src={img}
@@ -52,7 +52,7 @@ export default function AddedImagesList({
               onChange={handleImgAddChange}
               hidden
               accept="image/jpeg, image/png, image/webp"
-              name="productImages"
+              name="itemImages"
               type="file"
               multiple
               max={MaxNumOfImgs}

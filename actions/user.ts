@@ -2,8 +2,8 @@
 import { auth } from "@/auth";
 import SignOut from "@/components/auth/SignOut";
 import { db } from "@/db/db";
-import { productImages } from "@/db/schema/productImages";
-import { products } from "@/db/schema/products";
+import { itemImages } from "@/db/schema/itemImages";
+import { items } from "@/db/schema/items";
 import { SelectUser, users } from "@/db/schema/users";
 import { eq, inArray } from "drizzle-orm";
 import { revalidatePath } from "next/cache";
@@ -48,23 +48,23 @@ export async function deleteUser() {
     // Start a transaction
     await db
       .transaction(async (trx) => {
-        // First, get all product IDs for the specified user
-        const userProductIds = await trx
-          .select({ id: products.id })
-          .from(products)
-          .where(eq(products.userId, userId));
+        // First, get all item IDs for the specified user
+        const userItemIds = await trx
+          .select({ id: items.id })
+          .from(items)
+          .where(eq(items.userId, userId));
 
-        const productIds = userProductIds.map((product) => product.id);
+        const itemIds = userItemIds.map((item) => item.id);
 
-        if (productIds.length > 0) {
-          // Delete images associated with the user's products
+        if (itemIds.length > 0) {
+          // Delete images associated with the user's items
           await trx
-            .delete(productImages)
-            .where(inArray(productImages.productId, productIds));
+            .delete(itemImages)
+            .where(inArray(itemImages.itemId, itemIds));
         }
 
-        // Delete products associated with the user
-        await trx.delete(products).where(eq(products.userId, userId));
+        // Delete items associated with the user
+        await trx.delete(items).where(eq(items.userId, userId));
 
         // Delete the user
         await trx.delete(users).where(eq(users.id, userId));

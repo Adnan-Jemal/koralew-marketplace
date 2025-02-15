@@ -1,4 +1,4 @@
-import { SelectProductImages } from "@/db/schema/productImages";
+import { SelectItemImages } from "@/db/schema/itemImages";
 import { Timestamp } from "firebase/firestore";
 
 export type ItemWithImages = {
@@ -12,14 +12,14 @@ export type ItemWithImages = {
   views: number;
   createdAt: Date;
   status: "Active" | "Under Review" | "Rejected" | "Sold" | "Removed";
-  images: SelectProductImages[];
+  images: SelectItemImages[];
 };
 
 export type firebaseChatType = {
   chatId: string;
   sellerId: string;
   buyerId: string;
-  productId: number;
+  ItemId: number;
   createdAt: Timestamp | null;
   lastMessage: string;
   lastMessageAt: Timestamp | null;
@@ -43,7 +43,7 @@ export type firestoreChatTypeWithId = {
   chatId: string;
   sellerId: string;
   buyerId: string;
-  productId: number;
+  itemId: number;
   createdAt: Date | undefined;
   lastMessage: string;
   lastMessageAt: Date | undefined;
@@ -99,7 +99,7 @@ export type notificationTypes =
   | "Promotional";
 
 export type firestoreNotificationsWithId = {
-  id:string;
+  id: string;
   receiver: string;
   type: notificationTypes;
   message: string;

@@ -47,7 +47,7 @@ export async function createChat(
       chatId: chatId,
       sellerId: seller.id,
       buyerId: buyerId,
-      productId: item.id,
+      itemId: item.id,
       createdAt: serverTimestamp(),
       lastMessage: message,
       lastMessageAt: serverTimestamp(),
@@ -92,7 +92,7 @@ export async function updateItemStatusForChat(
     const chatsRef = collection(firestore, "chats");
     const q = query(
       chatsRef,
-      where("productId", "==", itemId),
+      where("itemId", "==", itemId),
       where("sellerId", "==", session.user.id)
     );
     const querySnapshot = await getDocs(q);

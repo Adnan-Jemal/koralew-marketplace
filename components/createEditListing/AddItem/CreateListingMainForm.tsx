@@ -44,7 +44,7 @@ export default function CreateListingMainForm({
       setIsUploading(true);
       setUploadMessage("Creating Listing");
       //add item to db
-      const newProductId = await addItem(formValues);
+      const newItemId = await addItem(formValues);
       window.scrollTo({ top: 0, behavior: "smooth" });
       setUploadMessage("Uploading Images");
 
@@ -53,16 +53,16 @@ export default function CreateListingMainForm({
         //upload each img to cloud storage
         const newImageRef = ref(
           storage,
-          `images/products/${newProductId}/image_${index}`
+          `images/items/${newItemId}/image_${index}`
         );
         const uploadTask = await uploadBytesResumable(
           newImageRef,
           imgFile.file as Blob
         );
 
-        //get img url and add each to db in product imgs table 
+        //get img url and add each to db in item imgs table
         const imgUrl = await getDownloadURL(uploadTask.ref);
-        await addImage(newProductId, imgUrl, index + 1);
+        await addImage(newItemId, imgUrl, index + 1);
         setUploadMessage("Almost Done");
       });
 

@@ -1,20 +1,20 @@
 import "server-only";
 import { db } from "@/db/db";
-import { productImages } from "@/db/schema/productImages";
+import { itemImages } from "@/db/schema/itemImages";
 import { eq, max } from "drizzle-orm";
 
 export async function getItemImgsMaxOrder(itemId: number) {
   const res = await db
-    .select({ maxImgOrder: max(productImages.order) })
-    .from(productImages)
-    .where(eq(productImages.productId, itemId));
+    .select({ maxImgOrder: max(itemImages.order) })
+    .from(itemImages)
+    .where(eq(itemImages.itemId, itemId));
   return res[0].maxImgOrder;
 }
 
-export async function getItemImgs(productId: number) {
-  const productImgs = await db
+export async function getItemImgs(itemId: number) {
+  const itemImgs = await db
     .select()
-    .from(productImages)
-    .where(eq(productImages.productId, productId));
-  return productImgs;
+    .from(itemImages)
+    .where(eq(itemImages.itemId, itemId));
+  return itemImgs;
 }

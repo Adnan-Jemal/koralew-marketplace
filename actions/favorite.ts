@@ -6,7 +6,7 @@ import { and, eq } from "drizzle-orm";
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 
-export async function addToFavorites(productId: number) {
+export async function addToFavorites(itemId: number) {
   const session = await auth();
   if (!session?.user?.id) {
     return redirect("/signin");
@@ -15,7 +15,7 @@ export async function addToFavorites(productId: number) {
   try {
     await db
       .insert(favorites)
-      .values({ productId: productId, userId: session.user.id });
+      .values({ itemId: itemId, userId: session.user.id });
     revalidatePath("account/favorites");
   } catch (error) {
     console.error(error);
@@ -24,7 +24,7 @@ export async function addToFavorites(productId: number) {
 }
 
 //delete
-export async function deleteFavorite(productId: number) {
+export async function deleteFavorite(itemId: number) {
   const session = await auth();
   if (!session?.user?.id) return redirect("/signin");
 
@@ -33,7 +33,7 @@ export async function deleteFavorite(productId: number) {
       .delete(favorites)
       .where(
         and(
-          eq(favorites.productId, productId),
+          eq(favorites.itemId, itemId),
           eq(favorites.userId, session.user.id)
         )
       );

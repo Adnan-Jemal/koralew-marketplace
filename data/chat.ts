@@ -21,7 +21,7 @@ export async function getChat(sellerId: string, itemId: number) {
     const chatsRef = collection(firestore, "chats");
     const chatQuery = query(
       chatsRef,
-      where("productId", "==", itemId),
+      where("itemId", "==", itemId),
       where("sellerId", "==", sellerId),
       where("buyerId", "==", buyerId),
       where(

@@ -2,8 +2,8 @@
 import { auth } from "@/auth";
 import { addItemFormSchema } from "@/components/createEditListing/AddItemForm";
 import { db } from "@/db/db";
-import { productImages } from "@/db/schema/productImages";
-import { InsertProduct, products } from "@/db/schema/products";
+import { itemImages } from "@/db/schema/itemImages";
+import { InsertItem, items } from "@/db/schema/items";
 import { ItemStatusType } from "@/lib/types";
 import { and, eq } from "drizzle-orm";
 import { redirect } from "next/navigation";
@@ -18,12 +18,12 @@ export async function addItem(formValues: z.infer<typeof addItemFormSchema>) {
   if (!session?.user?.id) {
     return redirect("/signin");
   }
-  let newProduct: InsertProduct = { ...formValues, userId: session.user.id };
-  let addedProduct = await db
-    .insert(products)
-    .values(newProduct)
-    .returning({ newProductId: products.id });
-  return addedProduct[0].newProductId;
+  let newItem: InsertItem = { ...formValues, userId: session.user.id };
+  let addedItem = await db
+    .insert(items)
+    .values(newItem)
+    .returning({ newItemId: items.id });
+  return addedItem[0].newItemId;
 }
 //update
 export async function updateItem(
@@ -35,7 +35,7 @@ export async function updateItem(
     return redirect("/");
   }
   await db
-    .update(products)
+    .update(items)
     .set({
       title: formValues.title,
       category: formValues.category,
@@ -43,7 +43,7 @@ export async function updateItem(
       price: formValues.price,
       condition: formValues.condition,
     })
-    .where(and(eq(products.userId, session.user.id), eq(products.id, itemId)));
+    .where(and(eq(items.userId, session.user.id), eq(items.id, itemId)));
 }
 
 export async function updateItemStatus(
@@ -55,11 +55,11 @@ export async function updateItemStatus(
     return redirect("/");
   }
   await db
-    .update(products)
+    .update(items)
     .set({
       status: newStatus,
     })
-    .where(and(eq(products.userId, session.user.id), eq(products.id, itemId)));
+    .where(and(eq(items.userId, session.user.id), eq(items.id, itemId)));
   await updateItemStatusForChat(itemId, newStatus);
 }
 
@@ -73,9 +73,9 @@ export async function deleteItem(itemId: number) {
     await db.transaction(async (trx) => {
       // Get current images using the transaction
       const currentImgs = await trx
-        .select({ url: productImages.imageUrl })
-        .from(productImages)
-        .where(eq(productImages.productId, itemId));
+        .select({ url: itemImages.imageUrl })
+        .from(itemImages)
+        .where(eq(itemImages.itemId, itemId));
 
       const currentImgUrls = currentImgs.map((img) => img.url);
 
@@ -83,10 +83,10 @@ export async function deleteItem(itemId: number) {
       await deleteItemImgs(currentImgUrls, itemId, trx);
       //update chat item snapshot to item status removed
       await updateItemStatusForChat(itemId, "Removed");
-      // Delete the product itself
+      // Delete the item itself
       await trx
-        .delete(products)
-        .where(and(eq(products.userId, userId), eq(products.id, itemId)));
+        .delete(items)
+        .where(and(eq(items.userId, userId), eq(items.id, itemId)));
     });
   } catch (error) {
     console.error("Error deleting item:", error);

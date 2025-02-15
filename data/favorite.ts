@@ -2,13 +2,13 @@ import "server-only";
 import { auth } from "@/auth";
 import { db } from "@/db/db";
 import { favorites } from "@/db/schema/favorites";
-import { productImages } from "@/db/schema/productImages";
-import { products } from "@/db/schema/products";
+import { itemImages } from "@/db/schema/itemImages";
+import { items } from "@/db/schema/items";
 import { ItemWithImages } from "@/lib/types";
 import { and, desc, eq, sql } from "drizzle-orm";
 import { redirect } from "next/navigation";
 
-export async function isProductFavorited(productId: number) {
+export async function isItemFavorited(itemId: number) {
   const session = await auth();
   if (!session?.user?.id) return redirect("/signin");
   try {
@@ -17,7 +17,7 @@ export async function isProductFavorited(productId: number) {
       .from(favorites)
       .where(
         and(
-          eq(favorites.productId, productId),
+          eq(favorites.itemId, itemId),
           eq(favorites.userId, session?.user?.id)
         )
       );
@@ -32,29 +32,29 @@ export async function getFavoriteItems() {
   const session = await auth();
   if (!session?.user?.id) return redirect("/signin");
   try {
-    const items = await db
+    const itemsWithImgs = await db
       .select({
-        id: products.id,
-        title: products.title,
-        condition: products.condition,
-        price: products.price,
+        id: items.id,
+        title: items.title,
+        condition: items.condition,
+        price: items.price,
         images: sql`
       JSON_AGG(
         JSON_BUILD_OBJECT(
-          'imageUrl', ${productImages.imageUrl},
-          'order', ${productImages.order},
-          'productId',${productImages.productId}
+          'imageUrl', ${itemImages.imageUrl},
+          'order', ${itemImages.order},
+          'itemId',${itemImages.itemId}
         )
       )
     `.as("images"),
       })
       .from(favorites)
-      .innerJoin(products, eq(favorites.productId, products.id))
-      .innerJoin(productImages, eq(products.id, productImages.productId))
+      .innerJoin(items, eq(favorites.itemId, items.id))
+      .innerJoin(itemImages, eq(items.id, itemImages.itemId))
       .where(eq(favorites.userId, session.user.id))
-      .groupBy(products.id, favorites.createdAt)
+      .groupBy(items.id, favorites.createdAt)
       .orderBy(desc(favorites.createdAt));
-    return items as ItemWithImages[];
+    return itemsWithImgs as ItemWithImages[];
   } catch (error) {
     console.log(error);
     throw error;
