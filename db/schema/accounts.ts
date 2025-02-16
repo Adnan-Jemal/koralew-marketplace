@@ -1,8 +1,6 @@
-
-import { integer, pgTable, text,primaryKey } from 'drizzle-orm/pg-core';
-import type { AdapterAccountType } from "next-auth/adapters"
-import { users } from './users';
- 
+import { integer, pgTable, text, primaryKey } from "drizzle-orm/pg-core";
+import type { AdapterAccountType } from "next-auth/adapters";
+import { users } from "./users";
 
 export const accounts = pgTable(
   "account",
@@ -26,4 +24,4 @@ export const accounts = pgTable(
       columns: [account.provider, account.providerAccountId],
     }),
   })
-)
+);

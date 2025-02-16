@@ -1,8 +1,5 @@
-
 "use client";
 
-import * as React from "react";
-import { getNames } from "country-list";
 import { Check, ChevronsUpDown } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
@@ -21,12 +18,10 @@ import {
 } from "@/components/ui/popover";
 import { FormControl } from "@/components/ui/form";
 import { UseFormReturn } from "react-hook-form";
+import { EthiopiaRegions } from "@/lib/ethiopiaRegions";
+import { useState } from "react";
 
-// Get the list of countries
-const countries = getNames().map((country) => ({
-  value: country.toLowerCase().replace(/\s+/g, "-"),
-  label: country,
-}));
+// Get the list of regions
 
 type PropTypes = {
   form: UseFormReturn<
@@ -34,7 +29,7 @@ type PropTypes = {
       name: string;
       email: string;
       phoneNumber: string;
-      country: string;
+      region: string;
       city: string;
       address: string;
     },
@@ -44,8 +39,17 @@ type PropTypes = {
     value: string;
   };
 };
-export function CountrySelect({ form, field }: PropTypes) {
-  const [open, setOpen] = React.useState(false);
+export function RegionSelect({ form, field }: PropTypes) {
+  const [open, setOpen] =useState(false);
+  const regions = EthiopiaRegions.regions.map((region) => ({
+    value: region.name,
+    label: region.name,
+  }));
+  const handelSelect = (region: string) => {
+    form.setValue("region", region);
+    form.setValue("city", "");
+    setOpen(false);
+  };
 
   return (
     <Popover open={open} onOpenChange={setOpen}>
@@ -60,37 +64,31 @@ export function CountrySelect({ form, field }: PropTypes) {
             )}
           >
             {field.value
-              ? countries.find((country) => country.value === field.value)
-                  ?.label
-              : "Select country"}
+              ? regions.find((region) => region.value === field.value)?.label
+              : "Select region"}
             <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
           </Button>
         </FormControl>
       </PopoverTrigger>
       <PopoverContent className="w-full p-0">
         <Command>
-          <CommandInput placeholder="Search country..." />
+          <CommandInput placeholder="Search region..." />
           <CommandList>
-            <CommandEmpty>No country found.</CommandEmpty>
+            <CommandEmpty>No region found.</CommandEmpty>
             <CommandGroup>
-              {countries.map((country) => (
+              {regions.map((region) => (
                 <CommandItem
-                  value={country.label}
-                  key={country.value}
-                  onSelect={() => {
-                    form.setValue("country", country.value);
-                    setOpen(false);
-                  }}
+                  value={region.label}
+                  key={region.value}
+                  onSelect={() => handelSelect(region.value)}
                 >
                   <Check
                     className={cn(
                       "mr-2 h-4 w-4",
-                      country.value === field.value
-                        ? "opacity-100"
-                        : "opacity-0"
+                      region.value === field.value ? "opacity-100" : "opacity-0"
                     )}
                   />
-                  {country.label}
+                  {region.label}
                 </CommandItem>
               ))}
             </CommandGroup>

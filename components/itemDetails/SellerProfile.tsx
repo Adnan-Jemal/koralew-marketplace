@@ -47,7 +47,7 @@ export const SellerProfile = async ({
             <p>
               <span className="">
                 {" " +
-                  fromDashedToCapitalizedWord(seller.country) +
+                  fromDashedToCapitalizedWord(seller.region) +
                   " / " +
                   seller.city}
               </span>

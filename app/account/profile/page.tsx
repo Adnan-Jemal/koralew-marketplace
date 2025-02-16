@@ -9,7 +9,7 @@ export default async function ProfilePage() {
 
   return (
     <div className="w-[90%] mx-auto flex flex-col  gap-14  my-10">
-      {(!user?.address || !user.city || !user.country || !user.phoneNumber) && (
+      {(!user?.address || !user.city || !user.region || !user.phoneNumber) && (
         <Notice
           title="Complete Your Profile Information"
           message="Please complete your profile information to get started listing your items."

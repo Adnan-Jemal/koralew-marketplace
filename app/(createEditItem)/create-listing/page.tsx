@@ -8,7 +8,7 @@ import { redirect } from "next/navigation";
 export default async function page() {
   const session = await auth();
   const user = await getUser();
-  if (!user?.address || !user.city || !user.country || !user.phoneNumber) {
+  if (!user?.address || !user.city || !user.region|| !user.phoneNumber) {
     return redirect("/account/profile");
   }
   return (

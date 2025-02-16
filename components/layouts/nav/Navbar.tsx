@@ -14,7 +14,7 @@ export const Navbar = async () => {
     >
       <div className=" max-w-7xl select-none px-4 m-auto py-3  flex items-center justify-between gap-2">
         <Link href={"/"}>
-          <h1 className="font-bold text-2xl  sm:text-3xl">Koralew</h1>
+          <h1 className="font-bold text-2xl  sm:text-3xl">ቆ Koralew</h1>
         </Link>
 
         <div

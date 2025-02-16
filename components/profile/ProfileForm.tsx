@@ -15,12 +15,13 @@ import { Button } from "../ui/button";
 import { Label } from "../ui/label";
 import { SelectUser } from "@/db/schema/users";
 
-
 import { toast } from "sonner";
-import { CountrySelect } from "./CountrySelect";
+
 import { Ellipsis } from "lucide-react";
 import { useSession } from "next-auth/react";
 import { updateUser } from "@/actions/user";
+import { RegionSelect } from "./RegionSelect";
+import { CitySelect } from "./CitySelect";
 
 const formSchema = z.object({
   name: z.string().min(2, { message: "Invalid full name" }).max(25),
@@ -28,8 +29,8 @@ const formSchema = z.object({
   phoneNumber: z
     .string()
     .regex(/^\d{10}$/, { message: "Invalid phone number" }),
-  country: z.string().min(4, { message: "Please select a country" }),
-  city: z.string().min(4, { message: "Please enter a real city" }),
+  region: z.string().min(4, { message: "Please select a region" }),
+  city: z.string().min(4, { message: "Please select a city" }),
   address: z.string().min(4, { message: "Please enter a real address" }),
 });
 
@@ -45,10 +46,11 @@ export default function ProfileForm({ userData }: propType) {
       name: userData?.name || "",
       email: userData?.email,
       phoneNumber: userData?.phoneNumber || "",
-      country: userData?.country || "",
+      region: userData?.region || "",
       city: userData?.city || "",
       address: userData?.address || "",
     },
+
   });
 
   async function onSubmit(values: z.infer<typeof formSchema>) {
@@ -65,7 +67,7 @@ export default function ProfileForm({ userData }: propType) {
               control={form.control}
               name="name"
               render={({ field }) => (
-                <FormItem className="flex-grow">
+                <FormItem className="w-full">
                   <Label>Full Name</Label>
                   <FormControl>
                     <Input placeholder="Your Name" {...field} />
@@ -78,7 +80,7 @@ export default function ProfileForm({ userData }: propType) {
               control={form.control}
               name="email"
               render={({ field }) => (
-                <FormItem className="flex-grow">
+                <FormItem className="w-full">
                   <Label>Email</Label>
                   <FormControl>
                     <Input
@@ -95,13 +97,13 @@ export default function ProfileForm({ userData }: propType) {
           <div className=" flex gap-4 flex-col sm:flex-row">
             <FormField
               control={form.control}
-              name="country"
+              name="region"
               render={({ field }) => (
-                <FormItem className="flex-grow">
-                  <Label>Country</Label>
+                <FormItem className="w-full">
+                  <Label>Region</Label>
                   <FormControl>
-                    {/* <Input placeholder="Enter Your Country" {...field} /> */}
-                    <CountrySelect form={form} field={field} />
+                    {/* <Input placeholder="Enter Your Region" {...field} /> */}
+                    <RegionSelect form={form} field={field} />
                   </FormControl>
                   <FormMessage className="text-sm text-white bg-red-400 w-fit px-2 rounded-md " />
                 </FormItem>
@@ -111,10 +113,10 @@ export default function ProfileForm({ userData }: propType) {
               control={form.control}
               name="phoneNumber"
               render={({ field }) => (
-                <FormItem className="flex-grow">
+                <FormItem className="w-full">
                   <Label>Phone Number</Label>
                   <FormControl>
-                    <Input placeholder="Enter Phone Number" {...field} />
+                    <Input placeholder="Enter Your Phone Number" {...field} />
                   </FormControl>
                   <FormMessage className="text-sm text-white bg-red-400 w-fit px-2 rounded-md " />
                 </FormItem>
@@ -126,10 +128,10 @@ export default function ProfileForm({ userData }: propType) {
               control={form.control}
               name="city"
               render={({ field }) => (
-                <FormItem className="flex-grow">
-                  <Label>City</Label>
-                  <FormControl>
-                    <Input placeholder="Enter Your City" {...field} />
+                <FormItem className="w-full">
+                  <Label>City / SubCity</Label>
+                  <FormControl >
+                    <CitySelect field={field} form={form} />
                   </FormControl>
                   <FormMessage className="text-sm text-white bg-red-400 w-fit px-2 rounded-md " />
                 </FormItem>
@@ -139,7 +141,7 @@ export default function ProfileForm({ userData }: propType) {
               control={form.control}
               name="address"
               render={({ field }) => (
-                <FormItem className="flex-grow">
+                <FormItem className="w-full">
                   <Label>Address</Label>
                   <FormControl>
                     <Input placeholder="Enter Your Address" {...field} />
