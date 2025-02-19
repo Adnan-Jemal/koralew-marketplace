@@ -80,7 +80,7 @@ export function CitySelect({ form, field }: PropTypes) {
         <Command>
           <CommandInput placeholder="Search city..." />
           <CommandList>
-            <CommandEmpty>Please select a region.</CommandEmpty>
+            <CommandEmpty>Please select a region first.</CommandEmpty>
             <CommandGroup>
               {cities?.map((city) => (
                 <CommandItem

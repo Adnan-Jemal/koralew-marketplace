@@ -33,7 +33,7 @@ export const items = pgTable("item", {
     .references(() => users.id, { onDelete: "cascade" }),
   category: text("category").notNull(),
   condition: conditionEnum("condition").notNull(),
-  price: decimal("price", { precision: 10, scale: 2 }).notNull(),
+  price: decimal("price", { precision: 12, scale: 2 }).notNull(),
   views: integer("views").notNull().default(0),
   createdAt: timestamp("created_at").notNull().defaultNow(),
   status: statusEnum("status").notNull().default("Active"),

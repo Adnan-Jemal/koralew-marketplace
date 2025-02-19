@@ -1,84 +1,111 @@
 import {
-    HomeIcon,
-    MoreHorizontal,
-    Music4,
-    Briefcase,
-    Drill,
-    HeartPulse,
-    LucideBookOpenText,
-    CarFront,
-    Dumbbell,
-    Baby,
-    Shirt,
-    MonitorSmartphone,
-    LucideIcon,
-  } from "lucide-react";
+  HomeIcon,
+  MoreHorizontal,
+  Music4,
+  Briefcase,
+  Drill,
+  HeartPulse,
+  LucideBookOpenText,
+  CarFront,
+  Dumbbell,
+  Baby,
+  Shirt,
+  MonitorSmartphone,
+  LucideIcon,
+  PawPrint,
+  Film,
+  Building,
+  Factory,
+  Sparkles,
+  Palette,
+  Gamepad,
+} from "lucide-react";
 
 export type categoryType = {
-    name:string,
-    link:string,
-    icon:React.ReactElement<LucideIcon>
-  }
-  export const categories :categoryType[] = [
-   
-    {
-      name: "Electronics",
-      link: "electronics",
-      icon: <MonitorSmartphone />,
-    },
-    {
-      name: "Fashion",
-      link: "fashion",
-      icon: <Shirt/>,
-    },
-    {
-      name: "Vehicles",
-      link: "vehicles",
-      icon: <CarFront />,
-    },
-    {
-      name: "Sports",
-      link: "sports",
-      icon: <Dumbbell />,
-    },
-    {
-      name: "Baby",
-      link: "baby",
-      icon: <Baby />,
-    },
-    {
-      name: "Home",
-      link: "home",
-      icon: <HomeIcon />,
-    },
-    {
-      name: "Books",
-      link: "books",
-      icon: <LucideBookOpenText />,
-    },
-    {
-      name: "Health",
-      link: "health",
-      icon: <HeartPulse />,
-    },
-    {
-      name: "Tools",
-      link: "tools",
-      icon: <Drill />,
-    },
-    {
-      name: "Office",
-      link: "office",
-      icon: <Briefcase />,
-    },
-    {
-      name: "Music",
-      link: "music",
-      icon: <Music4 />,
-    },
-    {
-      name: "Others",
-      link: "others",
-      icon: <MoreHorizontal />,
-    },
-  ];
+  name: string;
+  link: string;
+  icon: React.ReactElement<LucideIcon>;
+};
+export const categories: categoryType[] = [
+  {
+    name: "Electronics",
+    link: "electronics",
+    icon: <MonitorSmartphone />,
+  },
+  {
+    name: "Fashion",
+    link: "fashion",
+    icon: <Shirt />,
+  },
+  {
+    name: "Home",
+    link: "home",
+    icon: <HomeIcon />,
+  },
+  {
+    name: "Automotive",
+    link: "automotive",
+    icon: <CarFront />,
+  },
+  {
+    name: "Health",
+    link: "health",
+    icon: <HeartPulse />,
+  },
+  {
+    name: "Beauty",
+    link: "beauty",
+    icon: <Sparkles />,
+  },
+  {
+    name: "Real Estate",
+    link: "real-estate",
+    icon: <Building />,
+  },
+  {
+    name: "Sports",
+    link: "sports",
+    icon: <Dumbbell />,
+  },
+  {
+    name: "Art",
+    link: "art",
+    icon: <Palette />,
+  },
+  {
+    name: "Kids",
+    link: "kids",
+    icon: <Baby />,
+  },
+  {
+    name: "Entertainment",
+    link: "entertainment",
+    icon: <Film />,
+  },
+  {
+    name: "Hobbies",
+    link: "hobbies",
+    icon: <Gamepad />,
+  },
+  {
+    name: "Pets",
+    link: "pets",
+    icon: <PawPrint />,
+  },
+  {
+    name: "Industrial",
+    link: "industrial",
+    icon: <Factory />,
+  },
+
+  {
+    name: "Services",
+    link: "services",
+    icon: <Briefcase />,
+  },
+  {
+    name: "others",
+    link: "others",
+    icon: <MoreHorizontal />,
+  },
+];

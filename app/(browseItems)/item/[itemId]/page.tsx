@@ -1,4 +1,3 @@
-
 import { auth } from "@/auth";
 import Notice from "@/components/general/Notice";
 import DeleteItemBtn from "@/components/itemDetails/DeleteItemBtn";
@@ -22,12 +21,12 @@ export default async function page(props: {
   params: Promise<{ itemId: string }>;
 }) {
   const params = await props.params;
+  const itemId = parseInt(params.itemId);
   const session = await auth();
-  const item = await getItem(parseInt(params.itemId));
+  const item = await getItem(itemId);
   if (!item) {
     return (
       <>
-    
         <div className="flex flex-col w-full h-96 items-center justify-center text-center">
           <PackageOpen className="size-36 mb-6" />
           <h2 className="text-3xl font-bold">Item Not Found</h2>
@@ -41,7 +40,6 @@ export default async function page(props: {
 
   return (
     <>
-     
       <div className="max-w-7xl mx-auto">
         {seller.id == session?.user?.id && item.status != "Sold" && (
           <div className="bg-secondary mt-6 mx-8 py-6 px-6 flex items-center justify-center gap-4 rounded-xl flex-col sm:flex-row text-center sm:text-left">
@@ -57,8 +55,8 @@ export default async function page(props: {
               <Button asChild size={"lg"} className=" text-lg rounded-xl ">
                 <Link href={`/item/${params.itemId}/edit`}>Edit Item</Link>
               </Button>
-              <MarkaAsSoldBtn itemId={parseInt(params.itemId)} />
-              <DeleteItemBtn itemId={parseInt(params.itemId)} />
+              <MarkaAsSoldBtn itemId={itemId} />
+              <DeleteItemBtn itemId={itemId} />
             </div>
           </div>
         )}
@@ -77,7 +75,7 @@ export default async function page(props: {
             <FavoriteBtns
               session={session}
               sellerId={seller.id}
-              itemId={parseInt(params.itemId)}
+              itemId={itemId}
             />
             <ShareBtn />
           </div>

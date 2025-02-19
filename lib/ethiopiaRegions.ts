@@ -1,4 +1,10 @@
-export type RegionType = {};
+//cSpell:disable
+export type EthiopiaRegionsType = {
+  regions: {
+    name: string;
+    cities: string[];
+  }[];
+};
 export const EthiopiaRegions = {
   regions: [
     {

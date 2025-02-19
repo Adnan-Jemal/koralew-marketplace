@@ -26,7 +26,7 @@ import { categories } from "@/lib/categories";
 
 const categoryNames = categories.map((c) => c.name);
 
-export const addItemFormSchema = z.object({
+export const addEditItemFormSchema = z.object({
   title: z.string().min(5, { message: "Must be at leas 5 characters" }).max(50),
   category: z.enum(categoryNames as [string, ...string[]], {
     message: "Please select a category",
@@ -36,10 +36,9 @@ export const addItemFormSchema = z.object({
     .max(800)
     .min(10, { message: "description is too short" }),
   price: z
-    .string({ message: "please enter price" })
-    .regex(/^\d+(\.\d{1,2})?$/, { message: "Please enter a correct price" })
-    .min(1)
-    .max(10, { message: "your item is not worth this much" }),
+    .number()
+    .min(0.01, "Price too small")
+    .max(1000000000, "Your item is not worth this much"),
 
   condition: z.enum(conditionEnum.enumValues, {
     message: "please select a condition",
@@ -47,18 +46,18 @@ export const addItemFormSchema = z.object({
 });
 
 type propTypes = {
-  onSubmit: (values: z.infer<typeof addItemFormSchema>) => Promise<void>;
+  onSubmit: (values: z.infer<typeof addEditItemFormSchema>) => Promise<void>;
   item?: SelectItemType;
 };
 
-export default function AddItemForm({ onSubmit, item }: propTypes) {
-  const form = useForm<z.infer<typeof addItemFormSchema>>({
-    resolver: zodResolver(addItemFormSchema),
+export default function AddEditItemForm({ onSubmit, item }: propTypes) {
+  const form = useForm<z.infer<typeof addEditItemFormSchema>>({
+    resolver: zodResolver(addEditItemFormSchema),
     defaultValues: {
       title: item?.title || "",
       category: item?.category || "",
       description: item?.description || "",
-      price: item?.price || "",
+      price: !!item ? parseInt(item?.price) : undefined,
       condition: item?.condition,
     },
   });
@@ -143,12 +142,12 @@ export default function AddItemForm({ onSubmit, item }: propTypes) {
               name="price"
               render={({ field }) => (
                 <FormItem className="flex-grow">
-                  <Label className="text-md">Price (US$)</Label>
+                  <Label className="text-md">Price (ብር)</Label>
 
                   <FormControl>
                     <Input
                       type="number"
-                      placeholder="how much in USD"
+                      placeholder="how much in ETB"
                       {...field}
                       className="h-14 text-md"
                     />

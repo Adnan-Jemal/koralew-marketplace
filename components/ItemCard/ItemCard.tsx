@@ -39,7 +39,7 @@ export default function ItemCard({
           <h4 className="text-xl capitalize line-clamp-2 pb-0 ">{title}</h4>
           <span className="h-[2px] p-0 m-0 w-[90%] bg-secondary self-center" />
           <div className="flex justify-around  px-2  ">
-            <p className="font-bold text-xl ">${price.toFixed()}</p>
+            <p className="font-bold text-xl ">{price.toFixed() + " "}ብር</p>
             <span className="w-[2px] bg-secondary"></span>
             <span className="bg-black bg-opacity-80 dark:bg-opacity-75 dark:bg-white dark:text-black text-white px-3 text-[14px] text-center max-h-fit py-[2px] rounded-md capitalize ">
               {condition.toLowerCase()}

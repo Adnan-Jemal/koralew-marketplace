@@ -1,6 +1,6 @@
 "use server";
 import { auth } from "@/auth";
-import { addItemFormSchema } from "@/components/createEditListing/AddItemForm";
+import { addEditItemFormSchema } from "@/components/createEditListing/AddEditItemForm";
 import { db } from "@/db/db";
 import { itemImages } from "@/db/schema/itemImages";
 import { InsertItem, items } from "@/db/schema/items";
@@ -13,7 +13,9 @@ import { deleteItemImgs } from "./itemImage";
 import { updateItemStatusForChat } from "./chat";
 
 //create
-export async function addItem(formValues: z.infer<typeof addItemFormSchema>) {
+export async function addItem(
+  formValues: z.infer<typeof addEditItemFormSchema>
+) {
   const session = await auth();
   if (!session?.user?.id) {
     return redirect("/signin");
@@ -27,7 +29,7 @@ export async function addItem(formValues: z.infer<typeof addItemFormSchema>) {
 }
 //update
 export async function updateItem(
-  formValues: z.infer<typeof addItemFormSchema>,
+  formValues: z.infer<typeof addEditItemFormSchema>,
   itemId: number
 ) {
   const session = await auth();

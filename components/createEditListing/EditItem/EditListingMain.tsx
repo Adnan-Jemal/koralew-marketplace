@@ -1,6 +1,6 @@
 "use client";
 
-import AddItemForm, { addItemFormSchema } from "../AddItemForm";
+
 import { storage } from "@/firebase";
 import { getDownloadURL, ref, uploadBytesResumable } from "firebase/storage";
 import { useRouter } from "next/navigation";
@@ -14,6 +14,7 @@ import EditItemImgsForm from "./EditItemImgsForm";
 import { SelectItem } from "@/db/schema/items";
 import { updateItem } from "@/actions/item";
 import { addImage, deleteItemImgs } from "@/actions/itemImage";
+import AddEditItemForm, { addEditItemFormSchema } from "../AddEditItemForm";
 
 export type EditImgFilesT = {
   file?: File;
@@ -42,7 +43,7 @@ function EditListingMain({
   const [isUploading, setIsUploading] = useState<boolean>(false);
   const [uploadMessage, setUploadMessage] = useState<string>("");
 
-  async function onSubmit(formValues: z.infer<typeof addItemFormSchema>) {
+  async function onSubmit(formValues: z.infer<typeof addEditItemFormSchema>) {
     if (imgFiles.length < 2) {
       setImgError("Please upload 2 or more images!");
       window.scrollTo({ top: 0, behavior: "smooth" });
@@ -115,7 +116,7 @@ function EditListingMain({
               setRemovedImgUrls={setRemovedImgUrls}
             />
           </div>
-          <AddItemForm item={item} onSubmit={onSubmit} />
+          <AddEditItemForm item={item} onSubmit={onSubmit} />
         </div>
       </div>
       {isUploading && <UploadLoading message={uploadMessage} />}

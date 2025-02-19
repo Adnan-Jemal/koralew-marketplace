@@ -1,5 +1,5 @@
 "use client";
-import AddItemForm, { addItemFormSchema } from "../AddItemForm";
+
 import { storage } from "@/firebase";
 import { getDownloadURL, ref, uploadBytesResumable } from "firebase/storage";
 import { useRouter } from "next/navigation";
@@ -11,6 +11,7 @@ import { Session } from "next-auth";
 import AddItemImgsForm from "./AddItemImgsForm";
 import { addItem } from "@/actions/item";
 import { addImage } from "@/actions/itemImage";
+import AddEditItemForm, { addEditItemFormSchema } from "../AddEditItemForm";
 
 export type ImgFilesT = {
   file: File;
@@ -28,7 +29,7 @@ export default function CreateListingMainForm({
 
   const router = useRouter();
 
-  async function onSubmit(formValues: z.infer<typeof addItemFormSchema>) {
+  async function onSubmit(formValues: z.infer<typeof addEditItemFormSchema>) {
     if (imgFiles.length < 2) {
       setImgError("Please upload 2 or more images!");
       window.scrollTo({ top: 0, behavior: "smooth" });
@@ -92,7 +93,7 @@ export default function CreateListingMainForm({
               setImgFiles={setImgFiles}
             />
           </div>
-          <AddItemForm onSubmit={onSubmit} />
+          <AddEditItemForm onSubmit={onSubmit} />
         </div>
       </div>
       {isUploading && <UploadLoading message={uploadMessage} />}
