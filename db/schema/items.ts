@@ -4,8 +4,8 @@ import {
   serial,
   text,
   timestamp,
-  decimal,
   pgEnum,
+  numeric,
 } from "drizzle-orm/pg-core";
 import { users } from "./users";
 
@@ -33,7 +33,7 @@ export const items = pgTable("item", {
     .references(() => users.id, { onDelete: "cascade" }),
   category: text("category").notNull(),
   condition: conditionEnum("condition").notNull(),
-  price: decimal("price", { precision: 12, scale: 2 }).notNull(),
+  price: numeric("price", { precision: 12, scale: 2 }).notNull(),
   views: integer("views").notNull().default(0),
   createdAt: timestamp("created_at").notNull().defaultNow(),
   status: statusEnum("status").notNull().default("Active"),

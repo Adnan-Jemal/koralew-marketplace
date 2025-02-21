@@ -20,7 +20,11 @@ export async function addItem(
   if (!session?.user?.id) {
     return redirect("/signin");
   }
-  let newItem: InsertItem = { ...formValues, userId: session.user.id };
+  let newItem: InsertItem = {
+    ...formValues,
+    userId: session.user.id,
+    price: formValues.price.toString(),
+  };
   let addedItem = await db
     .insert(items)
     .values(newItem)
@@ -42,7 +46,7 @@ export async function updateItem(
       title: formValues.title,
       category: formValues.category,
       description: formValues.description,
-      price: formValues.price,
+      price: formValues.price.toString(),
       condition: formValues.condition,
     })
     .where(and(eq(items.userId, session.user.id), eq(items.id, itemId)));

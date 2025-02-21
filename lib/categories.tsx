@@ -1,11 +1,8 @@
 import {
   HomeIcon,
   MoreHorizontal,
-  Music4,
   Briefcase,
-  Drill,
   HeartPulse,
-  LucideBookOpenText,
   CarFront,
   Dumbbell,
   Baby,
