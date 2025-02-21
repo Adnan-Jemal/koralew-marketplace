@@ -101,7 +101,7 @@ export const categories: categoryType[] = [
     icon: <Briefcase />,
   },
   {
-    name: "others",
+    name: "Others",
     link: "others",
     icon: <MoreHorizontal />,
   },
