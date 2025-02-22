@@ -38,10 +38,7 @@ function EditItemImgsForm({
       );
       return;
     }
-    if (FilesFromInput.length + imgFiles.length == 1) {
-      setImgError("Please add more than one image!");
-      return;
-    }
+
     if (numOfLargeFiles > 0) {
       FilesFromInput = FilesFromInput.filter((f) => f.size < maxImgSizeInBytes);
       toast.error(

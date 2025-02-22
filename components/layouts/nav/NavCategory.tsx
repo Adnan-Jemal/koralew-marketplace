@@ -24,20 +24,20 @@ export default function NavCategory({
 
   if (params.get("category") == categoryLink) {
     return (
-      <button
-        className={`flex flex-col items-center cursor-pointer w-full group  transition-opacity hover:opacity-100 mx-1 `}
+      <span
+        className={`flex flex-col items-center cursor-pointer w-full group  transition-opacity hover:opacity-100 mx-1`}
       >
         {categoryIcon}
         <p className=" text-sm mt-1 w-full text-nowrap">{categoryName}</p>
         <div
           className={`h-[2px] w-full bg-primary transition-colors ease-in rounded-full mt-2 `}
         ></div>
-      </button>
+      </span>
     );
   }
 
   return (
-    <button
+    <span
       onClick={handelClick}
       className={`flex flex-col items-center cursor-pointer w-full group  transition-opacity hover:opacity-100 mx-1 `}
     >
@@ -46,6 +46,6 @@ export default function NavCategory({
       <div
         className={`h-[2px] w-full  group-hover:bg-primary transition-colors ease-in rounded-full mt-2 `}
       ></div>
-    </button>
+    </span>
   );
 }

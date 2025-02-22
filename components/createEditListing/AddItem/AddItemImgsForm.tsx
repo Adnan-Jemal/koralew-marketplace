@@ -6,7 +6,7 @@ import AddItemImgInput from "../AddEditItemImgInput";
 import { ImgFilesT } from "./CreateListingMainForm";
 import AddedImagesList from "../AddedImagesList";
 
-export const maxImgSizeInBytes = 1024 * 1024;
+export const maxImgSizeInBytes = 3 * 1024 * 1024;;
 export const MaxNumOfImgs = 8;
 type propTypes = {
   imgFiles: ImgFilesT[];
@@ -38,10 +38,7 @@ function AddItemImgsForm({
       );
       return;
     }
-    if (filesFromInput.length + imgFiles.length == 1) {
-      setImgError("Please add more than one image!");
-      return;
-    }
+
     if (numOfLargeFiles > 0) {
       filesFromInput = filesFromInput.filter((f) => f.size < maxImgSizeInBytes);
       toast.error(

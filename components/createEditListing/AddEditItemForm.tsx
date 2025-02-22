@@ -27,18 +27,21 @@ import { categories } from "@/lib/categories";
 const categoryNames = categories.map((c) => c.name);
 
 export const addEditItemFormSchema = z.object({
-  title: z.string().min(5, { message: "Must be at leas 5 characters" }).max(50),
+  title: z.string().min(5, { message: "Must be at leas 5 characters" }).max(50,{message: "Must be at most 50 characters"}),
   category: z.enum(categoryNames as [string, ...string[]], {
     message: "Please select a category",
   }),
   description: z
     .string()
-    .max(800)
-    .min(10, { message: "description is too short" }),
+    .max(800, { message: "Description too long." })
+    .min(10, { message: "Description is too short" }),
   price: z
-    .number()
-    .min(0.01, "Price too small")
-    .max(1000000000, "Your item is not worth this much"),
+    .string()
+    .regex(/^(?:\d+(?:\.\d{1,2})?|\.\d{1,2})$/, {
+      message: "Invalid price.",
+    })
+    .min(2, { message: "Price too small" })
+    .max(10, { message: "Your item is not worth this much" }),
 
   condition: z.enum(conditionEnum.enumValues, {
     message: "please select a condition",
@@ -57,7 +60,7 @@ export default function AddEditItemForm({ onSubmit, item }: propTypes) {
       title: item?.title || "",
       category: item?.category || "",
       description: item?.description || "",
-      price: !!item ? parseInt(item?.price) : undefined,
+      price: item?.price || "",
       condition: item?.condition,
     },
   });

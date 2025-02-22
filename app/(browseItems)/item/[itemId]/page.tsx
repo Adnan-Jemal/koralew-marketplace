@@ -86,7 +86,7 @@ export default async function page(props: {
           <div className="w-[90%] mx-auto lg:w-[45%] flex flex-col pt-4 gap-4 overflow-x-clip">
             <h2 className="text-5xl  ">{item.title}</h2>
             <p className="text-4xl py-2">
-              ${parseInt(item.price).toLocaleString()}
+              {parseInt(item.price).toLocaleString() + " ብር"}
             </p>
             <ItemInfo
               createdAt={item.createdAt}

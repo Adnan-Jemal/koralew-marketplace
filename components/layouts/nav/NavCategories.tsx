@@ -47,10 +47,13 @@ export default function NavCategories() {
     setTimeout(checkScrollButtons, 300);
   };
   return (
-    <div className="relative max-w-7xl mx-auto ">
+    <div
+      className="sticky top-[134px] sm:top-[82px] bg-white dark:bg-black max-w-7xl z-10 
+    mx-auto rounded-xl  "
+    >
       <div
         ref={divRef}
-        className="   flex items-center mt-4  px-16 gap-8  justify-evenly  overflow-x-hidden rounded-xl "
+        className="  flex items-center pt-4  px-16 gap-8  justify-evenly  overflow-x-hidden rounded-full "
       >
         <AllNavBtn />
         {categories.map((cat) => (

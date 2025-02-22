@@ -23,7 +23,6 @@ export async function addItem(
   let newItem: InsertItem = {
     ...formValues,
     userId: session.user.id,
-    price: formValues.price.toString(),
   };
   let addedItem = await db
     .insert(items)
@@ -46,7 +45,7 @@ export async function updateItem(
       title: formValues.title,
       category: formValues.category,
       description: formValues.description,
-      price: formValues.price.toString(),
+      price: formValues.price,
       condition: formValues.condition,
     })
     .where(and(eq(items.userId, session.user.id), eq(items.id, itemId)));

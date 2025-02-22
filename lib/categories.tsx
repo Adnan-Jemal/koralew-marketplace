@@ -60,15 +60,16 @@ export const categories: categoryType[] = [
     icon: <Building />,
   },
   {
-    name: "Sports",
-    link: "sports",
-    icon: <Dumbbell />,
-  },
-  {
     name: "Art",
     link: "art",
     icon: <Palette />,
   },
+  {
+    name: "Sports",
+    link: "sports",
+    icon: <Dumbbell />,
+  },
+
   {
     name: "Kids",
     link: "kids",
