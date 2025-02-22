@@ -5,7 +5,7 @@ import { db } from "@/db/db";
 import { itemImages } from "@/db/schema/itemImages";
 import { InsertItem, items } from "@/db/schema/items";
 import { ItemStatusType } from "@/lib/types";
-import { and, eq } from "drizzle-orm";
+import { and, eq, sql } from "drizzle-orm";
 import { redirect } from "next/navigation";
 import { z } from "zod";
 
@@ -66,6 +66,15 @@ export async function updateItemStatus(
     })
     .where(and(eq(items.userId, session.user.id), eq(items.id, itemId)));
   await updateItemStatusForChat(itemId, newStatus);
+}
+export async function increaseView(itemId: number) {
+  if (itemId <= 0) throw new Error("Invalid item ID");
+  await db
+    .update(items)
+    .set({
+      views: sql`${items.views} + 1`,
+    })
+    .where(eq(items.id, itemId));
 }
 
 //delete

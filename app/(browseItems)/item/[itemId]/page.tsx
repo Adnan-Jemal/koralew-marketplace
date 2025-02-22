@@ -1,3 +1,4 @@
+import { increaseView } from "@/actions/item";
 import { auth } from "@/auth";
 import Notice from "@/components/general/Notice";
 import DeleteItemBtn from "@/components/itemDetails/DeleteItemBtn";
@@ -22,6 +23,7 @@ export default async function page(props: {
 }) {
   const params = await props.params;
   const itemId = parseInt(params.itemId);
+  await increaseView(itemId);
   const session = await auth();
   const item = await getItem(itemId);
   if (!item) {
