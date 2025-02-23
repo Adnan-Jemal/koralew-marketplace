@@ -19,6 +19,7 @@ export async function getUserItems() {
         condition: items.condition,
         price: items.price,
         status: items.status,
+        views:items.views,
         images: sql`
       JSON_AGG(
         JSON_BUILD_OBJECT(

@@ -1,5 +1,6 @@
 import { ItemStatusType } from "@/lib/types";
 import clsx from "clsx";
+import { Eye } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import React from "react";
@@ -11,6 +12,7 @@ type propType = {
   condition: string;
   itemStatus?: ItemStatusType;
   id: number;
+  itemViews?: number;
 };
 
 export default function ItemCard({
@@ -20,6 +22,7 @@ export default function ItemCard({
   condition,
   id,
   itemStatus,
+  itemViews,
 }: propType) {
   return (
     <Link href={`/item/${id}`}>
@@ -59,6 +62,13 @@ export default function ItemCard({
             )}
           >
             {itemStatus}
+          </div>
+        )}
+
+        {itemViews != undefined && (
+          <div className="absolute py-1 px-2 top-0 left-0 text-white rounded-l-none rounded-r-md rounded-t-none bg-blue-500 flex gap-2 items-center justify-center">
+            <Eye />
+            {itemViews}
           </div>
         )}
       </div>

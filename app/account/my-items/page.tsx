@@ -1,4 +1,3 @@
-
 import ItemCard from "@/components/ItemCard/ItemCard";
 import { getUserItems } from "@/data/item";
 import { PackageOpen } from "lucide-react";
@@ -32,6 +31,7 @@ export default async function MyItemsPage() {
               price={parseFloat(item.price)}
               condition={item.condition}
               itemStatus={item.status}
+              itemViews={item.views || 0}
             />
           );
         })}
