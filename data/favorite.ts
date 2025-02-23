@@ -5,8 +5,9 @@ import { favorites } from "@/db/schema/favorites";
 import { itemImages } from "@/db/schema/itemImages";
 import { items } from "@/db/schema/items";
 import { ItemWithImages } from "@/lib/types";
-import { and, desc, eq, sql } from "drizzle-orm";
+import { and, count, desc, eq, sql } from "drizzle-orm";
 import { redirect } from "next/navigation";
+import { Session } from "next-auth";
 
 export async function isItemFavorited(itemId: number) {
   const session = await auth();
@@ -59,4 +60,13 @@ export async function getFavoriteItems() {
     console.log(error);
     throw error;
   }
+}
+
+export async function getTotalNumOfFavoritedItems(session: Session | null) {
+  if (!session?.user?.id) return 0;
+  const result = await db
+    .select({ totalItems: count() })
+    .from(favorites)
+    .where(eq(favorites.userId, session.user.id));
+  return result[0].totalItems;
 }

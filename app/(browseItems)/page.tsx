@@ -1,6 +1,4 @@
-
 import ItemCard from "@/components/ItemCard/ItemCard";
-
 import NavCategories from "@/components/layouts/nav/NavCategories";
 import { Skeleton } from "@/components/ui/skeleton";
 import { getCategoryItems } from "@/data/item";
@@ -19,7 +17,6 @@ export default async function Home(props: propType) {
 
   return (
     <>
-    
       <NavCategories />
 
       <div className="max-w-7xl mx-auto flex  flex-wrap gap-x-4 gap-y-10 mt-10 items-center justify-evenly ">

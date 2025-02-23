@@ -4,8 +4,9 @@ import { db } from "@/db/db";
 import { itemImages } from "@/db/schema/itemImages";
 import { items } from "@/db/schema/items";
 import { ItemWithImages } from "@/lib/types";
-import { and, eq, ne, sql } from "drizzle-orm";
+import { and, count, eq, ne, sql } from "drizzle-orm";
 import { redirect } from "next/navigation";
+import { Session } from "next-auth";
 
 export async function getUserItems() {
   const session = await auth();
@@ -125,4 +126,25 @@ export async function getSimilarCategoryItems(
 export async function getItemWithOutImgs(itemId: number) {
   const item = await db.select().from(items).where(eq(items.id, itemId));
   return item[0];
+}
+
+export async function getTotalNumOfListedItems(session: Session | null) {
+  if (!session?.user?.id) return 0;
+  const result = await db
+    .select({ totalItems: count() })
+    .from(items)
+    .where(eq(items.userId, session.user.id));
+  return result[0].totalItems;
+}
+
+export async function getTotalItemsViews(session: Session | null) {
+  if (!session?.user?.id) return 0;
+  const result = await db
+    .select({ views: items.views })
+    .from(items)
+    .where(eq(items.userId, session.user.id));
+
+  var totalViews = 0;
+  result.map((item) => (totalViews += item.views));
+  return totalViews;
 }

@@ -30,7 +30,6 @@ const NotificationIcon = ({ session }: { session?: Session | null }) => {
       },
       (error) => {
         console.error("Error fetching notifications:", error);
-        
       }
     );
 

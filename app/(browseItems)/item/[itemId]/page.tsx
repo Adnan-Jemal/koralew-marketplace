@@ -23,7 +23,6 @@ export default async function page(props: {
 }) {
   const params = await props.params;
   const itemId = parseInt(params.itemId);
-  await increaseView(itemId);
   const session = await auth();
   const item = await getItem(itemId);
   if (!item) {
@@ -39,6 +38,7 @@ export default async function page(props: {
   }
 
   const seller = await getItemSeller(item.userId);
+  if (seller.id != session?.user?.id) await increaseView(itemId);
 
   return (
     <>

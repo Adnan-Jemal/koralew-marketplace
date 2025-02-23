@@ -1,10 +1,9 @@
 import Link from "next/link";
-import { Search } from "lucide-react";
-
 import NotificationIcon from "@/components/notifications/NotificationIcon";
 import { NavProfile } from "./NavProfile";
 import { ModeToggle } from "@/components/ui/ModeToggle";
 import { auth } from "@/auth";
+import { SearchBar } from "./SearchBar";
 
 export const Navbar = async () => {
   const session = await auth();
@@ -17,35 +16,15 @@ export const Navbar = async () => {
           <h1 className="font-bold text-2xl  sm:text-3xl">ቆ Koralew</h1>
         </Link>
 
-        <div
-          className={`flex-1 hidden sm:inline-flex   border-2 rounded-lg transition-shadow border-secondary   p-2 max-w-[40%]`}
-        >
-          <input
-            type="text"
-            className="outline-none w-full bg-transparent   "
-            placeholder="Search"
-          />
-          <Search className="cursor-pointer hover:text-primary " />
-        </div>
+        <SearchBar />
 
         <div className="flex items-center md:gap-4 gap-2">
-      {session&& (
-        <NotificationIcon session={session} />
-      )}
-      <NavProfile session={session} />
-      <ModeToggle />
-    </div>
+          {session && <NotificationIcon session={session} />}
+          <NavProfile session={session} />
+          <ModeToggle />
+        </div>
       </div>
-      <div
-        className={`sm:hidden flex border-2 rounded-lg transition-shadow border-secondary p-2  mx-4 mb-2  `}
-      >
-        <input
-          type="text"
-          className="outline-none w-full bg-transparent   "
-          placeholder="Search"
-        />
-        <Search className="cursor-pointer hover:text-primary " />
-      </div>
+      <SearchBar smallScreen />
     </div>
   );
 };
