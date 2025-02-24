@@ -1,21 +1,21 @@
+"use client";
 import { LogOut } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Skeleton } from "@/components/ui/skeleton";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-
-import { auth } from "@/auth";
 import Form from "next/form";
 import { logOut } from "@/actions/auth";
+import { useSession } from "next-auth/react";
 
-const SidebarProfile = async () => {
-  const session = await auth();
-  const user = session?.user;
+const SidebarProfile = () => {
+  const session = useSession();
+  const user = session.data?.user;
 
   return (
     <div className="mb-6  w-[90%] mx-auto flex flex-col gap-5 justify-end">
       <div className="flex  gap-2 px-3 py-4 shadow-sm  rounded-xl  border-secondary border-2">
         {/* profile image */}
-        {session ? (
+        {session.status !== "loading" ? (
           <Avatar className="size-12 ">
             <AvatarImage
               className="object-cover"
@@ -31,9 +31,13 @@ const SidebarProfile = async () => {
         {/* profile name */}
         <div className="grow overflow-hidden">
           <h2 className="text-md font-semibold truncate">
-            {session ? user?.name : <Skeleton className="h-4 w-24 mt-1" />}
+            {session.status !== "loading" ? (
+              user?.name
+            ) : (
+              <Skeleton className="h-4 w-24 mt-1" />
+            )}
           </h2>
-          {session ? (
+          {session.status !== "loading" ? (
             <p className="text-muted-foreground text-sm truncate">
               {user?.email}
             </p>

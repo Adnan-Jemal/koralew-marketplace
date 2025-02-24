@@ -5,7 +5,6 @@ import { getTotalNumOfFavoritedItems } from "@/data/favorite";
 import { getTotalItemsViews, getTotalNumOfListedItems } from "@/data/item";
 import { Eye, Heart, Package } from "lucide-react";
 import React from "react";
-import Loading from "./loading";
 
 export default async function DashboardPage() {
   const session = await auth();
