@@ -4,6 +4,8 @@ import { NavProfile } from "./NavProfile";
 import { ModeToggle } from "@/components/ui/ModeToggle";
 import { auth } from "@/auth";
 import { SearchBar } from "./SearchBar";
+import Logo from "@/components/general/Logo";
+
 
 export const Navbar = async () => {
   const session = await auth();
@@ -12,10 +14,7 @@ export const Navbar = async () => {
       className={` border-b-2 border-secondary sticky  top-0 z-10 bg-background`}
     >
       <div className=" max-w-7xl select-none px-4 m-auto py-3  flex items-center justify-between gap-2">
-        <Link href={"/"}>
-          <h1 className="font-bold text-2xl  sm:text-3xl">ቆ Koralew</h1>
-        </Link>
-
+       <Logo/>
         <SearchBar />
 
         <div className="flex items-center md:gap-4 gap-2">
