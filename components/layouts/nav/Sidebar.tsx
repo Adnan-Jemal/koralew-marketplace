@@ -1,4 +1,3 @@
-import Link from "next/link";
 import SidebarProfile from "./SidebarProfile";
 import SidebarMenuItems from "./SidebarMenuItems";
 import Logo from "@/components/general/Logo";
