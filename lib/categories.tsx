@@ -107,3 +107,5 @@ export const categories: categoryType[] = [
     icon: <MoreHorizontal />,
   },
 ];
+export const categoryNames = categories.map((c) => c.name);
+export const categoryLinks = categories.map((c) => c.link);

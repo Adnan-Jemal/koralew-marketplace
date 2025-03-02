@@ -1,5 +1,5 @@
 "use client";
-import React, { Suspense } from "react";
+import React from "react";
 import CategoryFilter from "./CategoryFilter";
 import ConditionFilter from "./ConditionFilter";
 import { conditionType } from "@/lib/types";
@@ -28,12 +28,10 @@ const FilterSideBar = () => {
   };
 
   return (
-    <Suspense>
-      <div className="sticky top-0 w-72 h-[88vh] sm:flex flex-col p-4 gap-16  hidden ">
-        <CategoryFilter updateURL={updateURL} />
-        <ConditionFilter updateURL={updateURL} />
-      </div>
-    </Suspense>
+    <div className="sticky top-0 w-72 h-[88vh] sm:flex flex-col p-4 gap-16  hidden ">
+      <CategoryFilter updateURL={updateURL} />
+      <ConditionFilter updateURL={updateURL} />
+    </div>
   );
 };
 

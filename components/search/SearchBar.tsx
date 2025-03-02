@@ -1,7 +1,9 @@
 "use client";
 import { Search } from "lucide-react";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
-import React, { FormEvent, useEffect, useState } from "react";
+import React, { FormEvent, Suspense, useEffect, useState } from "react";
+import FilterDrawer from "./FilterDrawer";
+import { Button } from "../ui/button";
 
 export const SearchBar = ({
   smallScreen = false,
@@ -13,15 +15,14 @@ export const SearchBar = ({
   const path = usePathname();
   const [searchTerm, setSearchTerm] = useState(params.get("q") ?? "");
   const category = params.get("category");
-  const condition = params.get("condition");
 
-  //added because the input did not cleared when navigated to home page
+  //added because the input did not cleared when navigated to home page and prevent manual manipulation of the url
   useEffect(() => {
     setSearchTerm(params.get("q") ?? "");
     if (!params.get("q")) {
       router.push("/");
     }
-  }, [path]);
+  }, [path,params,router]);
 
   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -33,33 +34,38 @@ export const SearchBar = ({
   };
 
   return (
-    <div
-      className={`
-    border-2 rounded-xl transition-shadow border-secondary p-1 pl-2
+    <Suspense>
+      <div
+        className={`
     ${
       smallScreen
-        ? "flex sm:hidden mx-4 mb-2"
+        ? "flex sm:hidden mx-4 mb-2 items-center gap-2"
         : "hidden sm:inline-flex flex-1 max-w-[40%]"
     }
   `}
-    >
-      <form onSubmit={handleSubmit} className="flex w-full gap-2">
-        <input
-          value={searchTerm}
-          onChange={(e) => setSearchTerm(e.target.value)}
-          type="text"
-          className="outline-none w-full bg-transparent flex-1"
-          placeholder="Search"
-          aria-label="Search articles"
-        />
-        <button
-          type="submit"
-          className="hover:text-primary transition-colors h-full p-2 rounded-xl bg-secondary"
-          aria-label="Perform search"
-        >
-          <Search className="size-5" />
-        </button>
-      </form>
-    </div>
+      >
+        <div className=" border-2 rounded-xl transition-shadow border-secondary p-1 pl-2 w-full">
+          <form onSubmit={handleSubmit} className="flex w-full gap-2">
+            <input
+              value={searchTerm}
+              onChange={(e) => setSearchTerm(e.target.value)}
+              type="text"
+              className="outline-none  bg-transparent flex-1"
+              placeholder="Search"
+              aria-label="Search articles"
+            />
+            <Button
+              type="submit"
+              variant={"secondary"}
+              size={"icon"}
+              aria-label="Perform search"
+            >
+              <Search />
+            </Button>
+          </form>
+        </div>
+        {smallScreen && path.includes("search") && <FilterDrawer />}
+      </div>
+    </Suspense>
   );
 };

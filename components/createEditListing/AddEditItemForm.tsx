@@ -22,12 +22,13 @@ import {
   SelectTrigger,
   SelectValue,
 } from "../ui/select";
-import { categories } from "@/lib/categories";
-
-const categoryNames = categories.map((c) => c.name);
+import { categories, categoryNames } from "@/lib/categories";
 
 export const addEditItemFormSchema = z.object({
-  title: z.string().min(5, { message: "Must be at leas 5 characters" }).max(50,{message: "Must be at most 50 characters"}),
+  title: z
+    .string()
+    .min(5, { message: "Must be at leas 5 characters" })
+    .max(50, { message: "Must be at most 50 characters" }),
   category: z.enum(categoryNames as [string, ...string[]], {
     message: "Please select a category",
   }),

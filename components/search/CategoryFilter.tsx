@@ -3,7 +3,6 @@ import React from "react";
 import { ScrollArea } from "../ui/scroll-area";
 import { categories } from "@/lib/categories";
 import { RadioGroup, RadioGroupItem } from "../ui/radio-group";
-import { Label } from "../ui/label";
 import { useSearchParams } from "next/navigation";
 import { conditionType } from "@/lib/types";
 

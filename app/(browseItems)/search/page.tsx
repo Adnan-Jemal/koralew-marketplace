@@ -1,10 +1,12 @@
 import FilterSideBar from "@/components/search/FilterSideBar";
-import React from "react";
+import React, { Suspense } from "react";
 
 const SearchPage = () => {
   return (
     <div className=" max-w-7xl mx-auto flex">
-      <FilterSideBar />
+      <Suspense>
+        <FilterSideBar />
+      </Suspense>
     </div>
   );
 };

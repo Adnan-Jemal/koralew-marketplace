@@ -5,7 +5,7 @@ import { useSearchParams } from "next/navigation";
 import { ToggleGroup, ToggleGroupItem } from "../ui/toggle-group";
 import { BadgeAlert, BadgeCheck, BadgeHelp, BadgeMinus } from "lucide-react";
 import { conditionType } from "@/lib/types";
-import { conditions } from "@/lib/conditions";
+import { conditionsObj } from "@/lib/conditions";
 
 type propType = {
   updateURL: (category: string, condition: conditionType[]) => void;
@@ -30,7 +30,7 @@ const ConditionFilter = ({ updateURL }: propType) => {
         variant={"outline"}
         className=" bg-secondary  rounded-2xl w-full h-fit py-4 gap-2 flex flex-wrap"
       >
-        {conditions.map((condition) => (
+        {conditionsObj.map((condition) => (
           <ToggleGroupItem
             key={condition.key}
             value={condition.value}
