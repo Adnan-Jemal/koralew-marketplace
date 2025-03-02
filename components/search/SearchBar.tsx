@@ -2,7 +2,7 @@
 import { Search } from "lucide-react";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import React, { FormEvent, Suspense, useEffect, useState } from "react";
-import FilterDrawer from "./FilterDrawer";
+import FilterDrawer from "./filterDrawer";
 import { Button } from "../ui/button";
 
 export const SearchBar = ({
