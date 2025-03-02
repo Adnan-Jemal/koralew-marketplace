@@ -1,13 +1,14 @@
 import { SelectItemImages } from "@/db/schema/itemImages";
 import { Timestamp } from "firebase/firestore";
 
+export type conditionType = "New" | "Slightly Used" | "Used" | "Refurbished";
 export type ItemWithImages = {
   id: number;
   title: string;
   description: string;
   userId: string;
   category: string;
-  condition: "New" | "Slightly Used" | "Used" | "Refurbished";
+  condition: conditionType;
   price: string;
   views: number;
   createdAt: Date;

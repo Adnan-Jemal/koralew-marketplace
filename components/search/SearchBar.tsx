@@ -1,7 +1,7 @@
 "use client";
 import { Search } from "lucide-react";
-import { useRouter, useSearchParams } from "next/navigation";
-import React, { FormEvent, useState } from "react";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
+import React, { FormEvent, useEffect, useState } from "react";
 
 export const SearchBar = ({
   smallScreen = false,
@@ -10,8 +10,18 @@ export const SearchBar = ({
 }) => {
   const router = useRouter();
   const params = useSearchParams();
+  const path = usePathname();
   const [searchTerm, setSearchTerm] = useState(params.get("q") ?? "");
   const category = params.get("category");
+  const condition = params.get("condition");
+
+  //added because the input did not cleared when navigated to home page
+  useEffect(() => {
+    setSearchTerm(params.get("q") ?? "");
+    if (!params.get("q")) {
+      router.push("/");
+    }
+  }, [path]);
 
   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();

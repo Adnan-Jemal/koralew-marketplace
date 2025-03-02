@@ -4,19 +4,20 @@ import { ScrollArea } from "../ui/scroll-area";
 import { categories } from "@/lib/categories";
 import { RadioGroup, RadioGroupItem } from "../ui/radio-group";
 import { Label } from "../ui/label";
-import { useRouter, useSearchParams } from "next/navigation";
+import { useSearchParams } from "next/navigation";
+import { conditionType } from "@/lib/types";
 
-const CategoryFilter = () => {
+type propType = {
+  updateURL: (category: string, condition: conditionType[]) => void;
+};
+
+const CategoryFilter = ({ updateURL }: propType) => {
   const params = useSearchParams();
-  const router = useRouter();
-  const query = params.get("q") || "";
+  const condition: conditionType[] =
+    (params.getAll("condition") as conditionType[]) ?? [];
 
   const handelValueChange = (value: string) => {
-    const url =
-      value != "all"
-        ? `/search/?q=${query}&category=${value}`
-        : `/search/?q=${query}`;
-    router.push(url);
+    updateURL(value ?? "all", condition);
   };
   return (
     <div className="h-1/2 w-full space-y-2">
@@ -41,9 +42,7 @@ const CategoryFilter = () => {
                 id={category.link}
                 className="z-10"
               />
-              <Label className="cursor-pointer" htmlFor={category.link}>
-                {category.name}
-              </Label>
+              <p className="cursor-pointer text-sm">{category.name}</p>
             </label>
           ))}
         </RadioGroup>

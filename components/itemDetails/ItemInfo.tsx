@@ -2,6 +2,7 @@ import { formatDistanceToNow } from "date-fns";
 import {
   BadgeAlert,
   BadgeCheck,
+  BadgeHelp,
   BadgeMinus,
   Clock,
   Grid2x2,
@@ -31,6 +32,8 @@ export default function ItemInfo({
           <BadgeCheck className="size-5" />
         ) : condition === "Used" ? (
           <BadgeAlert className="size-5" />
+        ) : condition === "Refurbished" ? (
+          <BadgeHelp />
         ) : (
           <BadgeMinus className="size-5" />
         )}
