@@ -44,7 +44,7 @@ const filterFormSchema = z.object({
     .optional(),
 });
 
-const FilterDrawer = () => {
+const DrawerFilter = () => {
   const [open, setOpen] = useState(false);
   const params = useSearchParams();
   const router = useRouter();
@@ -168,4 +168,4 @@ const FilterDrawer = () => {
   );
 };
 
-export default FilterDrawer;
+export default DrawerFilter;
