@@ -2,7 +2,7 @@
 import { Search } from "lucide-react";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import React, { FormEvent, Suspense, useEffect, useState } from "react";
-import FilterDrawer from "./filterDrawer";
+import FilterDrawer from "./FilterDrawer";
 import { Button } from "../ui/button";
 
 export const SearchBar = ({
@@ -19,10 +19,10 @@ export const SearchBar = ({
   //added because the input did not cleared when navigated to home page and prevent manual manipulation of the url
   useEffect(() => {
     setSearchTerm(params.get("q") ?? "");
-    if (!params.get("q")) {
+    if (!params.get("q") && path.includes("search")) {
       router.push("/");
     }
-  }, [path,params,router]);
+  }, [path, params, router]);
 
   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
