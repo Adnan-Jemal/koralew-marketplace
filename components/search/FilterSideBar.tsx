@@ -11,7 +11,7 @@ const FilterSideBar = () => {
   const query = params.get("q") ?? "";
 
   const updateURL = (category: string, condition: conditionType[]) => {
-    const categoryExists = category != "all" && !!category;
+    const categoryExists = category != "All" && !!category;
     const conditionExists = condition.length > 0;
 
     if (categoryExists && conditionExists) {

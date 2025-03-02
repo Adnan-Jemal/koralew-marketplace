@@ -16,7 +16,7 @@ const CategoryFilter = ({ updateURL }: propType) => {
     (params.getAll("condition") as conditionType[]) ?? [];
 
   const handelValueChange = (value: string) => {
-    updateURL(value ?? "all", condition);
+    updateURL(value ?? "All", condition);
   };
   return (
     <div className="h-1/2 w-full space-y-2">
@@ -27,7 +27,7 @@ const CategoryFilter = ({ updateURL }: propType) => {
       >
         <RadioGroup
           onValueChange={(value) => handelValueChange(value)}
-          value={params.get("category") ?? "all"}
+          value={params.get("category") ?? "All"}
           className="p-4"
         >
           {[{ name: "All", link: "all" }, ...categories].map((category) => (
@@ -37,7 +37,7 @@ const CategoryFilter = ({ updateURL }: propType) => {
               className="flex items-center space-x-3 p-4 rounded-lg bg-background cursor-pointer"
             >
               <RadioGroupItem
-                value={category.link}
+                value={category.name}
                 id={category.link}
                 className="z-10"
               />

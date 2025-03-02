@@ -59,7 +59,6 @@ export default function NavCategories() {
         {categories.map((cat) => (
           <NavCategory
             key={cat.link}
-            categoryLink={cat.link}
             categoryName={cat.name}
             categoryIcon={cat.icon}
           />

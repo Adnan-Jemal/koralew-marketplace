@@ -13,7 +13,7 @@ type propType = {
 
 const ConditionFilter = ({ updateURL }: propType) => {
   const params = useSearchParams();
-  const category = params.get("category") ?? "all";
+  const category = params.get("category") ?? "All";
 
   const handelValueChange = (value: conditionType[]) => {
     updateURL(category, value ?? []);
