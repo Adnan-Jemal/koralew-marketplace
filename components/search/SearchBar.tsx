@@ -16,13 +16,10 @@ export const SearchBar = ({
   const [searchTerm, setSearchTerm] = useState(params.get("q") ?? "");
   const category = params.get("category");
 
-  //added because the input did not cleared when navigated to home page and prevent manual manipulation of the url
+  //added because the input did not cleared when navigated to home page
   useEffect(() => {
     setSearchTerm(params.get("q") ?? "");
-    if (!params.get("q") && path.includes("search")) {
-      router.push("/");
-    }
-  }, [path, params, router]);
+  }, [params]);
 
   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();

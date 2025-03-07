@@ -9,7 +9,6 @@ import {
 export default function ItemBreadCrumbs({ category }: { category: string }) {
   return (
     <div>
-
       <Breadcrumb>
         <BreadcrumbList className=" text-gray-500 dark:text-gray-400">
           <BreadcrumbItem>
@@ -17,7 +16,7 @@ export default function ItemBreadCrumbs({ category }: { category: string }) {
           </BreadcrumbItem>
           <BreadcrumbSeparator />
           <BreadcrumbItem>
-            <BreadcrumbLink href={`/?category=${category.toLowerCase()}`}>
+            <BreadcrumbLink href={`/?category=${category}`}>
               {category}
             </BreadcrumbLink>
           </BreadcrumbItem>

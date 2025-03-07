@@ -28,7 +28,7 @@ const FilterSideBar = () => {
   };
 
   return (
-    <div className="sticky top-0 w-72 h-[88vh] sm:flex flex-col p-4 gap-16  hidden ">
+    <div className="sticky top-[82px] w-96 h-[88vh] sm:flex flex-col p-4 gap-16  hidden ">
       <CategoryFilter updateURL={updateURL} />
       <ConditionFilter updateURL={updateURL} />
     </div>

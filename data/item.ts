@@ -3,8 +3,8 @@ import { auth } from "@/auth";
 import { db } from "@/db/db";
 import { itemImages } from "@/db/schema/itemImages";
 import { items } from "@/db/schema/items";
-import { ItemWithImages } from "@/lib/types";
-import { and, count, eq, ne, sql } from "drizzle-orm";
+import { conditionType, ItemWithImages } from "@/lib/types";
+import { and, count, eq, ilike, inArray, ne, sql } from "drizzle-orm";
 import { redirect } from "next/navigation";
 import { Session } from "next-auth";
 
@@ -19,7 +19,7 @@ export async function getUserItems() {
         condition: items.condition,
         price: items.price,
         status: items.status,
-        views:items.views,
+        views: items.views,
         images: sql`
       JSON_AGG(
         JSON_BUILD_OBJECT(
@@ -148,4 +148,50 @@ export async function getTotalItemsViews(session: Session | null) {
   var totalViews = 0;
   result.map((item) => (totalViews += item.views));
   return totalViews;
+}
+
+export async function getSearchedItems(
+  query: string,
+  category?: string,
+  conditions?: conditionType[]
+) {
+  if (!query) {
+    return redirect("/");
+  }
+
+  const filters = [
+    ilike(items.title, `%${query}%`),
+    eq(items.status, "Active"),
+  ];
+
+  if (category) {
+    filters.push(eq(items.category, category));
+  }
+
+  if (conditions && conditions.length > 0) {
+    filters.push(inArray(items.condition, conditions));
+  }
+
+  const itemsWithImgs = await db
+    .select({
+      id: items.id,
+      title: items.title,
+      condition: items.condition,
+      price: items.price,
+      images: sql`
+    JSON_AGG(
+      JSON_BUILD_OBJECT(
+        'imageUrl', ${itemImages.imageUrl},
+        'order', ${itemImages.order},
+        'itemId',${itemImages.itemId}
+      )
+    )
+  `.as("images"),
+    })
+    .from(items)
+    .innerJoin(itemImages, eq(items.id, itemImages.itemId))
+    .where(and(...filters))
+    .groupBy(items.id);
+
+  return itemsWithImgs as ItemWithImages[];
 }
