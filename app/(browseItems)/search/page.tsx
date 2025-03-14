@@ -1,8 +1,8 @@
-import ItemCard from "@/components/ItemCard/ItemCard";
 import { getSearchedItems } from "@/data/item";
 import { conditionType } from "@/lib/types";
 import { redirect } from "next/navigation";
 import { PackageOpen } from "lucide-react";
+import InfiniteItemList from "@/components/general/InfiniteItemList";
 
 type searchPropType = {
   searchParams: Promise<{
@@ -18,36 +18,30 @@ const SearchPage = async ({ searchParams }: searchPropType) => {
     return redirect("/");
   }
   const conditions = sParams.condition?.split(",");
+  const category = sParams.category;
   const searchedItems = await getSearchedItems(
     sParams.q,
-    sParams.category,
+    category,
     conditions as conditionType[] | undefined
   );
   if (searchedItems.length == 0) {
     return (
-      <div className="flex flex-col w-full h-[70vh] items-center justify-center text-center px-10">
+      <div className="flex flex-col w-full h-[70vh] items-center justify-center text-center ">
         <PackageOpen className="size-36" />
-        <h2 className="text-3xl font-bold">No results found</h2>
+        <h2 className="text-3xl font-bold px-10">No results found</h2>
         <p>We could not find anything that matches your search.</p>
       </div>
     );
   }
 
   return (
-    <div className=" w-full flex flex-wrap gap-x-4 gap-y-10 mt-12 justify-evenly">
-      {searchedItems?.map((item) => (
-        <ItemCard
-          id={item.id}
-          key={item.id}
-          title={item.title}
-          imageUrl={
-            item.images.find((img) => img.order == 1)?.imageUrl ||
-            item.images[0].imageUrl
-          }
-          price={parseFloat(item.price)}
-          condition={item.condition}
-        />
-      ))}
+    <div className=" w-full mt-12">
+      <InfiniteItemList
+        initialItems={searchedItems}
+        url={`/api/item/search-items?query=${sParams.q}${
+          category ? "&category=" + category : ""
+        }${conditions ? "&conditions=" + conditions : ""}`}
+      />
     </div>
   );
 };

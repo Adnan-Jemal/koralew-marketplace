@@ -83,7 +83,7 @@ const DrawerFilter = () => {
         </Button>
       </DrawerTrigger>
       <DrawerContent className="px-4 pb-4">
-        <DrawerTitle>Filter Items</DrawerTitle>
+        <DrawerTitle className="mt-4 mb-2 text-2xl text-center">Filter Items</DrawerTitle>
         <Form {...form}>
           <form
             onSubmit={form.handleSubmit(handleSubmit)}

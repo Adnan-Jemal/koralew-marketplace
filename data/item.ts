@@ -7,6 +7,7 @@ import { conditionType, ItemWithImages } from "@/lib/types";
 import { and, count, eq, ilike, inArray, ne, sql } from "drizzle-orm";
 import { redirect } from "next/navigation";
 import { Session } from "next-auth";
+import { revalidatePath } from "next/cache";
 
 export async function getUserItems() {
   const session = await auth();
@@ -62,6 +63,7 @@ export async function getCategoryItems(category: string) {
     .from(items)
     .innerJoin(itemImages, eq(items.id, itemImages.itemId))
     .where(and(eq(items.category, category), eq(items.status, "Active")))
+    .limit(4)
     .groupBy(items.id);
 
   return itemsWithImgs as ItemWithImages[];
@@ -119,6 +121,7 @@ export async function getSimilarCategoryItems(
     .from(items)
     .innerJoin(itemImages, eq(items.id, itemImages.itemId))
     .where(and(eq(items.category, category), ne(items.id, itemId)))
+    .limit(4)
     .groupBy(items.id);
 
   return itemsWithImgs as ItemWithImages[];
@@ -167,7 +170,6 @@ export async function getSearchedItems(
   if (category) {
     filters.push(eq(items.category, category));
   }
-
   if (conditions && conditions.length > 0) {
     filters.push(inArray(items.condition, conditions));
   }
@@ -191,7 +193,9 @@ export async function getSearchedItems(
     .from(items)
     .innerJoin(itemImages, eq(items.id, itemImages.itemId))
     .where(and(...filters))
+    .limit(5)
     .groupBy(items.id);
 
   return itemsWithImgs as ItemWithImages[];
+  
 }
