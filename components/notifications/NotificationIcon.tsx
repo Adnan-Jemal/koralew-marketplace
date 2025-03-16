@@ -42,7 +42,7 @@ const NotificationIcon = ({ session }: { session?: Session | null }) => {
           <div className="absolute top-0 right-0">
             <span className="relative flex size-3">
               <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-primary opacity-75"></span>
-              <span className="relative inline-flex size-3 rounded-full bg-blue-600"></span>
+              <span className="relative inline-flex size-3 rounded-full bg-brand"></span>
             </span>
           </div>
 

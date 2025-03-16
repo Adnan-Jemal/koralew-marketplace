@@ -32,7 +32,7 @@ const AllNavBtn = () => {
           <LayoutGrid />
           <p className="text-[.85rem] font-medium mt-1">All</p>
           <div
-            className={`h-[2px] w-full  group-hover:bg-primary transition-colors ease-in rounded-full mt-2 `}
+            className={`h-[2px] w-full  group-hover:bg-brand transition-colors ease-in rounded-full mt-2 `}
           ></div>
         </button>
       );

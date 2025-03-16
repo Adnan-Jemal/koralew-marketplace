@@ -34,7 +34,7 @@ const ConditionFilter = ({ updateURL }: propType) => {
           <ToggleGroupItem
             key={condition.key}
             value={condition.value}
-            className="flex items-center p-4 rounded-lg bg-background cursor-pointer hover:bg-primary-foreground data-[state=on]:bg-primary-foreground data-[state=on]:border data-[state=on]:border-primary   "
+            className="flex items-center p-4 rounded-lg bg-background cursor-pointer hover:bg-primary-foreground data-[state=on]:bg-primary-foreground data-[state=on]:border data-[state=on]:border-brand   "
           >
             {condition.value === "New" ? (
               <BadgeCheck className="size-5" />

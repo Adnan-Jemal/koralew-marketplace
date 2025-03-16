@@ -1,4 +1,5 @@
 import InfiniteItemList from "@/components/general/InfiniteItemList";
+import { HeroSection } from "@/components/home/HeroSection";
 import NavCategories from "@/components/layouts/nav/NavCategories";
 import { Button } from "@/components/ui/button";
 import { getCategoryItems } from "@/data/item";
@@ -21,7 +22,7 @@ export default async function Home(props: propType) {
   return (
     <div className="flex-1">
       <NavCategories />
-      <div className="max-w-7xl mx-auto  mt-10 ">
+      <div className="max-w-7xl mx-auto  mt-10 px-3 ">
         {categoryItems.length == 0 && searchParams.category ? (
           <div className="flex flex-col w-full mt-20 items-center justify-center text-center gap-4 px-10">
             <PackageOpen className="size-36" />
@@ -41,7 +42,10 @@ export default async function Home(props: propType) {
             url={`api/item/category-items?category=${searchParams.category}`}
           />
         ) : (
-          <h2>Home</h2>
+          <div className="w-full  border-2 rounded-xl overflow-hidden">
+            
+            <HeroSection />
+          </div>
         )}
       </div>
     </div>

@@ -39,7 +39,7 @@ export default function NavCategory({ categoryName, categoryIcon }: propTypes) {
       {categoryIcon}
       <p className=" text-sm mt-1 w-full text-nowrap">{categoryName}</p>
       <div
-        className={`h-[2px] w-full  group-hover:bg-primary transition-colors ease-in rounded-full mt-2 `}
+        className={`h-[2px] w-full  group-hover:bg-brand transition-colors ease-in rounded-full mt-2 `}
       ></div>
     </span>
   );

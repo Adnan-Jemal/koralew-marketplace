@@ -15,7 +15,7 @@ export const NavProfile = ({ session }: { session: Session | null }) => {
   const user = session?.user;
   if (!session) {
     return (
-      <Button asChild>
+      <Button variant={'brand'} asChild>
         <Link href={"/signin"}>Sign In </Link>
       </Button>
     );

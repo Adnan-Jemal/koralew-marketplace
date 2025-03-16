@@ -70,6 +70,7 @@ export default function NavCategories() {
           )}
         >
           <Button
+            variant={"default"}
             className="shadow-2xl m-2"
             size={"icon"}
             onClick={handleRightScroll}
@@ -84,6 +85,7 @@ export default function NavCategories() {
           )}
         >
           <Button
+            variant={"default"}
             className="shadow-2xl m-2"
             size={"icon"}
             onClick={handleLeftScroll}

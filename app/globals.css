@@ -18,10 +18,11 @@ body {
   }
 }
 :root:has(.no-scroll) {
-  overflow:hidden;
+  overflow: hidden;
 }
 @layer base {
   :root {
+    --brand: 222 100% 57%;
     --background: 0 0% 100%;
     --foreground: 240 10% 3.9%;
     --card: 0 0% 100%;
@@ -50,6 +51,7 @@ body {
   }
 
   .dark {
+    --brand: 222 100% 57%;
     --background: 240 10% 3.9%;
     --foreground: 0 0% 98%;
     --card: 240 10% 3.9%;
@@ -85,8 +87,6 @@ body {
     @apply bg-background text-foreground;
   }
 }
-
-
 
 @layer base {
   * {
