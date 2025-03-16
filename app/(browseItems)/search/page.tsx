@@ -26,22 +26,22 @@ const SearchPage = async ({ searchParams }: searchPropType) => {
   );
   if (searchedItems.length == 0) {
     return (
-      <div className="flex flex-col w-full h-[70vh] items-center justify-center text-center ">
+      <div className="flex flex-col w-full h-[70vh] items-center justify-center text-center gap-3 ">
         <PackageOpen className="size-36" />
-        <h2 className="text-3xl font-bold px-10">No results found</h2>
-        <p>We could not find anything that matches your search.</p>
+        <h2 className="text-3xl font-bold px-10">No Results Found</h2>
+        <p>We could&apos;t find anything that matches your search.</p>
       </div>
     );
   }
 
   return (
-    <div className=" w-full mt-12">
+    <div className=" w-full mt-12 ">
       <InfiniteItemList
         initialItems={searchedItems}
         url={`/api/item/search-items?query=${sParams.q}${
           category ? "&category=" + category : ""
         }${conditions ? "&conditions=" + conditions : ""}`}
-      />
+      ></InfiniteItemList>
     </div>
   );
 };

@@ -42,7 +42,7 @@ export default async function page(props: {
 
   return (
     <>
-      <div className="max-w-7xl mx-auto">
+      <div className="max-w-7xl mx-auto flex-1">
         {seller.id == session?.user?.id && item.status != "Sold" && (
           <div className="bg-secondary mt-6 mx-8 py-6 px-6 flex items-center justify-center gap-4 rounded-xl flex-col sm:flex-row text-center sm:text-left">
             <InfoIcon size={72} className="size-20" />

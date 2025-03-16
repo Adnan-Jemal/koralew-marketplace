@@ -15,7 +15,7 @@ export const SimilarItems = async ({
     return <div className="py-14"></div>;
   }
   return (
-    <div className=" mx-auto my-20 px-8 ">
+    <div className=" mx-auto mt-20 px-8 ">
       <h3 className="text-3xl font-semibold mb-10">Similar Items</h3>
       <div className=" flex  flex-wrap gap-x-4 gap-y-10  items-center justify-center sm:justify-normal  ">
         {SimilarCategoryItems?.map((item) => {

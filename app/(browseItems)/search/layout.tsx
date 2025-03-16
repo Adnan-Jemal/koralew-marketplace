@@ -8,7 +8,7 @@ const searchLayout = ({
   children: React.ReactNode;
 }>) => {
   return (
-    <div className=" max-w-7xl  mx-auto flex  justify-between">
+    <div className=" max-w-7xl  mx-auto flex  justify-between w-full flex-1">
       <Suspense fallback={<FilterSidebarSkeleton />}>
         <FilterSideBar />
       </Suspense>

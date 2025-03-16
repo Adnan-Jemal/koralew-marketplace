@@ -11,6 +11,7 @@ const InfiniteScrollOffset = 5;
 type InfiniteItemListProps = {
   initialItems: ItemWithImages[];
   url: string;
+  emptyMessage?: React.HTMLElementType;
 };
 
 export default function InfiniteItemList({
@@ -30,7 +31,6 @@ export default function InfiniteItemList({
     setAllItemsLoaded(false);
   }, [initialItems, url]);
 
-
   useEffect(() => {
     async function loadMoreItems() {
       try {
@@ -38,7 +38,7 @@ export default function InfiniteItemList({
         const response = await fetch(url + `&offset=${offset}`);
 
         if (!response.ok) {
-          toast.error('Something Went Wrong')
+          toast.error("Something Went Wrong");
           throw new Error("Network response was not ok");
         }
         const newItems = await response.json();
@@ -50,7 +50,7 @@ export default function InfiniteItemList({
           setOffset((prev) => prev + InfiniteScrollOffset);
         }
       } catch (error) {
-        toast.error('Something Went Wrong')
+        toast.error("Something Went Wrong");
         console.error("Error loading more items:", error);
       } finally {
         setIsLoading(false);
@@ -62,6 +62,7 @@ export default function InfiniteItemList({
     }
   }, [inView, allItemsLoaded, isLoading]);
 
+  
   return (
     <div className="flex flex-wrap gap-x-4 gap-y-10 items-center justify-evenly ">
       {items.map((item) => (

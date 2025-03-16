@@ -19,7 +19,7 @@ export async function GET(req: Request) {
     );
   }
 
-  const offset = offsetParam ? parseInt(offsetParam, 10) : 0;
+  const offset = offsetParam ? parseInt(offsetParam) : 0;
 
   try {
     const itemsWithImgs = await db
