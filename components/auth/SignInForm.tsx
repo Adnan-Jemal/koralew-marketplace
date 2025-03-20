@@ -31,12 +31,12 @@ export default function SignInForm() {
   };
 
   return (
-    <div className="px-12 py-12 border-2  rounded-xl shadow-lg bg-primary-foreground flex flex-col justify-between gap-8 lg:w-[40%] sm:w-[60%]  items-center">
+    <div className="px-12 py-12 border-2  rounded-2xl shadow-md bg-primary-foreground flex flex-col justify-between gap-8 lg:w-[40%] sm:w-[60%]  items-center">
       <Button
         onClick={googleSigning}
         disabled={googleLoading || githubLoading}
         variant={"outline"}
-        className="w-full text-md py-6 shadow-lg "
+        className="w-full text-md py-6 shadow-md rounded-xl "
       >
         {googleLoading ? (
           <Ellipsis className="text-4xl animate-bounce" />
@@ -49,7 +49,7 @@ export default function SignInForm() {
         onClick={githubSigning}
         disabled={googleLoading || githubLoading}
         variant={"outline"}
-        className="w-full text-md py-6 shadow-lg"
+        className="w-full text-md py-6 shadow-md rounded-xl"
       >
         {githubLoading ? (
           <Ellipsis className="text-4xl animate-bounce" />

@@ -48,7 +48,7 @@ export default function NavCategories() {
   };
   return (
     <div
-      className="sticky top-[134px] sm:top-[82px] bg-white dark:bg-black max-w-7xl z-10 
+      className="sticky top-[134px] sm:top-[82px] bg-white dark:bg-black max-w-7xl z-50 
     mx-auto rounded-xl  "
     >
       <div

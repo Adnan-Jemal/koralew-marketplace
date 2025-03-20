@@ -27,7 +27,7 @@ export async function HeroSection() {
       <div className=" w-full flex pb-10 items-center justify-center ">
         <Button size={"lg"} variant={"brand"} className="text-xl py-3 ">
           {session?.user ? (
-            <Link href="/sign-in">Explore</Link>
+            <Link href="#explore">Explore</Link>
           ) : (
             <Link href="/signin">Get Started</Link>
           )}

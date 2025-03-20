@@ -1,4 +1,5 @@
 import InfiniteItemList from "@/components/general/InfiniteItemList";
+import CategoriesSection from "@/components/home/CategoriesSection";
 import { HeroSection } from "@/components/home/HeroSection";
 import NavCategories from "@/components/layouts/nav/NavCategories";
 import { Button } from "@/components/ui/button";
@@ -42,9 +43,11 @@ export default async function Home(props: propType) {
             url={`api/item/category-items?category=${searchParams.category}`}
           />
         ) : (
-          <div className="w-full  border-2 rounded-xl overflow-hidden">
-            
-            <HeroSection />
+          <div className="w-full">
+            <div className="border-2 rounded-xl overflow-hidden">
+              <HeroSection />
+            </div>
+            <CategoriesSection />
           </div>
         )}
       </div>
