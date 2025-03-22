@@ -21,7 +21,7 @@ export async function HeroSection() {
         </span>
       </h1>
       <h2 className="text-xl px-4 pb-8 md:text-2xl text-center ">
-        Connect, buy, and sell with ease on Koralew, <br /> Your one-stop
+        Connect, buy, and sell with ease on Koralew, <br className="hidden md:inline-block" /> Your one-stop
         Ethiopian marketplace for buying and selling anything.
       </h2>
       <div className=" w-full flex pb-10 items-center justify-center ">

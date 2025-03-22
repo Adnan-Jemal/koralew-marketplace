@@ -12,13 +12,38 @@ import automotiveImg from "@/public/categoryImgs/Engine.jpg";
 import Link from "next/link";
 
 const TopCategories = [
-  { name: "Electronics", img: electronicImg, link: "/?category=Electronics" },
-  { name: "Beauty", img: beautyImg, link: "/?category=Beauty" },
-  { name: "Automotive", img: automotiveImg, link: "/?category=Automotive" },
-  { name: "Fashion", img: fashionImg, link: "/?category=Fashion" },
-  { name: "Home", img: homeImg, link: "/?category=Home" },
+  {
+    name: "Electronics",
+    img: electronicImg,
+    link: "/?category=Electronics",
+    subcategories: "Laptops, Smartphones, Headphones, Cameras, Gaming Consoles",
+  },
+  {
+    name: "Beauty",
+    img: beautyImg,
+    link: "/?category=Beauty",
+    subcategories: "Skincare, Makeup, Haircare, Fragrances, Bath & Body",
+  },
+  {
+    name: "Automotive",
+    img: automotiveImg,
+    link: "/?category=Automotive",
+    subcategories:
+      "Car Accessories, Tools & Equipment, Car Care, Motorcycle Accessories",
+  },
+  {
+    name: "Fashion",
+    img: fashionImg,
+    link: "/?category=Fashion",
+    subcategories: "Clothing, Footwear, Accessories, Bags, Jewelry",
+  },
+  {
+    name: "Home",
+    img: homeImg,
+    link: "/?category=Home",
+    subcategories: "Furniture, Decor, Kitchenware, Gardening, Bedding",
+  },
 ];
-
 const CategoriesSection = () => {
   const divRef = useRef<HTMLDivElement>(null);
   const [leftBtnDisabled, setLeftBtnDisabled] = useState(true);
@@ -52,8 +77,8 @@ const CategoriesSection = () => {
     setTimeout(checkScrollButtons, 300);
   };
   return (
-    <section id='explore' className="scroll-pt-80">
-      <h2 className="text-xl px-4 pt-10 pb-6 md:text-2xl lg:text-3xl font-bold">
+    <section id="explore" >
+      <h2 className="text-xl px-4  pb-6 md:text-2xl lg:text-3xl font-bold">
         Top Categories
       </h2>
       <div
@@ -62,20 +87,21 @@ const CategoriesSection = () => {
       >
         {TopCategories.map((cat, index) => (
           <Link key={index} href={cat.link}>
-            <div className="relative min-w-80 h-96 bg-gradient-to-t text-white from-black/75 to-transparent rounded-2xl overflow-clip flex items-end ">
+            <div className="relative min-w-80 h-96 bg-gradient-to-t text-white from-black/80 to-transparent rounded-2xl overflow-clip flex items-end ">
               <Image
                 alt={`${cat.name}category Image`}
                 src={cat.img}
                 className="absolute w-full h-full object-cover -z-10"
               />
               <div className="p-4">
-                <p className="text-2xl font-semibold">{cat.name}</p>
+                <h3 className="text-2xl font-semibold">{cat.name}</h3>
+                <p>{cat.subcategories}</p>
               </div>
             </div>
           </Link>
         ))}
       </div>
-      <div className=" w-full flex items-center justify-end">
+      <div className=" w-full flex items-center justify-end mt-2">
         <Button
           disabled={leftBtnDisabled}
           variant={"default"}

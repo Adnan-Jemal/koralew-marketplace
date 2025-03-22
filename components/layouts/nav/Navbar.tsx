@@ -9,9 +9,9 @@ export const Navbar = async () => {
   const session = await auth();
   return (
     <div
-      className={` border-b-2 border-secondary sticky  top-0 z-50 bg-background`}
+      className={` border-b-2 border-secondary sticky  top-0 z-50 sm:min-h-[82px] min-h-[134px] bg-background`}
     >
-      <div className=" max-w-7xl select-none px-4 m-auto py-3  flex items-center justify-between gap-2">
+      <div className=" max-w-7xl select-none px-4 mx-auto mb-0 py-3  flex items-center justify-between gap-2">
         <Logo />
         <SearchBar />
 
