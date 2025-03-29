@@ -4,7 +4,7 @@ import Link from "next/link";
 
 const CallToAction = () => {
   return (
-    <div className="w-5/6 mx-auto bg-secondary rounded-xl p-6 lg:p-10 flex items-center justify-between gap-4 flex-wrap">
+    <div className="w-5/6 mx-auto bg-secondary rounded-xl p-6 lg:p-10 flex items-center justify-between gap-4 flex-wrap ">
       {" "}
       <div className="space-y-2 lg:w-2/3">
         <h3 className="text-3xl font-semibold">Got Something to Sell?</h3>

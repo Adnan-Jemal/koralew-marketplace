@@ -4,7 +4,7 @@ import { db } from "@/db/db";
 import { itemImages } from "@/db/schema/itemImages";
 import { items } from "@/db/schema/items";
 import { conditionType, ItemWithImages } from "@/lib/types";
-import { and, count, eq, ilike, inArray, ne, sql } from "drizzle-orm";
+import { and, count, desc, eq, ilike, inArray, ne, sql } from "drizzle-orm";
 import { redirect } from "next/navigation";
 import { Session } from "next-auth";
 import { revalidatePath } from "next/cache";
@@ -197,5 +197,29 @@ export async function getSearchedItems(
     .groupBy(items.id);
 
   return itemsWithImgs as ItemWithImages[];
-  
+}
+export async function getTrendingItems() {
+  const itemsWithImgs = await db
+    .select({
+      id: items.id,
+      title: items.title,
+      condition: items.condition,
+      price: items.price,
+      images: sql`
+      JSON_AGG(
+        JSON_BUILD_OBJECT(
+          'imageUrl', ${itemImages.imageUrl},
+          'order', ${itemImages.order},
+          'itemId',${itemImages.itemId}
+        )
+      )
+    `.as("images"),
+    })
+    .from(items)
+    .innerJoin(itemImages, eq(items.id, itemImages.itemId))
+    .orderBy(desc(items.views))
+    .limit(16)
+    .groupBy(items.id);
+
+  return itemsWithImgs as ItemWithImages[];
 }

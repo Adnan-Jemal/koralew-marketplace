@@ -1,12 +1,16 @@
 import InfiniteItemList from "@/components/general/InfiniteItemList";
+import BrowseMore from "@/components/home/BrowseMore";
 import CallToAction from "@/components/home/CallToAction";
 import CategoriesSection from "@/components/home/CategoriesSection";
 import { HeroSection } from "@/components/home/HeroSection";
+import ItemsLoadingSkeleton from "@/components/home/ItemsLoadingSkeleton";
+import TrendingSection from "@/components/home/TrendingSection";
 import NavCategories from "@/components/layouts/nav/NavCategories";
 import { Button } from "@/components/ui/button";
 import { getCategoryItems } from "@/data/item";
 import { PackageOpen } from "lucide-react";
 import Link from "next/link";
+import { Suspense } from "react";
 
 type propType = {
   searchParams: Promise<{ category: string }>;
@@ -49,7 +53,11 @@ export default async function Home(props: propType) {
               <HeroSection />
             </div>
             <CategoriesSection />
-            <CallToAction/>
+            <CallToAction />
+            <Suspense fallback={<ItemsLoadingSkeleton />}>
+              <TrendingSection />
+            </Suspense>
+            <BrowseMore/>
           </div>
         )}
       </div>

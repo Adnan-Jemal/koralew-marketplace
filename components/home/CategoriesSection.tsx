@@ -77,7 +77,7 @@ const CategoriesSection = () => {
     setTimeout(checkScrollButtons, 300);
   };
   return (
-    <section id="explore" >
+    <section  >
       <h2 className="text-xl px-4  pb-6 md:text-2xl lg:text-3xl font-bold">
         Top Categories
       </h2>
