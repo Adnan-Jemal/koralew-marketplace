@@ -10,7 +10,7 @@ const CallToAction = () => {
         <h3 className="text-3xl font-semibold">Got Something to Sell?</h3>
         <p className="text-lg">
           Experience a hassle-free selling process—list your item in minutes,
-          reach buyers instantly, and become a Koralew seller. It's free and
+          reach buyers instantly, and become a Koralew seller. It&apos;s free and
           easy!
         </p>
       </div>
