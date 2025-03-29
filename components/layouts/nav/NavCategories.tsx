@@ -58,7 +58,7 @@ export default function NavCategories() {
         <AllNavBtn />
         {categories.map((cat) => (
           <NavCategory
-            key={cat.link}
+            key={cat.name}
             categoryName={cat.name}
             categoryIcon={cat.icon}
           />

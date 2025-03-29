@@ -32,13 +32,13 @@ const CategoryFilter = ({ updateURL }: propType) => {
         >
           {[{ name: "All", link: "all" }, ...categories].map((category) => (
             <label
-              key={category.link}
-              htmlFor={category.link}
+              key={category.name}
+              htmlFor={category.name}
               className="flex items-center space-x-3 p-4 rounded-lg bg-background cursor-pointer"
             >
               <RadioGroupItem
                 value={category.name}
-                id={category.link}
+                id={category.name}
                 className="z-10"
               />
               <p className="cursor-pointer text-sm">{category.name}</p>

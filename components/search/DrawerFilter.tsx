@@ -106,7 +106,7 @@ const DrawerFilter = () => {
                         (category) => (
                           <SelectItem
                             className="text-md"
-                            key={category.link}
+                            key={category.name}
                             value={category.name}
                           >
                             {category.name}

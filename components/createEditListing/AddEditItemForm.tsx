@@ -110,7 +110,7 @@ export default function AddEditItemForm({ onSubmit, item }: propTypes) {
                       {categories.map((category) => (
                         <SelectItem
                           className="text-md"
-                          key={category.link}
+                          key={category.name}
                           value={category.name}
                         >
                           {category.name}
