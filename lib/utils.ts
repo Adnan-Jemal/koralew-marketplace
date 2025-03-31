@@ -26,3 +26,17 @@ export function copyURL() {
       toast.error("something went wrong");
     });
 }
+export const scrollToSection = (id: string, topMargin: number) => {
+  const element = document.getElementById(id);
+  if (!element) return; // Exit if the element is not found
+
+  const elementTop = element.getBoundingClientRect().top;
+  // Calculate absolute position to scroll to
+  const offsetPosition = elementTop + window.pageYOffset - topMargin;
+
+  window.scrollTo({
+    top: offsetPosition,
+    left: 0,
+    behavior: "smooth",
+  });
+};

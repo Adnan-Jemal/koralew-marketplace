@@ -7,7 +7,6 @@ import { conditionType, ItemWithImages } from "@/lib/types";
 import { and, count, desc, eq, ilike, inArray, ne, sql } from "drizzle-orm";
 import { redirect } from "next/navigation";
 import { Session } from "next-auth";
-import { revalidatePath } from "next/cache";
 
 export async function getUserItems() {
   const session = await auth();

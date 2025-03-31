@@ -9,6 +9,7 @@ import { getMessages } from "@/data/messag";
 import { ArrowLeft } from "lucide-react";
 import Link from "next/link";
 import { redirect } from "next/navigation";
+import ChatLoading from "./loading";
 
 type chatPartnerType = {
   name: string;
@@ -39,6 +40,8 @@ async function page({ params }: { params: Promise<{ chatDocId: string }> }) {
           img: chatDoc.sellerSnapshot.sellerImg,
           role: "Seller",
         } as chatPartnerType);
+
+
 
   return (
     <div className="lg:max-w-[60%] flex flex-col w-full h-[88dvh] min-h-0">

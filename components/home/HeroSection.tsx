@@ -4,6 +4,7 @@ import { categoryDisplayNames } from "@/lib/categories";
 import { Button } from "../ui/button";
 import Link from "next/link";
 import { auth } from "@/auth";
+import ExploreBtn from "./ExploreBtn";
 
 const RotatingWords = categoryDisplayNames.map((n) => {
   return { text: n };
@@ -21,17 +22,18 @@ export async function HeroSection() {
         </span>
       </h1>
       <h2 className="text-xl px-4 pb-8 md:text-2xl text-center ">
-        Connect, buy, and sell with ease on Koralew, <br className="hidden md:inline-block" /> Your one-stop
-        Ethiopian marketplace for buying and selling anything.
+        Connect, buy, and sell with ease on Koralew,{" "}
+        <br className="hidden md:inline-block" /> Your one-stop Ethiopian
+        marketplace for buying and selling anything.
       </h2>
       <div className=" w-full flex pb-10 items-center justify-center ">
-        <Button size={"lg"} variant={"brand"} className="text-xl py-3 ">
-          {session?.user ? (
-            <Link href="#explore">Explore</Link>
-          ) : (
-            <Link href="/signin">Get Started</Link>
-          )}
-        </Button>
+        {session?.user ? (
+          <ExploreBtn />
+        ) : (
+          <Button size={"lg"} variant={"brand"} className="text-xl py-3 ">
+            <Link href="/signin">Get Started</Link>{" "}
+          </Button>
+        )}
       </div>
     </HeroHighlight>
   );

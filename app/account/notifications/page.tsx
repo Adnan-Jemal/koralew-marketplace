@@ -1,6 +1,5 @@
 import NotificationCard from "@/components/notifications/NotificationCard";
 import { getNotifications } from "@/data/notification";
-
 import { BellOffIcon } from "lucide-react";
 
 const NotificationsPage = async () => {

@@ -1,6 +1,8 @@
 import ItemCard from "@/components/ItemCard/ItemCard";
+import { Button } from "@/components/ui/button";
 import { getUserItems } from "@/data/item";
 import { PackageOpen } from "lucide-react";
+import Link from "next/link";
 
 export default async function MyItemsPage() {
   const userItems = await getUserItems();
@@ -15,6 +17,9 @@ export default async function MyItemsPage() {
           <PackageOpen className="size-36" />
           <h2 className="text-3xl font-bold">No Items Found</h2>
           <p>List an item and it will be displayed here.</p>
+          <Button asChild variant={"secondary"} className="mt-2">
+              <Link href={"/create-listing"}>List an Item</Link>
+            </Button>
         </div>
       )}
       <div className="flex flex-wrap gap-8 items-center justify-around ">

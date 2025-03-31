@@ -66,7 +66,7 @@ export default function ItemCard({
         )}
 
         {itemViews != undefined && (
-          <div className="absolute py-1 px-2 top-0 left-0 text-white rounded-l-none rounded-r-md rounded-t-none bg-blue-500 flex gap-2 items-center justify-center">
+          <div className="absolute py-1 px-2 top-0 left-0 text-white rounded-l-none rounded-r-md rounded-t-none bg-brand flex gap-2 items-center justify-center">
             <Eye />
             {itemViews}
           </div>

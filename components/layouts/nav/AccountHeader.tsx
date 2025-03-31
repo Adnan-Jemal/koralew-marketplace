@@ -59,7 +59,7 @@ const AccountHeader = () => {
           <div className=" py-4 mx-3">
             <Button
               asChild
-              variant={"default"}
+              variant={"brand"}
               className=" items-center py-6 text-lg   text-md border-none hidden sm:inline-flex"
             >
               <Link href={"/create-listing"}>
@@ -69,7 +69,7 @@ const AccountHeader = () => {
 
             <Button
               asChild
-              variant={"default"}
+              variant={"brand"}
               size={"icon"}
               className=" sm:hidden "
             >
