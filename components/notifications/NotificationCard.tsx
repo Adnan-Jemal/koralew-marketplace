@@ -19,7 +19,7 @@ const NotificationCard = ({
         <div className="bg-background p-3 rounded-full">
           <MessageSquareDotIcon className="size-8" />
         </div>
-        <div className=" flex flex-col">
+        <div className=" flex flex-col lg:flex-1">
           <p className="text-sm">{notification.type}</p>
           <p className="text-lg">{notification.message}</p>
           <p className="text-sm text-gray-400">
