@@ -22,7 +22,7 @@ const StatCard = ({ title, number, btnTxt, btnLink, icon: Icon }: propType) => {
       <p className="text-2xl">{title}</p>
       <Link href={btnLink}>
         <Button
-          className="w-full text-md mt-4 hover:border-primary hover:border"
+          className="w-full text-md mt-4 hover:border-brand hover:border"
           variant={"outline"}
           size={"lg"}
         >

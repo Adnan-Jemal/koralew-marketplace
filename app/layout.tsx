@@ -7,7 +7,7 @@ import { SessionProvider } from "next-auth/react";
 
 export const metadata: Metadata = {
   title: "Koralew Marketplace",
-  description: "An All In One Marketplace",
+  description: "All In One Ethiopian Marketplace",
 };
 
 export default function RootLayout({

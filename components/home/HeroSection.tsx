@@ -4,7 +4,7 @@ import { categoryDisplayNames } from "@/lib/categories";
 import { Button } from "../ui/button";
 import Link from "next/link";
 import { auth } from "@/auth";
-import ExploreBtn from "./ExploreBtn";
+import ExploreBtn from "./HeroBtns";
 
 const RotatingWords = categoryDisplayNames.map((n) => {
   return { text: n };
