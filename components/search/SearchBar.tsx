@@ -20,7 +20,7 @@ export const SearchBar = ({
   //added because the input did not cleared when navigated to home page
   useEffect(() => {
     setSearchTerm(query ?? "");
-  }, [params]);
+  }, [query]);
 
   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
