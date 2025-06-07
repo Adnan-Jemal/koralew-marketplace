@@ -68,7 +68,7 @@ export const SellerProfile = async ({
           </div>
         </div>
         <Separator className="my-2" />
-        <div className="flex w-full gap-4">
+        <div data-cy="contact-seller-btns" className="flex w-full gap-4">
           <CallSellerBtn
             disabled={session?.user?.id == seller.id}
             sellerPhoneNumber={seller.phoneNumber}

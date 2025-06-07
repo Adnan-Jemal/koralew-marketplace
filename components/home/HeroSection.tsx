@@ -13,7 +13,7 @@ const RotatingWords = categoryDisplayNames.map((n) => {
 export async function HeroSection() {
   const session = await auth();
   return (
-    <HeroHighlight>
+    <HeroHighlight >
       <h1 className="text-3xl px-4 py-8 md:text-4xl lg:text-5xl font-bold text-neutral-700 dark:text-white max-w-4xl leading-relaxed lg:leading-snug text-center mx-auto ">
         <span className="flex items-center gap-3 flex-col">
           {" "}

@@ -15,7 +15,7 @@ export const NavProfile = ({ session }: { session: Session | null }) => {
   const user = session?.user;
   if (!session) {
     return (
-      <Button variant={'brand'} asChild>
+      <Button  data-cy="signin-nav-btn" variant={'brand'} asChild>
         <Link href={"/signin"}>Sign In </Link>
       </Button>
     );

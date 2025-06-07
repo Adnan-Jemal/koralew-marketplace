@@ -20,6 +20,7 @@ export default function NavCategory({ categoryName, categoryIcon }: propTypes) {
   if (params.get("category") == categoryName) {
     return (
       <span
+        data-cy="nav-category"
         className={`flex flex-col items-center cursor-pointer w-full group  transition-opacity hover:opacity-100 mx-1`}
       >
         {categoryIcon}

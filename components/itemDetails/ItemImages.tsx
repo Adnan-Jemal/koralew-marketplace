@@ -4,11 +4,7 @@ import Image from "next/image";
 import { SelectItemImages } from "@/db/schema/itemImages";
 import { useState } from "react";
 
-export default function ItemImages({
-  images,
-}: {
-  images: SelectItemImages[];
-}) {
+export default function ItemImages({ images }: { images: SelectItemImages[] }) {
   const [currentImg, setCurrentImg] = useState(images[0].imageUrl);
   return (
     <>
@@ -16,6 +12,7 @@ export default function ItemImages({
         {/* used to hold space for the absolute positioned div aka image list */}
         <div className="w-1/5"></div>
         <div
+          data-cy="item-image-list"
           id="image-list"
           className={`flex flex-col col-span-1 p-2 w-1/5 h-full absolute  space-y-4 overflow-y-auto ${
             images.length < 6 && "scrollbar-none"

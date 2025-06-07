@@ -49,7 +49,10 @@ export default async function Home(props: propType) {
           />
         ) : (
           <div className="w-full space-y-10">
-            <div className="border-2 rounded-xl overflow-hidden">
+            <div
+              data-cy="hero-section"
+              className="border-2 rounded-xl overflow-hidden"
+            >
               <HeroSection />
             </div>
             <CategoriesSection />
@@ -57,7 +60,7 @@ export default async function Home(props: propType) {
             <Suspense fallback={<ItemsLoadingSkeleton />}>
               <TrendingSection />
             </Suspense>
-            <BrowseMore/>
+            <BrowseMore />
           </div>
         )}
       </div>

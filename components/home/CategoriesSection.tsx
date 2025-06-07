@@ -87,7 +87,7 @@ const CategoriesSection = () => {
       >
         {TopCategories.map((cat, index) => (
           <Link key={index} href={cat.link}>
-            <div className="relative min-w-80 h-96 bg-gradient-to-t text-white from-black/80 to-transparent rounded-2xl overflow-clip flex items-end ">
+            <div data-cy="home-categories" className="relative min-w-80 h-96 bg-gradient-to-t text-white from-black/80 to-transparent rounded-2xl overflow-clip flex items-end ">
               <Image
                 alt={`${cat.name}category Image`}
                 src={cat.img}

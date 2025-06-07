@@ -45,6 +45,7 @@ export const SearchBar = ({
         <div className=" border-2 rounded-xl transition-shadow border-secondary p-1 pl-2 w-full">
           <form onSubmit={handleSubmit} className="flex w-full gap-2">
             <input
+              data-cy="search-bar"
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
               type="text"

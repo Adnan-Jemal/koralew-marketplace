@@ -18,7 +18,7 @@ const filteredCategories = categories
 
 const BrowseMore = () => {
   return (
-    <div className="flex items-center justify-center flex-col gap-4">
+    <div data-cy='brose-more' className="flex items-center justify-center flex-col gap-4">
       <p>Browse More by Category</p>
       <div className="flex-wrap flex gap-4 items-center justify-center">
         {filteredCategories.map((c) => (

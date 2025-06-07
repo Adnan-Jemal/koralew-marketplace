@@ -25,7 +25,7 @@ export default function ItemCard({
   itemViews,
 }: propType) {
   return (
-    <Link href={`/item/${id}`}>
+    <Link data-cy="item-card" href={`/item/${id}`}>
       <div className="flex flex-col bg-primary-foreground justify-between  w-72 h-80 rounded-2xl overflow-hidden shadow-md cursor-pointer relative ">
         <div className="  h-[60%] select-none ">
           <Image

@@ -32,6 +32,7 @@ const ConditionFilter = ({ updateURL }: propType) => {
       >
         {conditionsObj.map((condition) => (
           <ToggleGroupItem
+            data-cy="condition-filter-btn"
             key={condition.key}
             value={condition.value}
             className="flex items-center p-4 rounded-lg bg-background cursor-pointer hover:bg-primary-foreground data-[state=on]:bg-primary-foreground data-[state=on]:border data-[state=on]:border-brand   "

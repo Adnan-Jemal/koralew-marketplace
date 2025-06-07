@@ -37,6 +37,7 @@ const CategoryFilter = ({ updateURL }: propType) => {
               className="flex items-center space-x-3 p-4 rounded-lg bg-background cursor-pointer"
             >
               <RadioGroupItem
+                data-cy="category-filter-btn"
                 value={category.name}
                 id={category.name}
                 className="z-10"

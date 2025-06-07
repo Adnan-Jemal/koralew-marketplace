@@ -20,14 +20,14 @@ export default function ItemInfo({
 }) {
   return (
     <div className="flex flex-wrap py-4  gap-4 border-b border-t border-secondary">
-      <div className="flex space-x-1 border p-2 items-center rounded-xl  ">
+      <div data-cy="item-category"  className="flex space-x-1 border p-2 items-center rounded-xl  ">
         <Grid2x2 className="size-5" />
         <p>
           Category:
           <span className="font-semibold">{" " + category}</span>
         </p>
       </div>
-      <div className="flex space-x-1 border p-2 items-center rounded-xl">
+      <div data-cy="item-condition" className="flex space-x-1 border p-2 items-center rounded-xl">
         {condition === "New" ? (
           <BadgeCheck className="size-5" />
         ) : condition === "Used" ? (

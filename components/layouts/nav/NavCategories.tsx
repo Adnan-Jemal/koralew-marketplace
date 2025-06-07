@@ -48,10 +48,12 @@ export default function NavCategories() {
   };
   return (
     <div
+      
       className="sticky top-[134px] sm:top-[82px] bg-white dark:bg-black max-w-7xl z-50 
     mx-auto rounded-xl  "
     >
       <div
+      data-cy="nav-categories"
         ref={divRef}
         className="  flex items-center pt-4  px-16 gap-8  justify-evenly  overflow-x-hidden rounded-full "
       >
